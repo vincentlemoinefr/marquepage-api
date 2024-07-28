@@ -5,6 +5,9 @@ openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -sha256 -days 3
 
 Transform joi to doc : https://github.com/jacobworrel/joi-md-doc
 Packagen winston : https://www.npmjs.com/package/winston
+winston max file size : https://stackoverflow.com/questions/25028454/nodejs-winston-log-file-not-change-upon-size-limit
+
+
 Docs, joi : https://joi.dev/api/?v=17.13.3
 API, joi : https://github.com/hapijs/joi/blob/master/API.md
 joi when() : https://stackoverflow.com/questions/56423558/joi-validation-how-to-require-or-optional-field-based-on-another-key-exists-in

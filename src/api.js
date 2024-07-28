@@ -35,7 +35,50 @@ if (error) {
     }
 }
 
-console.log('config object : ', config);
+const winston = require('winston');
+const { createLogger, format, transports } = require('winston');
+const { combine, timestamp, label, prettyPrint } = format;
+
+const logger = winston.createLogger({
+    level: config.LOG_LEVEL,
+    format: combine(
+        winston.format.json(),
+        winston.format.timestamp()
+    ),
+    defaultMeta: { service: 'marquepage-api' },
+    transports: [
+        new winston.transports.File({ filename: config.LOG_PATH+'error.log', level: 'error' }),
+        new winston.transports.File({ filename: config.LOG_PATH+'warn.log', level: 'warn' }),
+        new winston.transports.File({ filename: config.LOG_PATH+'info.log', level: 'info' }),
+    ],
+});
+
+if (config.NODE_ENV == 'dev') {
+    logger.add(new winston.transports.Console({
+        format: winston.format.simple(),
+    }));
+}
+
+logger.log({
+    level: 'info',
+    message: 'Hello distributed log files!'
+});
+
+logger.log({
+    level: 'info',
+    message: config
+});
+
+logger.log({
+    level: 'error',
+    message: 'borken'
+});
+
+logger.log({
+    level: 'warn',
+    message: 'warning!'
+});
+
 
 // Todo : load winston
 
