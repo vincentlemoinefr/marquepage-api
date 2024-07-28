@@ -23,6 +23,7 @@ if (error) {
         useUnifiedTopology: true,
     };
     // do we use HTTPS or not
+    // We need to require cer and key if https is enabled, in joi
     if (config.API_HTTPS_ENABLED) {
         config.REQUIRE_HTTP = 'https';
         config.API_HTTPS_OPTIONS = {
