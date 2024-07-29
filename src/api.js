@@ -7,7 +7,7 @@ const {value: config, error} = configSchema.validate(process.env);
 
 if (error) {
     // api will not start if the configuration is not valid
-    // we don't have winston yet so a wrong config will crash the apî
+    // we don't have winston yet so a wrong config will crash the apî and don't log
     console.log('error object : ', error);
     throw new Error('Configuration is not valid');
 } else {
@@ -61,11 +61,6 @@ if (config.NODE_ENV == 'dev') {
 
 logger.log({
     level: 'info',
-    message: 'Hello distributed log files!'
-});
-
-logger.log({
-    level: 'info',
     message: config
 });
 
@@ -80,8 +75,6 @@ logger.log({
 });
 
 
-// Todo : load winston
-
 // Todo  : description.json
 // What endpoits do we want ? 
 // OpenAPI standard
@@ -94,7 +87,7 @@ logger.log({
 //     -> Url
 //     -> Description
 //     -> Subfolder
-const apiDescription = require('./description.json')
+const apiDescription = require('./api/description.json')
 const express = require('express');
 const http = require(config.REQUIRE_HTTP);
 const { MongoClient } = require('mongodb');

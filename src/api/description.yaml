@@ -1,0 +1,211 @@
+# Use https://editor.swagger.io/ to edit
+# yaml to json https://onlineyamltools.com/convert-yaml-to-json
+# json to yaml https://www.bairesdev.com/tools/json2yaml/
+# Ressources :
+# openapi v3.0.3 https://spec.openapis.org/oas/v3.0.3
+# openapi v3.0.3 https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.3.md
+# no default responses for endpoints https://github.com/OAI/OpenAPI-Specification/issues/521
+# OpenAPI validator https://www.postman.com/postman/workspace/postman-open-technologies-governance-rules/overview
+
+# OpenAPI version
+openapi: 3.0.3
+
+# Info about the API
+info: 
+  title: "Marquepage"
+  description: "Interface for marquepage."
+  termsOfService: "todo"
+  contact:
+    email: "vincent.lemoine.fr@gmail.com"
+    name: "Marquepage API"
+    url: "https://marquepage.local/"
+  license:
+    name: "THE UNLICENSE"
+    url: "https://unlicense.org"
+  version: 0.0.1
+
+# What are we doing ?
+tags:
+- "name": "binder"
+  "description": "A binder is the place where you store your bookmarks"
+- "name": "bookmark"
+  "description": "A bookmark is a saved website URL with a title and a description"
+
+# Servers serving the API
+servers:
+- "url": "https://api.marquepage.local:{port}/{path}"
+  "description": "URL for the marquepage API"
+  "variables":
+    "port":
+      "enum":
+        - "80"
+        - "443"
+      "default": "80"
+      "description": "port we are listening to"
+    "path":
+      "enum":
+        - "v1"
+      "default": "v1"
+      "description": "there is only v1 for now"
+
+# Possible HTTP requests :
+# GET
+# HEAD
+# POST
+# PUT
+# DELETE
+# CONNECT
+# TRACE
+# PATCH
+
+# Default responses for all endpoints :
+# 400 Bad / malformed request
+# 401 you are not authenticated
+# 404 Not found
+# 405 Method not allowed
+# 413 Payload too large
+# 414 URI too long
+# 429 Rate limited
+
+# API paths summary
+# /binder
+# /binder/{binderUuid}
+# /binder/{binderUuid}/bookmark/
+# /binder/{binderUuid}/bookmark/{bookmarkUuid}/
+
+# Paths of the API
+paths:
+  "/binder":
+    get:
+      tags:
+        - "binder"
+      description: "Get all the binders you have access to"
+      operationId: "readBinders"
+      parameters: []
+      responses:
+        "200": {} # here are your binders
+        "204": {} # you dont have access to any binder
+        "401": {} # you are not authenticated
+      security: []
+    post:
+      tags:
+        - "binder"
+      description: "Create one or more binders, recieve corresponding uuid"
+      operationId: "createBinders"
+      parameters: []
+      requestBody: {}
+      responses:
+        "200": {} # binder(s) created return the uuid(s)
+        "401": {} # you are not authenticated
+      security: []
+  "/binder/{binderUuid}":
+    get:
+      tags:
+        - "binder"
+      description: "Get a binder from its uuid"
+      operationId: "readBinderByUuid"
+      parameters: []
+      responses:
+        "200": {} # here is your binder
+        "401": {} # you are not authenticated
+        "403": {} # you don't have access to read this binder
+        "404": {} # this uuid doesn't exist
+      security: []
+    patch:
+      tags:
+        - "binder"
+      description: "Modify certain binders parameters, like its name"
+      operationId: "updateBinderByUuid"
+      parameters: []
+      requestBody: {}
+      responses:
+        "201": {} # you changed some value of the binder
+        "401": {} # you are not authenticated
+        "403": {} # you don't have access to update this binder
+        "404": {} # this uuid doesn't exist
+      security: []
+    delete:
+      tags:
+        - "binder"
+      description: "Delete a binder by its uuid"
+      operationId: "deleteBinderByUuid"
+      parameters: []
+      responses:
+        "200": {} # binder deleted
+        "401": {} # you are not authenticated
+        "403": {} # you don't have access to delete this binder
+        "404": {} # this uuid doesn't exist
+      security: []
+  "/binder/{binderUuid}/bookmark/":
+    get:
+      tags:
+        - "bookmark"
+      description: "Get all the bookmarks you have access to in that binder"
+      operationId: "readBookmarks"
+      parameters: []
+      responses:
+        "200": {} # here are your bookmarks
+        "204": {} # you dont have access to any bookmarks in that binder
+        "401": {} # you are not authenticated
+      security: []
+    post:
+      tags:
+        - "bookmark"
+      description: "Create one or more bookmarks, recieve corresponding uuid"
+      operationId: "createBookmarks"
+      parameters: []
+      requestBody: {}
+      responses:
+        "200": {} # bookmark(s) created return the uuid(s)
+        "401": {} # you are not authenticated
+      security: []
+  "/binder/{binderUuid}/bookmark/{bookmarkUuid}/":
+    get:
+      tags:
+        - "bookmark"
+      description: "Get a bookmark from its uuid"
+      operationId: "readBookmarkByUuid"
+      parameters: []
+      responses:
+        "201": {} # here is your bookmark
+        "401": {} # you are not authenticated
+        "403": {} # you don't have access to read this bookmark
+        "404": {} # this bookmark doesn't exist
+      security: []
+    put:
+      tags:
+        - "bookmark"
+      description: "Update all the bookmark fields"
+      operationId: "updateBookmarkByUuid"
+      parameters: []
+      requestBody: {}
+      responses:
+        "201": {} # you changed some value of the bookmark
+        "401": {} # you are not authenticated
+        "403": {} # you don't have access to update this bookmark
+        "404": {} # this bookmark doesn't exist
+      security: []
+    delete:
+      tags: 
+        - "bookmark"
+      description: "Delete a bookmark by its uuid"
+      operationId: "deleteBookmarkByUuid"
+      parameters: []
+      responses:
+        "201": {} # you deleted the bookmark
+        "401": {} # you are not authenticated
+        "403": {} # you don't have access to delete this bookmark
+        "404": {} # this bookmark doesn't exist
+      security: []
+
+# Components description
+components:
+  schemas: {}
+  responses:
+    "404":
+      description: "Not found"
+    "405":
+      description: "Method Not Allowed response"
+
+# Security ???
+security: []
