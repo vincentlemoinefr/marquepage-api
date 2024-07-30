@@ -58,7 +58,7 @@ module.exports = joi.object({
     LOG_PATH: joi
         .string()
         .required()
-        .failover('./data/logs/')
+        .failover('./logs/')
         .description('Folder where the logs files are stored'),
     LOG_FILENAME: joi
         .string()

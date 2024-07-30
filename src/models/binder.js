@@ -1,0 +1,1 @@
+// json model for a binder

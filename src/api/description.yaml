@@ -107,6 +107,7 @@ paths:
       parameters: []
       responses:
         "200": {} # here is your binder
+        "204": {} # This binder doesn't exist anymore
         "401": {} # you are not authenticated
         "403": {} # you don't have access to read this binder
         "404": {} # this uuid doesn't exist
@@ -145,6 +146,7 @@ paths:
       parameters: []
       responses:
         "200": {} # here are your bookmarks
+        "204": {} # This binder doesn't exist anymore
         "204": {} # you dont have access to any bookmarks in that binder
         "401": {} # you are not authenticated
       security: []
