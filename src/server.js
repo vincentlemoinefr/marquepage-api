@@ -3,58 +3,40 @@
 const config = require('./config');
 const logger = require('./logger');
 
-// logger.info(JSON.stringify(config));
-// logger.error('borken');
-// logger.warn('warning!');
-
-const apiDescription = require('./api/description.json');
-const paths = Object.keys(apiDescription.paths);
-const express = require('express');
-const marquepageApi = express();
-const router = express.Router();
-
 const controllers = require('./controllers/')
-
-const routes = [
-    { 'method' : 'get', 'path' : '/api', 'controller' : 'readOpenapi' },
-    { 'method' : 'get', 'path' : '/binder', 'controller' : 'readBinder' },
-    { 'method' : 'get', 'path' : '/binder', 'controller' : 'doSomething' }
-];
-
-
-
-for (const route of routes) {
-    router[route.method](route['path'],controllers[route.controller]);
-};
-
-marquepageApi.use('/', router);
-
-
-
-
-
-
-
-
-
-
-
+const description = require('./api/description');
 
 const http = require(config.REQUIRE_HTTP);
-const { MongoClient } = require('mongodb');
-const client = new MongoClient(config.MONGO_URL);
-marquepageApi.use(express.json());
+const express = require('express');
+const api = express();
+api.use(express.json());
 
+let routes = [];
+const paths = Object.keys(description.paths);
 
-marquepageApi.get('/status', (req, res) => {
-    res.send({'Status': 'Running'});
-});
+for (const path of paths) {
 
-marquepageApi.get('/test/:key([0-9]{4})', (req, res) => {
-    console.log(req.params);
-    res.send("Data captured is :" + req.params.key);
-});
+    const endpoint = description.paths[path];
+    const methods = Object.keys(endpoint);
 
-marquepageApi.listen(config.API_PORT, () => {
-    console.log("Server Listening on : http://"+config.API_HOST+":"+config.API_PORT);
+    for (const method of methods) {
+        routes.push({
+            'path' : path,
+            'method' : method,
+            'controller' : endpoint[method].operationId
+        });
+    }
+};
+
+for (const route of routes) {
+    try {
+        // note we can pass an array of "middlewares" they are executed in order
+        api[route.method](route.path,controllers[route.controller]);
+    } catch (e) {
+
+    }
+};
+
+api.listen(config.API_PORT, () => {
+    logger.info('Server Listening on : http://'+config.API_HOST+':'+config.API_PORT+'/');
 });

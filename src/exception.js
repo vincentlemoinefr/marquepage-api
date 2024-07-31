@@ -1,2 +1,2 @@
 'use strict';
-// Standardized http error response messages
+// We will get all the exceptions from the description.json

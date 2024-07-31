@@ -17,12 +17,16 @@
   },
   "tags": [
     {
+      "name": "internal",
+      "description": "Endpoints related to the inner workings of the api"
+    },
+    {
       "name": "binder",
-      "description": "A binder is the place where you store your bookmarks"
+      "description": "A binder is a place where you store your bookmarks"
     },
     {
       "name": "bookmark",
-      "description": "A bookmark is a saved website URL with a title and a description"
+      "description": "A bookmark is a website url you want to save for later"
     }
   ],
   "servers": [
@@ -49,6 +53,18 @@
     }
   ],
   "paths": {
+    "/": {
+      "get": {
+        "tags": [
+          "internal"
+        ],
+        "description": "Get the api description as json",
+        "operationId": "getDescription",
+        "responses": {
+          "200": {}
+        }
+      }
+    },
     "/binder": {
       "get": {
         "tags": [
@@ -59,7 +75,6 @@
         "parameters": [],
         "responses": {
           "200": {},
-          "204": {},
           "401": {}
         },
         "security": []
@@ -137,7 +152,6 @@
         "parameters": [],
         "responses": {
           "200": {},
-          "204": {},
           "401": {}
         },
         "security": []

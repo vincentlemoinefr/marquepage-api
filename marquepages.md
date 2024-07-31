@@ -115,3 +115,10 @@ https://expressjs.com/en/api.html#req
 https://expressjs.com/en/guide/routing.html
 
 https://www.youtube.com/watch?v=fUWkVxCv4IQ
+
+We need to manage concurrent requests if we want a shared binder :
+
+https://medium.com/swlh/handling-concurrent-requests-in-a-restful-api-5a25a4b81a1
+
+Do we need to manage CORS ?...
+https://swagger.io/docs/open-source-tools/swagger-ui/usage/cors/

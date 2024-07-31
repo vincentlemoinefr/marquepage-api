@@ -1,16 +1,19 @@
 'use strict';
 
-// This file with load the config, while config.js in validators does the joi validation
+// This file with load the config, while ./validators/config.js does the joi validation
 const configSchema = require('./validators/config');
 
 // we get all our configs from process.env, unnecessary envs are cut off, default if validation fail
-const {value: config, error} = configSchema.validate(process.env);
+const { value: config, error } = configSchema.validate(process.env);
 
 if (error) {
     // api will not start if the configuration is not valid
-    // we don't have winston yet so a wrong config will crash the apî and don't log
-    console.log('error object : ', error);
-    throw new Error('Configuration is not valid');
+    // we don't have winston yet so a wrong config will process.exit()
+
+    console.log('The application exited because your configuration incorrect.')
+    console.log('Change or add the following environnement variables : ')
+    error.details.forEach(error => console.log(error.message));
+    process.exit(1)
 } else {
     // do extra config here
     config.MONGO_URL = config.MONGO_BASE+config.MONGO_HOST+':'+config.MONGO_PORT;

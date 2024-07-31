@@ -39,11 +39,13 @@ module.exports = joi.object({
     API_HTTPS_CER: joi
         .string()
         .allow('')
-        .description('Certificate cer [the certificate in PEM form, not the path]'),
+        .description('Certificate cer [the certificate in PEM form, not the path]')
+        .when('API_HTTPS_ENABLED', { is: joi.equal(true), then: joi.required() }),
     API_HTTPS_KEY: joi
         .string()
         .allow('')
-        .description('Certificate key [the certificate in PEM form, not the path]'),
+        .description('Certificate key [the certificate in PEM form, not the path]')
+        .when('API_HTTPS_ENABLED', { is: joi.equal(true), then: joi.required() }),
     LOG_ENABLED: joi
         .boolean()
         .required()
@@ -137,4 +139,5 @@ module.exports = joi.object({
         .failover(5000)
         .description('Connection timeout in milliseconds')
 })
-.options({ stripUnknown: true });
+.options({ stripUnknown: true })
+.options({ abortEarly: false });

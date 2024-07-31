@@ -26,10 +26,12 @@ info:
 
 # What are we doing ?
 tags:
+- "name": "internal"
+  "description": "Endpoints related to the inner workings of the api"
 - "name": "binder"
-  "description": "A binder is the place where you store your bookmarks"
+  "description": "A binder is a place where you store your bookmarks"
 - "name": "bookmark"
-  "description": "A bookmark is a saved website URL with a title and a description"
+  "description": "A bookmark is a website url you want to save for later"
 
 # Servers serving the API
 servers:
@@ -68,31 +70,39 @@ servers:
 # 429 Rate limited
 
 # API paths summary
+# /
 # /binder
 # /binder/{binderUuid}
 # /binder/{binderUuid}/bookmark/
 # /binder/{binderUuid}/bookmark/{bookmarkUuid}/
+# /user ?
+# /user/{userUuid} ?
+# /login ?
+# /logout ?
 
 # Paths of the API
 paths:
   "/":
     get:
       tags:
-        - "api"
-      description: "Get the api description as json"
-      operationId: "readOpenapi"
+        - "internal"
+      description: "Returns ./api/description.json"
+      operationId: "getDescription"
       responses:
-        "200": {} # send ./api/description.json
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                - $ref: '#/'
   "/binder":
     get:
       tags:
         - "binder"
       description: "Get all the binders you have access to"
       operationId: "readBinders"
-      parameters: []
       responses:
-        "200": {} # here are your binders
-        "200": {} # you dont have access to any binder
+        "200": {} # Returns binder(s) or return 'no binder found'
         "401": {} # you are not authenticated
       security: []
     post:
@@ -114,11 +124,10 @@ paths:
       operationId: "readBinderByUuid"
       parameters: []
       responses:
-        "200": {} # here is your binder
-        "204": {} # This binder doesn't exist anymore
+        "200": {} # Returns one binder
         "401": {} # you are not authenticated
         "403": {} # you don't have access to read this binder
-        "404": {} # this uuid doesn't exist
+        "404": {} # This uuid doesn't exist
       security: []
     patch:
       tags:
@@ -153,9 +162,7 @@ paths:
       operationId: "readBookmarks"
       parameters: []
       responses:
-        "200": {} # here are your bookmarks
-        "204": {} # This binder doesn't exist anymore
-        "204": {} # you dont have access to any bookmarks in that binder
+        "200": {} # Returns bookmarks / Returns 0 bookmark
         "401": {} # you are not authenticated
       security: []
     post:
