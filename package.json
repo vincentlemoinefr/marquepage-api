@@ -2,7 +2,7 @@
   "name": "marquepage-api",
   "version": "1.0.0",
   "description": "Synchronise bookmarks between browsers and share them",
-  "main": "./src/api.js",
+  "main": "./src/server.js",
   "scripts": {
     "test": "node -r dotenv/config ."
   },

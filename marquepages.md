@@ -105,3 +105,13 @@ https://hub.docker.com/layers/library/node/lts-alpine3.20/images/sha256-375518d7
 https://12factor.net/
 
 https://spec.openapis.org/oas/latest.html
+
+
+
+21/07/2024 :
+
+https://expressjs.com/en/api.html#req
+
+https://expressjs.com/en/guide/routing.html
+
+https://www.youtube.com/watch?v=fUWkVxCv4IQ

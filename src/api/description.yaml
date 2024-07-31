@@ -75,6 +75,14 @@ servers:
 
 # Paths of the API
 paths:
+  "/":
+    get:
+      tags:
+        - "api"
+      description: "Get the api description as json"
+      operationId: "readOpenapi"
+      responses:
+        "200": {} # send ./api/description.json
   "/binder":
     get:
       tags:
@@ -84,7 +92,7 @@ paths:
       parameters: []
       responses:
         "200": {} # here are your binders
-        "204": {} # you dont have access to any binder
+        "200": {} # you dont have access to any binder
         "401": {} # you are not authenticated
       security: []
     post:
