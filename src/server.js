@@ -1,7 +1,7 @@
 'use strict';
 
-const config = require('./config');
 const logger = require('./logger');
+const config = require("./config/");
 
 const controllers = require('./controllers/')
 const description = require('./api/description');

@@ -60,14 +60,7 @@ servers:
 # TRACE
 # PATCH
 
-# Default responses for all endpoints :
-# 400 Bad / malformed request
-# 401 you are not authenticated
-# 404 Not found
-# 405 Method not allowed
-# 413 Payload too large
-# 414 URI too long
-# 429 Rate limited
+
 
 # API paths summary
 # /
@@ -217,12 +210,32 @@ paths:
 
 # Components description
 components:
+  # Reusable schemas (data models)
   schemas: {}
-  responses:
-    "404":
-      description: "Not found"
-    "405":
-      description: "Method Not Allowed response"
+  # Reusable path, query, header and cookie parameters
+  parameters: {}
+  # Security scheme definitions (see Authentication)
+  securitySchemes: {}
+  # Reusable request bodies
+  requestBodies: {}
+  # Reusable responses, such as 401 Unauthorized or 400 Bad Request
+  # Default responses for all endpoints :
+  # 400 Bad / malformed request
+  # 401 you are not authenticated
+  # 404 Not found
+  # 405 Method not allowed
+  # 413 Payload too large
+  # 414 URI too long
+  # 429 Rate limited
+  responses: {}
+  # Reusable response headers
+  headers: {}
+  # Reusable examples
+  examples: {}
+  # Reusable links
+  links: {}
+  # Reusable callbacks
+  callbacks: {}
 
 # Security ???
 security: []
