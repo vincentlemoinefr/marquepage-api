@@ -19,15 +19,13 @@ module.exports = joi.object({
     .min(1)
     .max(65535)
     .required()
-    .failover(8080)
+    .failover(443)
     .description('Port for the marquepage api'),
   API_PATH: joi
     .string()
     .required()
     .failover('/')
-    .description(
-    'Relative path to the marquepage api, after the domain name'
-    ),
+    .description('Relative path to the marquepage api, after the domain name'),
   API_PROXY: joi
     .boolean()
     .required()
@@ -38,7 +36,7 @@ module.exports = joi.object({
     .required()
     .failover(false)
     .description('Does the api force HTTPS or not'),
-  API_HTTPS_CER: joi
+  API_HTTPS_CRT: joi
     .string()
     .allow('')
     .description('Certificate cer [the certificate in PEM form, not the path]')

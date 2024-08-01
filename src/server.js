@@ -6,9 +6,13 @@ const config = require("./config/");
 const controllers = require('./controllers/')
 const description = require('./api/description');
 
-const http = require(config.REQUIRE_HTTP);
+const http = require('http');
+const https = require('https');
 const express = require('express');
 const api = express();
+
+var httpsServer = https.createServer(config.API_HTTPS_OPTIONS, api);
+
 api.use(express.json());
 
 let routes = [];
@@ -37,6 +41,6 @@ for (const route of routes) {
     }
 };
 
-api.listen(config.API_PORT, () => {
-    logger.info('Server Listening on : http://'+config.API_HOST+':'+config.API_PORT+'/');
+httpsServer.listen(config.API_PORT, () => {
+    logger.info('Server Listening on : https://'+config.API_HOST+':'+config.API_PORT+'/');
 });

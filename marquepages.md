@@ -122,3 +122,9 @@ https://medium.com/swlh/handling-concurrent-requests-in-a-restful-api-5a25a4b81a
 
 Do we need to manage CORS ?...
 https://swagger.io/docs/open-source-tools/swagger-ui/usage/cors/
+
+
+Software architecture choices :
+  - The app is only an API and will never return something else than JSON
+  - If we want to inform the user on missuse, we might redirect him to another server ( eg : api.domain.com redirect to domain.com ) but that server will be another application.
+  - We enforce HTTPS in all environments

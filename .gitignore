@@ -1,3 +1,26 @@
+# Certificates and ssl files
+
+ssl/
+*.key
+*.keys
+*.priv
+*.rsa
+*.key.json
+*.ssh
+*.ssh-key
+*.key-mrc
+*.ca
+*.crt
+*.csr
+*.der 
+*.kdb
+*.org
+*.p12
+*.pem
+*.rnd
+*.ssleay
+*.smime
+
 # Logs
 logs
 *.log

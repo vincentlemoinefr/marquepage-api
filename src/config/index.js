@@ -25,23 +25,16 @@ if (error) {
     keepAlive: true,
     useFindAndModify: false,
     useNewUrlParser: true,
-    useUnifiedTopology: true,
+    useUnifiedTopology: true
   };
 
   if (config.API_HTTPS_ENABLED) {
-
-    config.REQUIRE_HTTP = 'https';
     config.API_HTTPS_OPTIONS = {
-      cert: config.API_HTTPS_CER,
-      key: config.API_HTTPS_KEY,
+      cert: config.API_HTTPS_CRT,
+      key: config.API_HTTPS_KEY
     };
-    delete config.API_HTTPS_CER;
+    delete config.API_HTTPS_CRT;
     delete config.API_HTTPS_KEY;
-
-  } else {
-
-    config.REQUIRE_HTTP = 'http';
-    
   }
 }
 
