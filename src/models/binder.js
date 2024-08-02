@@ -1,4 +1,4 @@
-
+'use strict';
 const binder = {
     binderUuid : '',         // Mongo will handle that
     version : '',           // we need this for concurrency

@@ -7,7 +7,7 @@
     "contact": {
       "email": "vincent.lemoine.fr@gmail.com",
       "name": "Marquepage API",
-      "url": "https://marquepage.local/"
+      "url": "https://marquepage.org/"
     },
     "license": {
       "name": "THE UNLICENSE",
@@ -31,37 +31,47 @@
   ],
   "servers": [
     {
-      "url": "https://api.marquepage.local:{port}/{path}",
+      "url": "https://api.marquepage.org:{port}/{path}",
       "description": "URL for the marquepage API",
       "variables": {
         "port": {
           "enum": [
-            "80",
             "443"
           ],
-          "default": "80",
+          "default": "443",
           "description": "port we are listening to"
         },
         "path": {
           "enum": [
-            "v1"
+            "current"
           ],
-          "default": "v1",
+          "default": "current",
           "description": "there is only v1 for now"
         }
       }
     }
   ],
   "paths": {
-    "/": {
+    "/current": {
       "get": {
         "tags": [
           "internal"
         ],
-        "description": "Get the api description as json",
-        "operationId": "getDescription",
+        "description": "Returns ./api/description.json",
+        "operationId": "description_get",
         "responses": {
-          "200": {}
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": [
+                  {
+                    "$ref": "#/"
+                  }
+                ]
+              }
+            }
+          }
         }
       }
     },
@@ -71,8 +81,7 @@
           "binder"
         ],
         "description": "Get all the binders you have access to",
-        "operationId": "readBinders",
-        "parameters": [],
+        "operationId": "binder_get",
         "responses": {
           "200": {},
           "401": {}
@@ -84,7 +93,7 @@
           "binder"
         ],
         "description": "Create one or more binders, recieve corresponding uuid",
-        "operationId": "createBinders",
+        "operationId": "binder_post",
         "parameters": [],
         "requestBody": {},
         "responses": {
@@ -100,7 +109,7 @@
           "binder"
         ],
         "description": "Get a binder from its uuid",
-        "operationId": "readBinderByUuid",
+        "operationId": "binder_get_by_uuid",
         "parameters": [],
         "responses": {
           "200": {},
@@ -115,7 +124,7 @@
           "binder"
         ],
         "description": "Modify certain binders parameters, like its name",
-        "operationId": "updateBinderByUuid",
+        "operationId": "binder_patch_by_uuid",
         "parameters": [],
         "requestBody": {},
         "responses": {
@@ -131,7 +140,7 @@
           "binder"
         ],
         "description": "Delete a binder by its uuid",
-        "operationId": "deleteBinderByUuid",
+        "operationId": "binder_delete_by_uuid",
         "parameters": [],
         "responses": {
           "200": {},
@@ -148,7 +157,7 @@
           "bookmark"
         ],
         "description": "Get all the bookmarks you have access to in that binder",
-        "operationId": "readBookmarks",
+        "operationId": "bookmark_get",
         "parameters": [],
         "responses": {
           "200": {},
@@ -161,7 +170,7 @@
           "bookmark"
         ],
         "description": "Create one or more bookmarks, recieve corresponding uuid",
-        "operationId": "createBookmarks",
+        "operationId": "bookmark_post",
         "parameters": [],
         "requestBody": {},
         "responses": {
@@ -177,7 +186,7 @@
           "bookmark"
         ],
         "description": "Get a bookmark from its uuid",
-        "operationId": "readBookmarkByUuid",
+        "operationId": "bookmark_get_by_uuid",
         "parameters": [],
         "responses": {
           "201": {},
@@ -192,7 +201,7 @@
           "bookmark"
         ],
         "description": "Update all the bookmark fields",
-        "operationId": "updateBookmarkByUuid",
+        "operationId": "bookmark_put_by_uuid",
         "parameters": [],
         "requestBody": {},
         "responses": {
@@ -208,7 +217,7 @@
           "bookmark"
         ],
         "description": "Delete a bookmark by its uuid",
-        "operationId": "deleteBookmarkByUuid",
+        "operationId": "bookmark_delete_by_uuid",
         "parameters": [],
         "responses": {
           "201": {},
@@ -222,14 +231,14 @@
   },
   "components": {
     "schemas": {},
-    "responses": {
-      "404": {
-        "description": "Not found"
-      },
-      "405": {
-        "description": "Method Not Allowed response"
-      }
-    }
+    "parameters": {},
+    "securitySchemes": {},
+    "requestBodies": {},
+    "responses": {},
+    "headers": {},
+    "examples": {},
+    "links": {},
+    "callbacks": {}
   },
   "security": []
 }

@@ -1,4 +1,5 @@
-const files = require('fs').readdirSync(__dirname + '/');
+'use strict';
+const files = require('fs').readdirSync('./src/models/');
 
 for (const file of files) {
     if (file !== 'index.js') {

@@ -3,13 +3,14 @@
 // Load the skeleton (a joi object) the single source of truth for configs
 const skeleton = require('./skeleton');
 
-// we get all our configs from process.env, unnecessary envs are cut off
+// We get all our configs from process.env, unnecessary envs are cut off
+// We should have a way to read the current used config
 const { value: config, error } = skeleton.validate(process.env);
 
 if (error) {
 
-  console.log("The api will not start if the configuration is not valid.");
-  console.log("You need to add or set the following environnement variables :");
+  console.log('The api will not start if the configuration is not valid.');
+  console.log('You need to add or set the following environnement variables :');
 
   error.details.forEach((error) => console.log(error.message));
   process.exit(1);
@@ -28,14 +29,12 @@ if (error) {
     useUnifiedTopology: true
   };
 
-  if (config.API_HTTPS_ENABLED) {
-    config.API_HTTPS_OPTIONS = {
-      cert: config.API_HTTPS_CRT,
-      key: config.API_HTTPS_KEY
-    };
-    delete config.API_HTTPS_CRT;
-    delete config.API_HTTPS_KEY;
-  }
+  config.API_HTTPS_OPTIONS = {
+    cert: config.API_HTTPS_CRT,
+    key: config.API_HTTPS_KEY
+  };
+  delete config.API_HTTPS_CRT;
+  delete config.API_HTTPS_KEY;
 }
 
 module.exports = config;

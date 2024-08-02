@@ -127,4 +127,12 @@ https://swagger.io/docs/open-source-tools/swagger-ui/usage/cors/
 Software architecture choices :
   - The app is only an API and will never return something else than JSON
   - If we want to inform the user on missuse, we might redirect him to another server ( eg : api.domain.com redirect to domain.com ) but that server will be another application.
-  - We enforce HTTPS in all environments
+  - Enforce HTTPS in all environments
+	- log to database instead of file ? 
+
+Blue / Green deployment ideas :
+  - A push to the main branch should trigger a deployment to the blue environment (non-live)
+	- After that, we need to press a Promote to Live button to promote the non-live environment to the live environment.
+	- Once an environment is live, we should be able to roll back to the previous live environment by pressing the Rollback button.
+  - What about the database ? 
+

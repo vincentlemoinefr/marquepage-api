@@ -18,7 +18,7 @@ info:
   contact:
     email: "vincent.lemoine.fr@gmail.com"
     name: "Marquepage API"
-    url: "https://marquepage.local/"
+    url: "https://marquepage.org/"
   license:
     name: "THE UNLICENSE"
     url: "https://unlicense.org"
@@ -26,48 +26,35 @@ info:
 
 # What are we doing ?
 tags:
-- "name": "internal"
-  "description": "Endpoints related to the inner workings of the api"
-- "name": "binder"
-  "description": "A binder is a place where you store your bookmarks"
-- "name": "bookmark"
-  "description": "A bookmark is a website url you want to save for later"
+- name: "internal"
+  description: "Endpoints related to the inner workings of the api"
+- name: "binder"
+  description: "A binder is a place where you store your bookmarks"
+- name: "bookmark"
+  description: "A bookmark is a website url you want to save for later"
 
 # Servers serving the API
 servers:
-- "url": "https://api.marquepage.local:{port}/{path}"
-  "description": "URL for the marquepage API"
-  "variables":
-    "port":
-      "enum":
-        - "80"
+- url: "https://api.marquepage.org:{port}/{path}"
+  description: "URL for the marquepage API"
+  variables:
+    port:
+      enum:
         - "443"
-      "default": "80"
-      "description": "port we are listening to"
-    "path":
-      "enum":
-        - "v1"
-      "default": "v1"
-      "description": "there is only v1 for now"
-
-# Possible HTTP requests :
-# GET
-# HEAD
-# POST
-# PUT
-# DELETE
-# CONNECT
-# TRACE
-# PATCH
-
-
+      default: "443"
+      description: "port we are listening to"
+    path:
+      enum:
+        - "current"
+      default: "current"
+      description: "there is only v1 for now"
 
 # API paths summary
-# /
 # /binder
 # /binder/{binderUuid}
 # /binder/{binderUuid}/bookmark/
 # /binder/{binderUuid}/bookmark/{bookmarkUuid}/
+# /current -> return the openapi description
 # /user ?
 # /user/{userUuid} ?
 # /login ?
@@ -75,12 +62,12 @@ servers:
 
 # Paths of the API
 paths:
-  "/":
+  "/current":
     get:
       tags:
         - "internal"
       description: "Returns ./api/description.json"
-      operationId: "getDescription"
+      operationId: "description_get"
       responses:
         "200":
           description: OK
@@ -93,7 +80,7 @@ paths:
       tags:
         - "binder"
       description: "Get all the binders you have access to"
-      operationId: "readBinders"
+      operationId: "binder_get"
       responses:
         "200": {} # Returns binder(s) or return 'no binder found'
         "401": {} # you are not authenticated
@@ -102,7 +89,7 @@ paths:
       tags:
         - "binder"
       description: "Create one or more binders, recieve corresponding uuid"
-      operationId: "createBinders"
+      operationId: "binder_post"
       parameters: []
       requestBody: {}
       responses:
@@ -114,7 +101,7 @@ paths:
       tags:
         - "binder"
       description: "Get a binder from its uuid"
-      operationId: "readBinderByUuid"
+      operationId: "binder_get_by_uuid"
       parameters: []
       responses:
         "200": {} # Returns one binder
@@ -126,7 +113,7 @@ paths:
       tags:
         - "binder"
       description: "Modify certain binders parameters, like its name"
-      operationId: "updateBinderByUuid"
+      operationId: "binder_patch_by_uuid"
       parameters: []
       requestBody: {}
       responses:
@@ -139,7 +126,7 @@ paths:
       tags:
         - "binder"
       description: "Delete a binder by its uuid"
-      operationId: "deleteBinderByUuid"
+      operationId: "binder_delete_by_uuid"
       parameters: []
       responses:
         "200": {} # binder deleted
@@ -152,7 +139,7 @@ paths:
       tags:
         - "bookmark"
       description: "Get all the bookmarks you have access to in that binder"
-      operationId: "readBookmarks"
+      operationId: "bookmark_get"
       parameters: []
       responses:
         "200": {} # Returns bookmarks / Returns 0 bookmark
@@ -162,7 +149,7 @@ paths:
       tags:
         - "bookmark"
       description: "Create one or more bookmarks, recieve corresponding uuid"
-      operationId: "createBookmarks"
+      operationId: "bookmark_post"
       parameters: []
       requestBody: {}
       responses:
@@ -174,7 +161,7 @@ paths:
       tags:
         - "bookmark"
       description: "Get a bookmark from its uuid"
-      operationId: "readBookmarkByUuid"
+      operationId: "bookmark_get_by_uuid"
       parameters: []
       responses:
         "201": {} # here is your bookmark
@@ -186,7 +173,7 @@ paths:
       tags:
         - "bookmark"
       description: "Update all the bookmark fields"
-      operationId: "updateBookmarkByUuid"
+      operationId: "bookmark_put_by_uuid"
       parameters: []
       requestBody: {}
       responses:
@@ -199,7 +186,7 @@ paths:
       tags: 
         - "bookmark"
       description: "Delete a bookmark by its uuid"
-      operationId: "deleteBookmarkByUuid"
+      operationId: "bookmark_delete_by_uuid"
       parameters: []
       responses:
         "201": {} # you deleted the bookmark
