@@ -136,3 +136,38 @@ Blue / Green deployment ideas :
 	- Once an environment is live, we should be able to roll back to the previous live environment by pressing the Rollback button.
   - What about the database ? 
 
+
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/blue-green-deployments-overview.html
+
+CICD :
+  - Git checkout Blue
+	- Read version and create build number
+	- Remove existing docker images or old artrifacts
+	- Docker build image
+	- Deploy to local with TEST variables docker compose
+	- docker also need to pull dependencies (eg mongodb)
+	- The container start, we do testing
+	- Testing fails
+	  - Remove all containers, images, volumes (maybe push the logs as artifacts)
+		- Return to first step
+	- Testing success
+	  - Push image to repository
+		- Git push the new version in package.json
+		- Cleanup
+		- Deploy to Blue with STAGING variables(Almost like prod but not quite) 
+
+There should be two databases with Green synchronizing to blue everyday asynchronous
+
+After deployment : 
+  - Additionnal testing, manual or automated, easy to do 
+
+Manual action after a period of time (business decisions, PV, validation from hierarchy) : 
+  - Someone need to flip the switch, which will make blue the new green environment
+	- Real production configuration will be set with all the new features enabled from tags 
+	- Git Blue branch need to be merged to Green branch
+
+Dev also need to be able to
+  - Build and test localy even with HTTPS, a test database with some amount of fake data
+	- Run local tests on the code, linting etc
+
+Idea : Have a red environment for recovery
