@@ -9,6 +9,11 @@ git add .
 
 git commit -m "Automatic commit for $version"
 
+if [ -z "$(docker images -q $package_name:$version-$commit_hash 2> /dev/null)" ]; then
+  echo "You have not made any changes, rebuild is unecessary"
+  exit(0)
+fi
+
 docker build . --check
 
 docker build . \
