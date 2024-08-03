@@ -15,7 +15,7 @@ git commit -m "Automatic commit for $version"
 echo "Building image : $package_name:$version-$commit_hash starting at $full_date"
 
 if [ $clean_before_use = true ]; then
-  docker image rm -f $package_name
+  docker image rm -f $(docker images | grep '$package_name')
 fi
 
 if [ $do_it_fast = false ]; then
