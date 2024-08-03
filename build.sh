@@ -3,18 +3,11 @@ version=$(npm pkg get version --workspaces=false | tr -d '"')
 full_date=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
 commit_hash=$(git rev-parse --short HEAD)
 
-echo $package_name:$version-$commit_hash
-
-# this is something new ???
-
 git add .
 
 git commit -m "Automatic commit for $version"
 
-if [ -z "$(docker images -q $package_name:$version-$commit_hash 2> /dev/null)" ]; then
-  echo "You have not made any changes, rebuild is unecessary"
-  exit 0
-fi
+echo "Building image : $package_name:$version-$commit_hash"
 
 docker build . --check
 
