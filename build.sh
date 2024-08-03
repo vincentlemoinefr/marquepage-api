@@ -18,6 +18,8 @@ docker build . \
 
 docker scout quickview $package_name:$version-$commit_hash
 
+docker scout recommendations $package_name:$version-$commit_hash
+
 
 
 
