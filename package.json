@@ -5,7 +5,7 @@
   "main": "./src/server.js",
   "scripts": {
     "test": "node --env-file=./src/config/.env .",
-    "build": "node ./src/deployment.js",
+    "build": "node ./deployment.js",
     "start": "node ."
   },
   "repository": {
