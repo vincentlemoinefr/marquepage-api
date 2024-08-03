@@ -4,9 +4,7 @@ full_date=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
 commit_hash=$(git rev-parse --short HEAD)
 
 git add .
-if [ $? -ne 0 ]; then
-  exit 0
-fi
+if [ $? -ne 0 ]; then exit 0;fi
 
 git commit -m "Automatic commit for $version"
 if [ $? -ne 0 ]; then; exit 0; fi
