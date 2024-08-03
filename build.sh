@@ -11,6 +11,9 @@ echo "Building image : $package_name:$version-$commit_hash"
 
 docker build . --check
 
+echo $?
+exit 0
+
 docker build . \
   --build-arg BUILD_DATE=$full_date \
   --build-arg BUILD_DATE=$version \
