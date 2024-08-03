@@ -5,6 +5,8 @@ commit_hash=$(git rev-parse --short HEAD)
 
 echo $package_name:$version-$commit_hash
 
+# this is something new ???
+
 git add .
 
 git commit -m "Automatic commit for $version"
