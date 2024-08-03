@@ -4,24 +4,32 @@ full_date=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
 commit_hash=$(git rev-parse --short HEAD)
 
 git add .
+if [ $? -ne 0 ]; then
+  exit 0
+fi
 
 git commit -m "Automatic commit for $version"
+if [ $? -ne 0 ]; then; exit 0; fi
 
 echo "Building image : $package_name:$version-$commit_hash"
+if [ $? -ne 0 ]; then; exit 0; fi
 
 docker build . --check
-
-echo $?
-exit 0
+if [ $? -ne 0 ]; then
+  exit 0
+fi
 
 docker build . \
   --build-arg BUILD_DATE=$full_date \
   --build-arg BUILD_DATE=$version \
   -t $package_name:$version-$commit_hash
+if [ $? -ne 0 ]; then; exit 0; fi
 
 docker scout quickview $package_name:$version-$commit_hash
+if [ $? -ne 0 ]; then; exit 0; fi
 
 docker scout recommendations $package_name:$version-$commit_hash
+if [ $? -ne 0 ]; then; exit 0; fi
 
 
 
