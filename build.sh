@@ -35,6 +35,8 @@ fi
 finished_date=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
 echo "Building image : $package_name:$version-$commit_hash finished at $finished_date"
 
+# git reset HEAD~
+
 
 # local dev environment
 # 1/ dev something
