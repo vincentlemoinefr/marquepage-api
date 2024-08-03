@@ -13,7 +13,7 @@ git commit -m "Automatic commit for $version"
 
 echo "Building image : $package_name:$version-$commit_hash at $full_date"
 
-if [ !$do_it_fast ]; then
+if [ $do_it_fast = false ]; then
   docker build . --check
 fi
 
@@ -22,7 +22,7 @@ docker build . \
   --build-arg BUILD_DATE=$version \
   -t $package_name:$version-$commit_hash
 
-if [ !$do_it_fast ]; then
+if [ $do_it_fast = false ]; then
   docker scout quickview $package_name:$version-$commit_hash
   docker scout recommendations $package_name:$version-$commit_hash
 fi
