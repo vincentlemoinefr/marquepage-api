@@ -7,11 +7,16 @@ version=$(npm pkg get version --workspaces=false | tr -d '"')
 full_date=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
 commit_hash=$(git rev-parse --short HEAD)
 do_it_fast=true
+clean_before_use=true
 
 git add .
 git commit -m "Automatic commit for $version"
 
 echo "Building image : $package_name:$version-$commit_hash starting at $full_date"
+
+if [ $clean_before_use = true ]; then
+  docker image rm -f $package_name:$version-*
+fi
 
 if [ $do_it_fast = false ]; then
   docker build . --check
@@ -28,23 +33,17 @@ if [ $do_it_fast = false ]; then
 fi
 
 finished_date=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
-echo "Building image : $package_name:$version-$commit_hash starting at $finished_date"
+echo "Building image : $package_name:$version-$commit_hash finished at $finished_date"
 
 
-
-
-
-
-
-# Blue/Green Trunk dev cycle :
+# local dev environment
 # 1/ dev something
-# 1.1/ dev use command "build"
-# 2/ git add / git commit [no push] (automatic)
-# 3/ build command launch :
+# 1.1/ dev use command "build.sh"
 #   - get package name
 #   - get short commit hash
 #   - get version
-# 3.1/ docker build command with image name : "name:version-githash"
+# 2/ git add . git commit [no push] (automatic)
+# 3/ docker build command with image name : "name:version-githash"
 # 4/ build success
 #   - if fail : last commit reverted, image deleted
 #   - if success : next
