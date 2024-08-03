@@ -16,6 +16,8 @@ docker build . \
   --build-arg BUILD_DATE=$version \
   -t $package_name:$version-$commit_hash
 
+docker scout quickview $package_name:$version-$commit_hash
+
 
 
 
