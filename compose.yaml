@@ -24,7 +24,7 @@ services:
       - "API_HTTPS_KEY=$API_HTTPS_KEY"
     image: $IMAGE_NAME
     ports:
-      - "8080:8080"
+      - "443:443"
     restart: always
     volumes:
       - "api-logs:/marquepage"
