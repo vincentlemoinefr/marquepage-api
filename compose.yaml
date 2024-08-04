@@ -10,26 +10,23 @@ services:
       - "27017:27017"
     restart: always
     volumes:
-      - "db-data:/data/db"
-      - "db-backups:/data/backups"
+      - "db-data:/data"
   api:
     container_name: "marquepage-api"
     depends_on:
       - "db"
     environment:
+      - "API_HTTPS_CRT=$API_HTTPS_CRT"
+      - "API_HTTPS_KEY=$API_HTTPS_KEY"
       - "MONGO_USERNAME=$MONGO_USERNAME"
       - "MONGO_PASSWORD=$MONGO_PASSWORD"
       - "MONGO_BDNAME=$MONGO_BDNAME"
-      - "API_HTTPS_CRT=$API_HTTPS_CRT"
-      - "API_HTTPS_KEY=$API_HTTPS_KEY"
     image: $IMAGE_NAME
     ports:
       - "443:443"
     restart: always
     volumes:
-      - "api-logs:/marquepage"
-
+      - "api-data:/marquepage"
 volumes:
-  db-backups:
   db-data:
-  api-logs:
+  api-data:

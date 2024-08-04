@@ -8,12 +8,10 @@ ARG BUILD_VERSION
 LABEL BUILD_DATE=$BUILD_DATE
 LABEL BUILD_VERSION=$BUILD_VERSION
 
-RUN mkdir -p /marquepage
+RUN mkdir /marquepage
 WORKDIR /marquepage
 COPY . .
 
 RUN npm ci
-
-EXPOSE 3000
 
 ENTRYPOINT ["npm", "run", "start"]
