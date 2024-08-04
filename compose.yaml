@@ -1,32 +1,28 @@
 services:
   db:
-    container_name: "marquepage-db"
-    image: "mongo:7.0.12"
-    environment:
-      - "MONGO_INITDB_DATABASE=$MONGO_BDNAME"
-      - "MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME"
-      - "MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD"
+    container_name: marquepage-db
+    image: mongo:7.0.12
+    env_file: .env
     ports:
-      - "27017:27017"
-    restart: always
+      - 27017:27017
+    restart: unless-stopped
     volumes:
-      - "db-data:/data"
+      - db-configdb:/data/configdb
+      - db-data:/data/db
+      - db-backup:/data/backup
   api:
-    container_name: "marquepage-api"
-    depends_on:
-      - "db"
-    environment:
-      - "API_HTTPS_CRT=$API_HTTPS_CRT"
-      - "API_HTTPS_KEY=$API_HTTPS_KEY"
-      - "MONGO_USERNAME=$MONGO_USERNAME"
-      - "MONGO_PASSWORD=$MONGO_PASSWORD"
-      - "MONGO_BDNAME=$MONGO_BDNAME"
+    container_name: marquepage-api
     image: $IMAGE_NAME
+    depends_on:
+      - db
+    env_file: .env
     ports:
-      - "443:443"
-    restart: always
+      - 443:443
+    restart: unless-stopped
     volumes:
-      - "api-data:/marquepage"
+      - api-data:/marquepage
 volumes:
+  db-configdb:
+  db-backup:
   db-data:
   api-data:
