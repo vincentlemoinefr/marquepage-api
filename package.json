@@ -4,8 +4,9 @@
   "description": "Synchronise bookmarks between browsers and share them",
   "main": "./src/server.js",
   "scripts": {
-    "test": "node --env-file=./src/config/.env .",
-    "build": "node ./deployment.js",
+    "test": "node --env-file=.env .",
+    "build": "node ./build.js",
+    "docker:build": "./build.sh",
     "start": "node ."
   },
   "repository": {

@@ -7,14 +7,10 @@ const skeleton = require('./skeleton');
 // We should have a way to read the current used config
 const { value: config, error } = skeleton.validate(process.env);
 
-console.log(process.env);
-console.log(config);
-
 if (error) {
 
   console.log('The api will not start if the configuration is not valid.');
   console.log('You need to add or set the following environnement variables :');
-
 
   error.details.forEach((error) => console.log(error.message));
   process.exit(1);
