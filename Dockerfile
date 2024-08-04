@@ -10,7 +10,9 @@ LABEL BUILD_VERSION=$BUILD_VERSION
 
 RUN mkdir /marquepage
 WORKDIR /marquepage
-COPY . .
+
+COPY ./package.json .
+COPY ./src .
 
 RUN npm ci
 
