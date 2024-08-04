@@ -11,6 +11,7 @@ LABEL BUILD_VERSION=$BUILD_VERSION
 RUN mkdir /marquepage
 WORKDIR /marquepage
 
+COPY ./package-lock.json .
 COPY ./package.json .
 COPY ./src .
 
