@@ -1,7 +1,7 @@
 # Certificates and ssl files
 
-ssl/*
-!ssl/generate-ca.sh
+*.srl*
+*.ext*
 *.key*
 *.keys*
 *.priv*

@@ -5,9 +5,14 @@
   "main": "./src/server.js",
   "scripts": {
     "test": "node --env-file=.env .",
-    "build": "node ./build.js",
-    "docker:build": "./build.sh",
-    "start": "node ."
+    "build": "node ./toolin/build.js",
+    "start": "node .",
+    "db:test": "node --env-file=.env ./src/database/index.js",
+    "config:print": "node --env-file=.env ./src/config/index.js",
+    "docker:build": "sh ./tooling/docker_build.sh",
+    "docker:nuke": "sh ./tooling/docker_nuke.sh",
+    "docker:exec:api": "sh ./tooling/docker_exec.sh api",
+    "docker:exec:db": "sh ./tooling/docker_exec.sh db"
   },
   "repository": {
     "type": "git",

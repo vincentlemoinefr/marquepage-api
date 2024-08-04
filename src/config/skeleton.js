@@ -64,7 +64,7 @@ module.exports = joi.object({
     .boolean()
     .failover(true)
     .description('Disable mongodb for testing'),
-  MONGO_BASE: joi
+  MONGO_URL_BASE: joi
     .string()
     .valid('mongodb://', 'mongodb+srv://')
     .failover('mongodb://')

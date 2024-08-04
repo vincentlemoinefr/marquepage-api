@@ -3,6 +3,7 @@
 // Create controllers if they don't exist
 // We could do a docker helper too
 // Build the ssl script as well ?
+// We need to create the configuration .md from the joi object
 
 'use strict';
 const description = require('./api/description');

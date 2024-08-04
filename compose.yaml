@@ -2,6 +2,7 @@ services:
   db:
     container_name: marquepage-db
     image: mongo:7.0.12
+    command: --quiet --logpath /dev/null --setParameter logLevel=0 > /dev/null 2>&1
     env_file: [.env]
     ports:
       - 27017:27017
@@ -10,17 +11,27 @@ services:
       - db-configdb:/data/configdb
       - db-data:/data/db
       - db-backup:/data/backup
+      - ./tooling/mongo_fake_bookmark.json:/docker-entrypoint-initdb.d/mongo_fake_bookmark.json
+      - ./tooling/mongo_bootstrap.js:/docker-entrypoint-initdb.d/mongo_bootstrap.js
+      - ./tooling/mongo_import.sh:/docker-entrypoint-initdb.d/mongo_import.sh
   api:
     container_name: marquepage-api
     image: $IMAGE_NAME
     depends_on:
       - db
     env_file: [.env]
+#    healthcheck:
+#      test: [ "CMD", "node", "/marquepage/src/api_healthcheck.js" ]
+#      interval: "1m"
+#      timeout: "10s"
+#      retries: "5"
+#      start_period: "30s"
     ports:
       - 443:443
     restart: unless-stopped
     volumes:
       - api-data:/marquepage
+      - ./tooling/api_healthcheck.js:/marquepage/src/api_healthcheck.js
 volumes:
   db-configdb:
   db-backup:

@@ -4,7 +4,6 @@
 const skeleton = require('./skeleton');
 
 // We get all our configs from process.env, unnecessary envs are cut off
-// We should have a way to read the current used config
 const { value: config, error } = skeleton.validate(process.env);
 
 if (error) {
@@ -18,7 +17,14 @@ if (error) {
 } else {
 
   // do extra config here
-  config.MONGO_URL = config.MONGO_BASE + config.MONGO_HOST + ':' + config.MONGO_PORT;
+  config.MONGO_URL =
+      config.MONGO_URL_BASE
+    + config.MONGO_USERNAME
+    + ':' + config.MONGO_PASSWORD
+    + '@' + config.MONGO_HOST
+    + ':' + config.MONGO_PORT
+    + '/' + config.MONGO_DB_NAME;
+
   config.MONGO_OPTIONS = {
     connectTimeoutMS: config.MONGO_TIMEOUT,
     // Note : move these to config.js validator
@@ -37,4 +43,5 @@ if (error) {
   delete config.API_HTTPS_KEY;
 }
 
+console.log(config);
 module.exports = config;

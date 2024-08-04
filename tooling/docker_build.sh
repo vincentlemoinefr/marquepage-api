@@ -12,8 +12,8 @@ clean_before_use=true
 
 export IMAGE_NAME=$package_name:$version-$commit_hash
 
-git add .
-git commit -m "Automatic commit for $version"
+# git add .
+# git commit -m "Automatic commit for $version"
 
 echo "Building image : $IMAGE_NAME starting at $full_date"
 
