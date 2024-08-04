@@ -2,7 +2,7 @@ services:
   db:
     container_name: marquepage-db
     image: mongo:7.0.12
-    env_file: .env
+    env_file: [.env]
     ports:
       - 27017:27017
     restart: unless-stopped
@@ -15,7 +15,7 @@ services:
     image: $IMAGE_NAME
     depends_on:
       - db
-    env_file: .env
+    env_file: [.env]
     ports:
       - 443:443
     restart: unless-stopped
