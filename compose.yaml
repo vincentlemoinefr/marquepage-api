@@ -19,6 +19,9 @@ services:
     environment:
       - "MONGO_USERNAME=$MONGO_USERNAME"
       - "MONGO_PASSWORD=$MONGO_PASSWORD"
+      - "MONGO_BDNAME=$MONGO_BDNAME"
+      - "API_HTTPS_CRT=$API_HTTPS_CRT"
+      - "API_HTTPS_KEY=$API_HTTPS_KEY"
     image: $IMAGE_NAME
     ports:
       - "8080:8080"
