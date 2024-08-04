@@ -17,13 +17,13 @@ if (error) {
 } else {
 
   // do extra config here
-  config.MONGO_URL =
-      config.MONGO_URL_BASE
-    + config.MONGO_USERNAME
-    + ':' + config.MONGO_PASSWORD
+  config.MONGO_URI = config.MONGO_URI_BASE
+    + encodeURIComponent(config.MONGO_USERNAME)
+    + ':' + encodeURIComponent(config.MONGO_PASSWORD)
     + '@' + config.MONGO_HOST
     + ':' + config.MONGO_PORT
-    + '/' + config.MONGO_DB_NAME;
+    + '/' + config.MONGO_DB_NAME
+    + '?' + config.MONGO_AUTHSOURCE;
 
   config.MONGO_OPTIONS = {
     connectTimeoutMS: config.MONGO_TIMEOUT,
@@ -43,5 +43,4 @@ if (error) {
   delete config.API_HTTPS_KEY;
 }
 
-console.log(config);
 module.exports = config;

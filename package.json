@@ -29,5 +29,8 @@
     "joi": "^17.13.3",
     "mongodb": "^6.8.0",
     "winston": "^3.13.1"
+  },
+  "devDependencies": {
+    "yaml": "^2.5.0"
   }
 }

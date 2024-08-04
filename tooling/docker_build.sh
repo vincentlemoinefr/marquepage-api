@@ -45,6 +45,38 @@ docker compose up
 # git reset HEAD~
 
 
+# We would like :
+# The application need APIs (database, apis, services) -> dependencies
+# To test the application we need all the dependencies
+# We should be able to turn on or off dependencies
+# With 0 dependencies the application should still launch even if with limited functions
+# Exemple : 
+# Our api need the database
+# No database -> we can still start the api with some endpoints like /current
+# The application can do some of this :
+# 1. start with minimal functionnalities
+# 2. if the dependency feature is off it will never retry to connect
+# 3. If it's on, the application can retry to connect periodically
+#   3.1. with a timeout and a max number of retries ? 0 = infinite
+# We could have a database state parameter (connected : true/false)
+
+# Ideally in dev we need 1 command per service needed :
+# launch:service1
+# launch:service2
+# launch:database
+# build:application
+# launch:application
+# killall
+# kill/rebuild:service1
+# kill/rebuild:service2
+# kill/rebuild:database
+# kill/rebuild:application
+
+
+# The dev should be able to build the application and dependencies all one by one
+# We need a dependencies tree
+
+
 # local dev environment
 # 1/ dev something
 # 1.1/ dev use command "build.sh"

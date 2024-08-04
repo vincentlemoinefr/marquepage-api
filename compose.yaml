@@ -2,11 +2,11 @@ services:
   db:
     container_name: marquepage-db
     image: mongo:7.0.12
-    command: --quiet --logpath /dev/null --setParameter logLevel=0 > /dev/null 2>&1
+    command: mongod --quiet --logpath /dev/null --setParameter logLevel=0 > /dev/null 2>&1
     env_file: [.env]
     ports:
       - 27017:27017
-    restart: unless-stopped
+    restart: "no"
     volumes:
       - db-configdb:/data/configdb
       - db-data:/data/db
@@ -28,7 +28,7 @@ services:
 #      start_period: "30s"
     ports:
       - 443:443
-    restart: unless-stopped
+    restart: "no"
     volumes:
       - api-data:/marquepage
       - ./tooling/api_healthcheck.js:/marquepage/src/api_healthcheck.js

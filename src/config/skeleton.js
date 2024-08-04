@@ -64,7 +64,7 @@ module.exports = joi.object({
     .boolean()
     .failover(true)
     .description('Disable mongodb for testing'),
-  MONGO_URL_BASE: joi
+  MONGO_URI_BASE: joi
     .string()
     .valid('mongodb://', 'mongodb+srv://')
     .failover('mongodb://')
@@ -89,7 +89,7 @@ module.exports = joi.object({
     .description('Password to connect to mongodb'),
   MONGO_AUTHSOURCE: joi
     .string().max(64)
-    .failover('admin')
+    .failover('authSource=admin')
     .description('Database where the credentials are stored'),
   MONGO_TIMEOUT: joi
     .number().integer()
