@@ -1,0 +1,32 @@
+services:
+  db:
+    container_name: "marquepage-db"
+    image: "mongo:7.0.12"
+    environment:
+      - "MONGO_INITDB_DATABASE=$MONGO_BDNAME"
+      - "MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME"
+      - "MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD"
+    ports:
+      - "27017:27017"
+    restart: always
+    volumes:
+      - "db-data:/data/db"
+      - "db-backups:/data/backups"
+  api:
+    container_name: $IMAGE_NAME
+    depends_on:
+      - "db"
+    environment:
+      - "MONGO_USERNAME=$MONGO_USERNAME"
+      - "MONGO_PASSWORD=$MONGO_PASSWORD"
+    image: "xbrowsersync/api:1.1.13"
+    ports:
+      - "8080:8080"
+    restart: always
+    volumes:
+      - "api-logs:/marquepage"
+
+volumes:
+  db-backups:
+  db-data:
+  api-logs:

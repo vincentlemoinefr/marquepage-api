@@ -80,7 +80,6 @@ module.exports = joi.object({
     .description('Port for the mongodb database'),
   MONGO_BDNAME: joi
     .string().max(64)
-    .failover('marquepage')
     .description('Database name for the api'),
     MONGO_USERNAME: joi
     .string().max(64)

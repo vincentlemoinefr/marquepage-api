@@ -1,4 +1,5 @@
 # This script will miserably fail if anything is wrong
+# better than if [ $? -ne 0 ]; then exit 0; fi
 # https://gist.github.com/mohanpedala/1e2ff5661761d3abd0385e8223e16425
 set -euxo pipefail
 
@@ -9,10 +10,12 @@ commit_hash=$(git rev-parse --short HEAD)
 do_it_fast=true
 clean_before_use=true
 
+export IMAGE_NAME=$package_name:$version-$commit_hash
+
 git add .
 git commit -m "Automatic commit for $version"
 
-echo "Building image : $package_name:$version-$commit_hash starting at $full_date"
+echo "Building image : $IMAGE_NAME starting at $full_date"
 
 if [ $clean_before_use = true ]; then
   docker image rm -f $(docker images | grep "$package_name" | awk '{print $3}') || echo "No images to remove" 
@@ -24,16 +27,20 @@ fi
 
 docker build . \
   --build-arg BUILD_DATE=$full_date \
-  --build-arg BUILD_DATE=$version \
+  --build-arg BUILD_VERSION=$version \
   -t $package_name:$version-$commit_hash
 
 if [ $do_it_fast = false ]; then
-  docker scout quickview $package_name:$version-$commit_hash
-  docker scout recommendations $package_name:$version-$commit_hash
+  docker scout quickview $IMAGE_NAME
+  docker scout recommendations $IMAGE_NAME
 fi
 
 finished_date=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
-echo "Building image : $package_name:$version-$commit_hash finished at $finished_date"
+echo "Building image : $IMAGE_NAME finished at $finished_date"
+
+docker compose up
+
+
 
 # git reset HEAD~
 
