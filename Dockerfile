@@ -13,7 +13,7 @@ WORKDIR /marquepage
 
 COPY ./package-lock.json .
 COPY ./package.json .
-COPY ./src .
+COPY ./src ./src
 
 RUN npm ci
 
