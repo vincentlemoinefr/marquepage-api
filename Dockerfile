@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 # check=error=true
 
-FROM node:lts-alpine3.20
+FROM node:lts-alpine
 
 ARG BUILD_DATE
 ARG BUILD_VERSION

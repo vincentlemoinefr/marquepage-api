@@ -28,7 +28,7 @@ fi
 docker build . \
   --build-arg BUILD_DATE=$full_date \
   --build-arg BUILD_VERSION=$version \
-  -t $package_name:$version-$commit_hash
+  -t $IMAGE_NAME
 
 if [ $do_it_fast = false ]; then
   docker scout quickview $IMAGE_NAME
