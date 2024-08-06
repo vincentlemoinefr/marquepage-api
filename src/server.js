@@ -42,26 +42,19 @@ server.listen(config.API_PORT, () => {
 // https://www.rfc-editor.org/rfc/rfc9457.html
 // https://datatracker.ietf.org/doc/html/rfc7231
 
+// What can be handled by nginx
 // IP whitelist / blacklist
-// IP whitelist are cool, blacklist not very much but the feature can be useful
-// We should also manage ip ranges like apache
-// Should return a 403
+// Rate limiting
+// Force https
+// Wrong https protocol / cipher
+// Require 2 Way SSL
+// Request gateway timeout
+// nginx can read OpenAPI ???
+// https://www.f5.com/company/blog/nginx/from-openapi-to-nginx-as-an-api-gateway-using-a-declarative-api
+// Load balancing
+// ModSecurity
+// Disable unwanted HTTP request : HEAD, CONNECT, OPTIONS, TRACE...
 
-// X request per IP per Y amount of time
-// Fast check, only require lookup in memory for IP, dont save in DB
-// Don't forget about reverse proxies
-// 429 Rate limited
-
-// No https -> 403
-// We need a list of protocoles and ciphers for this... how does it work in node ?
-// 403 Not accepting normal http
-
-// At this point 426 
-// you are not using the secure protocol we want 
-// 426 Upgrade Required
-
-// Now we could require 2 Way SSL
-// Return 403 if not set or client certificate is invalid
 
 // now validating the parameters, weirds characters in any header or body
 // body missing on post, put, patch, delete...
@@ -97,6 +90,3 @@ server.listen(config.API_PORT, () => {
 // Can this really be reached if we have a catch all url ? 
 // 50x Any server meltdown (log as critical and send 404 instead ?)
 
-// At anypoint of the stack (how to do that ???), if the request already took more than 1 second to respond
-// eg : the database or filesystem is taking over 1 second to respond, send a 408
-// 408 Request Timeout
