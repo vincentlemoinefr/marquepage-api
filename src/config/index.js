@@ -39,6 +39,7 @@ if (error) {
     cert: config.API_HTTPS_CRT,
     key: config.API_HTTPS_KEY
   };
+
   delete config.API_HTTPS_CRT;
   delete config.API_HTTPS_KEY;
 }

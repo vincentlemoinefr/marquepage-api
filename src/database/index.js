@@ -21,7 +21,7 @@ class Database {
     this.mongo_available = true;
   }
 
-  close() {
+  disconnect() {
     if (this.mongo_connection !== null) {
       this.mongo_connection.close();
     }

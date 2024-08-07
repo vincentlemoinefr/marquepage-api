@@ -1,32 +1,39 @@
 'use strict';
 
 const database = require('./database/');
+const routes = require('./routes/');
 const config = require('./config/');
 const logger = require('./logger/');
-const api = require('./api/');
 
-// HTTPS should not be mandatory if we use a reverse proxy
+const express = require('express');
+const api = express();
+api.use(express.json());
+api.use('/', routes);
+api.use('*', fail);
+
+function fail(request, response) {
+  response.status(404).end();
+  return;
+}
+
 const https = require('https');
 const server = https.createServer(config.API_HTTPS_OPTIONS, api);
 
-let seedData =  {
-  decade: '1970s',
-  artist: 'Debby Boone',
-  song: 'You Light Up My Life',
-  weeksAtOne: 10
-};
-
 async function test() {
+  let seedData =  {
+    decade: '1970s',
+    artist: 'Debby Boone',
+    song: 'You Light Up My Life',
+    weeksAtOne: 10
+  };
+
   await database.connect();
   const create_result = await database.create(seedData);
   logger('info', 'added one row to the database');
   logger('info', create_result);
 };
 
-test();
-
-
-
+// test();
 
 server.listen(config.API_PORT, () => {
     logger('info', 'Server Listening on : https://'+config.API_HOST+'/');
@@ -45,15 +52,6 @@ server.listen(config.API_PORT, () => {
 
 
 
-
-
-
-
-// What my api should respond to a request, in order of priority
-// references : 
-// https://www.rfc-editor.org/rfc/rfc9457.html
-// https://datatracker.ietf.org/doc/html/rfc7231
-
 // What can be handled by nginx
 // IP whitelist / blacklist
 // Rate limiting
@@ -69,32 +67,38 @@ server.listen(config.API_PORT, () => {
 // Disable unwanted HTTP request : HEAD, CONNECT, OPTIONS, TRACE...
 // Http Logging
 
-// now validating the parameters, weirds characters in any header or body
-// body missing on post, put, patch, delete...
-// note : we don't validate the data structure in body, we just need something to be there
-// We can do that with joi
-// 413/414 Payload Too Large / URI Too Long (could be 400 instead ?)
-// OR 400 Bad Request
+
+// Now the request arrives at the Node JS API
+// We need to pre-validate the data (basic structure checks)
+// We will use joi for this task
+// 1. Sanitize the headers, body, and parameters 
+// 2. If we need body is there a body ? [post, put, patch, delete]
+// 3. what else ? 
+// Responses : 
+// 413 : Payload Too Large
+// 414 : URI Too Long
+// 400 : Bad Request
 
 // We want to check if any authentification is provided
-// If authentification is provided but wrong it's also a 401
-// 401 Unauthorized
- 
-//// At this point the request was ok-ish : 20x OR 403 OR 404 OR 422
-// 422 Unprocessable Content
-// the json you sent was bad we can put that in DB silly
+// 1. No authentification was provided
+// 2. Authentification was provided but is wrong type
+// 3. Authentification was provided and is correct but invalid
+// Responses :
+// 401 : Unauthorized
 
-// We found what you were searching but you don't have access to it
-// 403 Forbidden
-
-// We didn't find what you were searching for
-// Add a body so the requester know the request was valid
-// 404 Not found
-
-// We found what you were searching for and we did what you asked
-// here is your data as json
-// 20x Any Successful responses as needed
-////
+// Now we have the http request with valid authentification
+// 1. We pass the request to the correct controller
+// 2. The individual controller need to validate the body and parameters if needed
+// 3. The controller use a model to query the database
+// 4. The controller send the appropriate response
+// Responses :
+// 200 : OK (With data)
+// 201 : Created
+// 204 : No Content (deleted correctly)
+// 403 : Forbidden (you don't have authorization on this object)
+// 404 : Not Found (but request was ok)
+// 410 : Gone (object existed but was deleted)
+// 422 : Unprocessable Content (JSON body has invalid data)
 
 // default catch all route
 // 404 Not found

@@ -50,26 +50,20 @@ servers:
       description: "there is only v1 for now"
 
 # API paths summary
+# /schema
 # /binder
 # /binder/{binderUuid}
 # /binder/{binderUuid}/bookmark/
 # /binder/{binderUuid}/bookmark/{bookmarkUuid}/
-# /current -> return the openapi description
-# /user ?
-# /user/{userUuid} ?
-# /login ?
-# /logout ?
-
-# Paths of the API
 paths:
-  "/current":
+  "/schema":
     get:
       tags:
         - "internal"
-      description: "Returns ./api/description.json"
-      operationId: "description_get"
+      description: "Returns the OpenAPI schema"
+      operationId: "schema_get"
       responses:
-        "200":
+        200:
           description: OK
           content:
             application/json:
