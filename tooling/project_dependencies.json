@@ -1,0 +1,51 @@
+[
+  {
+    "service_name" : "mongodb",
+    "service_direction" : "upstream",
+    "location_after_build" : "some uri or IP",
+    "port_location_after_build" : 3000,
+    "build_destination": "local", "comment": "This could be local, local VM, dev cloud...",
+    "building_from" : "git url ?",
+    "rebuild" : false,
+    "required_env" : [
+      "DATABASE_USERNAME",
+      "DATABASE_PASSWORD",
+      "DATABASE_NAME",
+      "WHATEVER..."
+    ]
+  },
+  {
+    "service_name" : "nginx",
+    "service_direction" : "downstream",
+    "location_after_build" : "some uri or IP",
+    "port_location_after_build" : 443,
+    "build_destination": "local", "comment2": "This could be local, local VM, dev cloud...",
+    "building_from" : "git url ?",
+    "rebuild" : false,
+    "required_env" : [
+      "WHATEVER..."
+    ]
+  },
+  {
+    "name" : "another fake service",
+    "direction" : "upstream",
+    "location" : "somewhere idk",
+    "build_locally": false,
+    "rebuild" : false,
+    "building" : "git url ?",
+    "parameters" : {
+
+    }
+  },
+  {
+    "name" : "some filesystem dependency",
+    "direction" : "upstream",
+    "location" : "somewhere idk",
+    "build_locally": false,
+    "rebuild" : false,
+    "building" : "git url ?",
+    "parameters" : {
+
+    }
+  }
+]

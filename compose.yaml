@@ -4,6 +4,8 @@ services:
     image: mongo:7.0.12
     command: mongod --quiet --logpath /dev/null --setParameter logLevel=0 > /dev/null 2>&1
     env_file: [.env]
+    logging:
+      driver: "none"
     ports:
       - 27017:27017
     restart: "no"

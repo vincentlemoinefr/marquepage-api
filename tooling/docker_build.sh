@@ -38,7 +38,7 @@ fi
 finished_date=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
 echo "Building image : $IMAGE_NAME finished at $finished_date"
 
-docker compose up
+docker compose up --no-attach db
 
 
 

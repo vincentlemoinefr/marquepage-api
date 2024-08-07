@@ -78,15 +78,18 @@ module.exports = joi.object({
     .min(1).max(65535)
     .failover(27017)
     .description('Port for the mongodb database'),
-  MONGO_DB_NAME: joi
-    .string().max(64)
-    .description('Database name for the api'),
   MONGO_USERNAME: joi
     .string().max(64)
     .description('Username to connect to mongodb'),
   MONGO_PASSWORD: joi
     .string().max(64)
     .description('Password to connect to mongodb'),
+  MONGO_DB_NAME: joi
+    .string().max(64)
+    .description('Database name for the api'),
+  MONGO_COLLECTION_NAME: joi
+    .string().max(64)
+    .description('Collection name for the api'),
   MONGO_AUTHSOURCE: joi
     .string().max(64)
     .failover('authSource=admin')

@@ -1,41 +1,53 @@
 'use strict';
 
-const mongo = require('./database/');
+const database = require('./database/');
 const config = require('./config/');
-const logger = require('./logger');
+const logger = require('./logger/');
 const api = require('./api/');
 
+// HTTPS should not be mandatory if we use a reverse proxy
 const https = require('https');
 const server = https.createServer(config.API_HTTPS_OPTIONS, api);
-
-const { MongoClient } = require('mongodb');
 
 let seedData =  {
   decade: '1970s',
   artist: 'Debby Boone',
   song: 'You Light Up My Life',
   weeksAtOne: 10
-}
+};
 
-// async function fuckpromisesandasync() {
-//   const mongo_client = new MongoClient(config.MONGO_URI);
-//   const idkwhatthisis = await mongo_client.connect();
-//   console.log('idkwhatthisis : ', idkwhatthisis);
-//   const marquepage_db = mongo_client.db(config.MONGO_DB_NAME);
-//   console.log('marquepage_db : ', marquepage_db);
-//   const binder_collection = marquepage_db.collection('binder');
-//   console.log('binder_collection : ', binder_collection);
-//   binder_collection.insertOne(seedData);
-// }
+async function test() {
+  await database.connect();
+  const create_result = await database.create(seedData);
+  logger('info', 'added one row to the database');
+  logger('info', create_result);
+};
 
+test();
 
-// fuckpromisesandasync();
 
 
 
 server.listen(config.API_PORT, () => {
     logger('info', 'Server Listening on : https://'+config.API_HOST+'/');
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // What my api should respond to a request, in order of priority
 // references : 
@@ -53,8 +65,9 @@ server.listen(config.API_PORT, () => {
 // https://www.f5.com/company/blog/nginx/from-openapi-to-nginx-as-an-api-gateway-using-a-declarative-api
 // Load balancing
 // ModSecurity
+// https://www.acunetix.com/blog/web-security-zone/hardening-nginx/
 // Disable unwanted HTTP request : HEAD, CONNECT, OPTIONS, TRACE...
-
+// Http Logging
 
 // now validating the parameters, weirds characters in any header or body
 // body missing on post, put, patch, delete...
