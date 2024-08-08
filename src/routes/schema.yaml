@@ -1,60 +1,44 @@
 # Use https://editor.swagger.io/ to edit
 # yaml to json https://onlineyamltools.com/convert-yaml-to-json
-# json to yaml https://www.bairesdev.com/tools/json2yaml/
-# Ressources :
-# openapi v3.0.3 https://spec.openapis.org/oas/v3.0.3
-# openapi v3.0.3 https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.3.md
-# no default responses for endpoints https://github.com/OAI/OpenAPI-Specification/issues/521
+# https://spec.openapis.org/oas/v3.0.3
+# https://swagger.io/specification/v3/
+# https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.3.md
 # OpenAPI validator https://www.postman.com/postman/workspace/postman-open-technologies-governance-rules/overview
 
-# OpenAPI version
 openapi: 3.0.3
 
-# Info about the API
 info: 
   title: "Marquepage"
-  description: "Interface for marquepage."
-  termsOfService: "todo"
+  description: "API interface for marquepage."
   contact:
     email: "vincent.lemoine.fr@gmail.com"
     name: "Marquepage API"
-    url: "https://marquepage.org/"
-  license:
-    name: "THE UNLICENSE"
-    url: "https://unlicense.org"
+    url: "https://localhost"
   version: 0.0.1
 
-# What are we doing ?
+servers:
+- url: "https://localhost"
+  description: "Base URL to marquepage API"
+
 tags:
 - name: "internal"
-  description: "Endpoints related to the inner workings of the api"
+  description: "Endpoints related to the inner workings of the API"
 - name: "binder"
   description: "A binder is a place where you store your bookmarks"
 - name: "bookmark"
   description: "A bookmark is a website url you want to save for later"
 
-# Servers serving the API
-servers:
-- url: "https://api.marquepage.org:{port}/{path}"
-  description: "URL for the marquepage API"
-  variables:
-    port:
-      enum:
-        - "443"
-      default: "443"
-      description: "port we are listening to"
-    path:
-      enum:
-        - "current"
-      default: "current"
-      description: "there is only v1 for now"
-
 # API paths summary
 # /schema
 # /binder
 # /binder/{binderUuid}
-# /binder/{binderUuid}/bookmark/
-# /binder/{binderUuid}/bookmark/{bookmarkUuid}/
+# /folder
+# /folder/{folderUuid}
+# /bookmark
+# /bookmark/{bookmarkUuid}
+
+
+
 paths:
   "/schema":
     get:
@@ -65,10 +49,6 @@ paths:
       responses:
         200:
           description: OK
-          content:
-            application/json:
-              schema:
-                - $ref: '#/'
   "/binder":
     get:
       tags:
@@ -76,20 +56,16 @@ paths:
       description: "Get all the binders you have access to"
       operationId: "binder_get"
       responses:
-        "200": {} # Returns binder(s) or return 'no binder found'
-        "401": {} # you are not authenticated
-      security: []
+        200:
+          description : todo
     post:
       tags:
         - "binder"
       description: "Create one or more binders, recieve corresponding uuid"
       operationId: "binder_post"
-      parameters: []
-      requestBody: {}
       responses:
-        "200": {} # binder(s) created return the uuid(s)
-        "401": {} # you are not authenticated
-      security: []
+        200:
+          description : todo
   "/binder/{binderUuid}":
     get:
       tags:
@@ -98,59 +74,43 @@ paths:
       operationId: "binder_get_by_uuid"
       parameters: []
       responses:
-        "200": {} # Returns one binder
-        "401": {} # you are not authenticated
-        "403": {} # you don't have access to read this binder
-        "404": {} # This uuid doesn't exist
-      security: []
+        200:
+          description : todo
     patch:
       tags:
         - "binder"
       description: "Modify certain binders parameters, like its name"
       operationId: "binder_patch_by_uuid"
       parameters: []
-      requestBody: {}
       responses:
-        "201": {} # you changed some value of the binder
-        "401": {} # you are not authenticated
-        "403": {} # you don't have access to update this binder
-        "404": {} # this uuid doesn't exist
-      security: []
+        200:
+          description : todo
     delete:
       tags:
         - "binder"
       description: "Delete a binder by its uuid"
       operationId: "binder_delete_by_uuid"
-      parameters: []
       responses:
-        "200": {} # binder deleted
-        "401": {} # you are not authenticated
-        "403": {} # you don't have access to delete this binder
-        "404": {} # this uuid doesn't exist
-      security: []
-  "/binder/{binderUuid}/bookmark/":
+        200:
+          description : todo
+  "/bookmark":
     get:
       tags:
-        - "bookmark"
-      description: "Get all the bookmarks you have access to in that binder"
-      operationId: "bookmark_get"
-      parameters: []
+        - "binder"
+      description: "Get all the binders you have access to"
+      operationId: "binder_get"
       responses:
-        "200": {} # Returns bookmarks / Returns 0 bookmark
-        "401": {} # you are not authenticated
-      security: []
+        200:
+          description : todo
     post:
       tags:
-        - "bookmark"
-      description: "Create one or more bookmarks, recieve corresponding uuid"
-      operationId: "bookmark_post"
-      parameters: []
-      requestBody: {}
+        - "binder"
+      description: "Create one or more binders, recieve corresponding uuid"
+      operationId: "binder_post"
       responses:
-        "200": {} # bookmark(s) created return the uuid(s)
-        "401": {} # you are not authenticated
-      security: []
-  "/binder/{binderUuid}/bookmark/{bookmarkUuid}/":
+        200:
+          description : todo
+  "/bookmark/{bookmarkUuid}":
     get:
       tags:
         - "bookmark"
@@ -189,57 +149,336 @@ paths:
         "404": {} # this bookmark doesn't exist
       security: []
 
-# Components description
+
 components:
-  # Reusable schemas (data models)
-  schemas: {}
-  # Reusable path, query, header and cookie parameters
-  parameters: {}
-  # Security scheme definitions (see Authentication)
-  securitySchemes: {}
-  # Reusable request bodies
-  requestBodies: {}
-  # Reusable responses, such as 401 Unauthorized or 400 Bad Request
-  # Default responses for all endpoints :
-  # 200 OK                            | Section 6.3.1           
-  # 201 Created                       | Section 6.3.2           
-  # 202 Accepted                      | Section 6.3.3           
-  # 203 Non-Authoritative Information | Section 6.3.4           
-  # 204 No Content                    | Section 6.3.5           
-  # 205 Reset Content                 | Section 6.3.6           
-  # 206 Partial Content               | Section 4.1 of [RFC7233]
-  # 300 Multiple Choices              | Section 6.4.1           
-  # 301 Moved Permanently             | Section 6.4.2           
-  # 302 Found                         | Section 6.4.3           
-  # 303 See Other                     | Section 6.4.4           
-  # 304 Not Modified                  | Section 4.1 of [RFC7232]
-  # 305 Use Proxy                     | Section 6.4.5           
-  # 307 Temporary Redirect            | Section 6.4.7           
-  # 400 Bad Request                   | Section 6.5.1           
-  # 401 Unauthorized                  | Section 3.1 of [RFC7235]
-  # 403 Forbidden                     | Section 6.5.3           
-  # 404 Not Found                     | Section 6.5.4           
-  # 405 Method Not Allowed            | Section 6.5.5           
-  # 406 Not Acceptable                | Section 6.5.6           
-  # 407 Proxy Authentication Required | Section 3.2 of [RFC7235]
-  # 408 Request Timeout               | Section 6.5.7           
-  # 409 Conflict                      | Section 6.5.8           
-  # 410 Gone                          | Section 6.5.9           
-  # 411 Length Required               | Section 6.5.10          
-  # 412 Precondition Failed           | Section 4.2 of [RFC7232]
-  # 413 Payload Too Large             | Section 6.5.11          
-  # 414 URI Too Long                  | Section 6.5.12          
-  # 415 Unsupported Media Type        | Section 6.5.13          
-  # 416 Range Not Satisfiable         | Section 4.4 of [RFC7233]
-  # 417 Expectation Failed            | Section 6.5.14          
-  # 426 Upgrade Required              | Section 6.5.15          
-  # 500 Internal Server Error         | Section 6.6.1           
-  # 501 Not Implemented               | Section 6.6.2           
-  # 502 Bad Gateway                   | Section 6.6.3           
-  # 503 Service Unavailable           | Section 6.6.4           
-  # 504 Gateway Timeout               | Section 6.6.5       
-  # 429 Rate limited
-  responses: {}
+  schemas:
+    serverSuccessCreateBinder:
+      type: object
+      description: Returns the binder you created with additionnal information
+      properties:
+        requestId:
+          type: string
+          format: uuid.v1
+        responseStatus:
+          type: integer
+        responseMessage:
+          type: string
+    serverSuccessReadBinder:
+      type: object
+      description: Returns the binder you requested
+      properties:
+        requestId:
+          type: string
+          format: uuid.v1
+        responseStatus:
+          type: integer
+        responseMessage:
+          type: string
+    serverSuccessReadAllBinder:
+      type: object
+      description: Returns all the binder you have access to
+      properties:
+        requestId:
+          type: string
+          format: uuid.v1
+        responseStatus:
+          type: integer
+        responseMessage:
+          type: string
+    serverSuccessUpdateBinder:
+      type: object
+      description: Returns the information of the binder you updated
+      properties:
+        requestId:
+          type: string
+          format: uuid.v1
+        responseStatus:
+          type: integer
+        responseMessage:
+          type: string
+    serverSuccessDeleteBinder:
+      type: object
+      description: Returns the information of the binder you deleted
+      properties:
+        requestId:
+          type: string
+          format: uuid.v1
+        responseStatus:
+          type: integer
+        responseMessage:
+          type: string
+    serverSuccessCreateFolder:
+      type: object
+    serverSuccessReadFolder:
+      type: object
+    serverSuccessReadAllFolder:
+      type: object
+    serverSuccessUpdateFolder:
+      type: object
+    serverSuccessDeleteFolder:
+      type: object
+    serverSuccessCreateBookmark:
+      type: object
+    serverSuccessReadBookmark:
+      type: object
+    serverSuccessReadAllBookmark:
+      type: object
+    serverSuccessUpdateBookmark:
+      type: object
+    serverSuccessDeleteBookmark:
+      type: object
+
+    clientErrorBadRequest:
+      type: object
+      properties:
+        requestId:
+          type: string
+          format: uuid.v1
+        responseStatus:
+          type: integer
+        responseMessage:
+          type: string
+    clientErrorUnauthorized:
+      type: object
+      properties:
+        requestId:
+          type: string
+          format: uuid.v1
+        responseStatus:
+          type: integer
+        responseMessage:
+          type: string
+    clientErrorForbidden:
+      type: object
+      properties:
+        requestId:
+          type: string
+          format: uuid.v1
+        responseStatus:
+          type: integer
+        responseMessage:
+          type: string
+    clientErrorNotFound:
+      type: object
+      properties:
+        requestId:
+          type: string
+          format: uuid.v1
+        responseStatus:
+          type: integer
+        responseMessage:
+          type: string
+    clientErrorMethodNotAllowed:
+      type: object
+      properties:
+        requestId:
+          type: string
+          format: uuid.v1
+        responseStatus:
+          type: integer
+        responseMessage:
+          type: string
+    clientErrorNotAcceptable:
+      type: object
+      properties:
+        requestId:
+          type: string
+          format: uuid.v1
+        responseStatus:
+          type: integer
+        responseMessage:
+          type: string
+    clientErrorRequestTimeout:
+      type: object
+      properties:
+        requestId:
+          type: string
+          format: uuid.v1
+        responseStatus:
+          type: integer
+        responseMessage:
+          type: string
+    clientErrorConflict:
+      type: object
+      properties:
+        requestId:
+          type: string
+          format: uuid.v1
+        responseStatus:
+          type: integer
+        responseMessage:
+          type: string
+    clientErrorGone:
+      type: object
+      properties:
+        requestId:
+          type: string
+          format: uuid.v1
+        responseStatus:
+          type: integer
+        responseMessage:
+          type: string
+    clientErrorPayloadTooLarge:
+      type: object
+      properties:
+        requestId:
+          type: string
+          format: uuid.v1
+        responseStatus:
+          type: integer
+        responseMessage:
+          type: string
+    clientErrorUriTooLong:
+      type: object
+      properties:
+        requestId:
+          type: string
+          format: uuid.v1
+        responseStatus:
+          type: integer
+        responseMessage:
+          type: string
+    clientErrorUnprocessableContent:
+      type: object
+      properties:
+        requestId:
+          type: string
+          format: uuid.v1
+        responseStatus:
+          type: integer
+        responseMessage:
+          type: string
+    clientErrorUpgradeRequired:
+      type: object
+      properties:
+        requestId:
+          type: string
+          format: uuid.v1
+        responseStatus:
+          type: integer
+        responseMessage:
+          type: string
+    clientErrorTooManyRequests:
+      type: object
+      properties:
+        requestId:
+          type: string
+          format: uuid.v1
+        responseStatus:
+          type: integer
+        responseMessage:
+          type: string
+    clientErrorRequestHeaderFieldsTooLarge:
+      type: object
+      properties:
+        requestId:
+          type: string
+          format: uuid.v1
+        responseStatus:
+          type: integer
+        responseMessage:
+          type: string
+    serverErrorInternalServerError:
+      type: object
+      properties:
+        requestId:
+          type: string
+          format: uuid.v1
+        responseStatus:
+          type: integer
+        responseMessage:
+          type: string
+    serverErrorServiceUnavailable:
+      type: object
+      properties:
+        requestId:
+          type: string
+          format: uuid.v1
+        responseStatus:
+          type: integer
+        responseMessage:
+          type: string
+
+  responses:
+    # Success
+    200: # A 200 response always has a payload
+      description: OK
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/serverSuccessCreateBinder'
+              - $ref: '#/components/schemas/serverSuccessReadAllBinder'
+              - $ref: '#/components/schemas/serverSuccessReadBinder'
+              - $ref: '#/components/schemas/serverSuccessUpdateBinder'
+              - $ref: '#/components/schemas/serverSuccessDeleteBinder'
+              - $ref: '#/components/schemas/serverSuccessCreateFolder'
+              - $ref: '#/components/schemas/serverSuccessReadFolder'
+              - $ref: '#/components/schemas/serverSuccessReadAllFolder'
+              - $ref: '#/components/schemas/serverSuccessUpdateFolder'
+              - $ref: '#/components/schemas/serverSuccessDeleteFolder'
+              - $ref: '#/components/schemas/serverSuccessCreateBookmark'
+              - $ref: '#/components/schemas/serverSuccessReadBookmark'
+              - $ref: '#/components/schemas/serverSuccessReadAllBookmark'
+              - $ref: '#/components/schemas/serverSuccessUpdateBookmark'
+              - $ref: '#/components/schemas/serverSuccessDeleteBookmark'
+
+    # Client Erros, you fucked up.
+    400: # Failed header, parameters or body validation (Pre-validation)
+      description: Bad Request
+    401: # Didn't send authentification or bad authentification 
+      description: Unauthorized
+    403: # Unauthorized on ressource or generic error from proxy (eg blacklisted)
+      description: Forbidden
+    404: # Ressource not found or uri invalid
+      description: Not Found
+    405: # When you use a bad HTTP method (eg TRACE)
+      description: Method Not Allowed
+    406: # When you use "Accept: application/rtf" and we don't accept it
+      description: Not Acceptable
+    408: # Failed to process request in time. (useful when we depend on others api or database)
+      description: Request Timeout
+    409: # Used if we want to handle concurrency, when 2 person modify in a short time
+      description: Conflict
+    410: # The ressource existed in the past but was deleted
+      description: Gone
+    413: # Self explanatory
+      description: Payload Too Large
+    414: # Self explanatory
+      description: URI Too Long
+    422: # Pre-validation OK but the content you sent was bad on the business logic side
+      description: Unprocessable Content
+    426: # Upgrade the protocol (eg HTTP/1.1 -> HTTP/3.0)
+      description: Upgrade Required
+    429: # Self explanatory
+      description: Too Many Requests
+    431: # Self explanatory
+      description: Request Header Fields Too Large 
+
+    # Server Errors, we fucked up.
+    500:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/serverErrorInternalServerError'
+    503:
+      description: Service Unavailable
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/serverErrorServiceUnavailable'
+    default:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/serverErrorInternalServerError'
+
+
+
+
+
   # Reusable response headers
   headers: {}
   # Reusable examples

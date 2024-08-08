@@ -2,5 +2,6 @@
 const schema = require('../routes/schema.json');
 
 module.exports = (request, response) => {
-    response.json(schema);
+  console.log(request.timestamp);
+  response.json(schema);
 };

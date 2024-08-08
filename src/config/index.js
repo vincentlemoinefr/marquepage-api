@@ -1,10 +1,10 @@
 'use strict';
 
-// Load the skeleton (a joi object) the single source of truth for configs
-const skeleton = require('./skeleton');
+// Load the schema (a joi object) the single source of truth for configs
+const schema = require('./schema_config');
 
 // We get all our configs from process.env, unnecessary envs are cut off
-const { value: config, error } = skeleton.validate(process.env);
+const { value: config, error } = schema.validate(process.env);
 
 if (error) {
 

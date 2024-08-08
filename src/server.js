@@ -1,26 +1,31 @@
 'use strict';
 
+// at some point
+var jwt = require('jsonwebtoken');
+
 const database = require('./database/');
 const routes = require('./routes/');
 const config = require('./config/');
 const logger = require('./logger/');
-
 const express = require('express');
-const api = express();
+
+const middlewares = require('./middlewares');
+
+const api = express()
+
+// Express middleware here :
+// Validation
+// Authentification
+
+// api.use(middlewares.timestamp);
 api.use(express.json());
 api.use('/', routes);
-api.use('*', fail);
-
-function fail(request, response) {
-  response.status(404).end();
-  return;
-}
 
 const https = require('https');
 const server = https.createServer(config.API_HTTPS_OPTIONS, api);
 
 async function test() {
-  let seedData =  {
+  const seedData =  {
     decade: '1970s',
     artist: 'Debby Boone',
     song: 'You Light Up My Life',
@@ -32,8 +37,6 @@ async function test() {
   logger('info', 'added one row to the database');
   logger('info', create_result);
 };
-
-// test();
 
 server.listen(config.API_PORT, () => {
     logger('info', 'Server Listening on : https://'+config.API_HOST+'/');

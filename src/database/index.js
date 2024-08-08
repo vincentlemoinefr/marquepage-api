@@ -3,6 +3,12 @@
 const config = require('../config/');
 const { MongoClient } = require('mongodb');
 
+class Test extends MongoClient {
+  constructor(uri, database, collection) {
+    
+  } 
+}
+
 class Database {
   constructor(mongo_uri, mongo_db_name, mongo_collection_name) {
     this.mongo_uri = mongo_uri;
@@ -12,7 +18,7 @@ class Database {
     this.mongo_database = null;
     this.mongo_collection = null;
     this.mongo_available = false;
-  }
+  } 
 
   async connect() {
     this.mongo_connection = await MongoClient.connect(this.mongo_uri);

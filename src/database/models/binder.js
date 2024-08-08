@@ -1,5 +1,46 @@
 'use strict';
 
+// Access rights : 
+// Read
+// Modify
+// Change rights 
+
+
+// Business logic :
+// Get all the binders you have access to
+// 
+// Create a binder
+// Delete a binder by id
+// Update a binder by id :
+//   - Name
+//   - Access list
+// Create a binder's folder structure (./subfolderA/subfolderB/subfolderC)
+// Delete a binder's folder
+
+// Create a bookmark
+// Get a bookmark by id
+// Delete a bookmark by id
+// Update a bookmark by id :
+//   - Name
+//   - Description
+//   - Url
+//   - Tags
+//   - Change folder
+
+
+// uuid -> binder (mongo _id)
+// uuid -> bookmark (mongo _id)
+
+const joi = require('joi');
+const validator_id = joi.object({
+  uuid: joi
+    .string().hex().length(24)
+    .required()
+    .description('A MongoDB _id in string format')
+});
+
+
+
 // What about users and authorizations ? ?
 const user = {
   user_something : ''         // idklol
@@ -16,9 +57,9 @@ const binder = {
   binder_last_accessed : '',  // When was it accessed last
   binder_deleted : false,     // We want to store this state and delete at a later date
   binder_time_deleted : '',   // Time of deleting
-  binder_tags: '',
   bookmarks_amount : 5000,    // Number of bookmarks in that binder
-  bookmarks_list : []         // Bookmarks array
+  bookmarks_list : [],        // Bookmarks array
+  binder_folders_list : []
 }
 
 const bookmark = {
