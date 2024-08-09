@@ -9,16 +9,17 @@
 export MSYS_NO_PATHCONV=1
 
 # Create a Root Certificate and self-sign it with the key
-ca_file_name='self-root-ca'
-ca_subject='/C=FR/ST=IDF/L=Paris/O=Marquepage/OU=IT/CN=Marquepage CA/emailAddress=vincent.lemoine.fr@gmail.com'
+ca_file_name="self-root-ca"
 
-ca_country='FR'
-ca_state='IDF'
-ca_city='Paris'
-ca_organization='Marquepage'
-ca_operation_unit='IT'
-ca_common_name='Marquepage CA'
-ca_email='vincent.lemoine.fr@gmail.com'
+ca_country="C=FR"
+ca_state="ST=IDF"
+ca_city="L=Paris"
+ca_organization="O=Marquepage"
+ca_operation_unit="OU=IT"
+ca_common_name="CN=Marquepage CA"
+ca_email="emailAddress=vincent.lemoine.fr@gmail.com"
+
+ca_subject="/$ca_country/$ca_state/$ca_city/$ca_organization/$ca_operation_unit/$ca_common_name/$ca_email"
 
 openssl ecparam -out $ca_file_name.key -name prime256v1 -genkey
 
@@ -27,21 +28,21 @@ openssl req -new -sha256 -key $ca_file_name.key -out $ca_file_name.csr -subj $ca
 openssl x509 -req -sha256 -days 3650 -in $ca_file_name.csr -signkey $ca_file_name.key -out $ca_file_name.crt
 
 # Create a server certificate for localhost
+crt_name="localhost"
 
-crt_name='localhost'
-crt_subject='/C=FR/ST=IDF/L=Paris/O=Marquepage/OU=IT/CN=localhost/emailAddress=vincent.lemoine.fr@gmail.com'
+crt_country="C=FR"
+crt_state="ST=IDF"
+crt_city="L=Paris"
+crt_organization="O=Marquepage"
+crt_operation_unit="OU=IT"
+crt_common_name="CN=localhost"
+crt_email="emailAddress=vincent.lemoine.fr@gmail.com"
 
-crt_country='FR'
-crt_state='IDF'
-crt_city='Paris'
-crt_organization='Marquepage'
-crt_operation_unit='IT'
-crt_common_name='localhost'
-crt_email='vincent.lemoine.fr@gmail.com'
+crt_subject="/$crt_country/$crt_state/$crt_city/$crt_organization/$crt_operation_unit/$crt_common_name/$crt_email"
 
 openssl ecparam -out $crt_name.key -name prime256v1 -genkey
 
-echo -n 'authorityKeyIdentifier=keyid,issuer
+echo -n "authorityKeyIdentifier=keyid,issuer
 basicConstraints=CA:FALSE
 extendedKeyUsage=serverAuth,clientAuth
 keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
@@ -49,7 +50,7 @@ subjectAltName = @alt_names
 [alt_names]
 DNS.1 = localhost
 DNS.2 = test.localhost
-IP.1 = 127.0.0.1' > $crt_name.ext
+IP.1 = 127.0.0.1" > $crt_name.ext
 
 openssl req -new -sha256 -key $crt_name.key -out $crt_name.csr -subj $crt_subject
 

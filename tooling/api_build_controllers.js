@@ -1,12 +1,12 @@
 'use strict';
-const schema = require('../src/routes/schema.json');
-const paths = Object.keys(schema.paths);
+const definition = require('../src/routes/definition.json');
+const paths = Object.keys(definition.paths);
 const fs = require('fs');
 const content = '\'use strict\';';
 
 const operationIds = [];
 for (const path of paths) {
-  const endpoint = schema.paths[path];
+  const endpoint = definition.paths[path];
   const methods = Object.keys(endpoint);
 
   for (const method of methods) {

@@ -5,7 +5,6 @@
 // Modify
 // Change rights 
 
-
 // Business logic :
 // Get all the binders you have access to
 // 
@@ -26,20 +25,6 @@
 //   - Url
 //   - Tags
 //   - Change folder
-
-
-// uuid -> binder (mongo _id)
-// uuid -> bookmark (mongo _id)
-
-const joi = require('joi');
-const validator_id = joi.object({
-  uuid: joi
-    .string().hex().length(24)
-    .required()
-    .description('A MongoDB _id in string format')
-});
-
-
 
 // What about users and authorizations ? ?
 const user = {

@@ -1,6 +1,11 @@
 'use strict';
 const joi = require('joi');
 
+// things to add :
+// Request timeout
+// Response timeout
+// max(Response timeout, Database timeout)
+
 module.exports = joi.object({
   API_HOST: joi
     .string().max(253)

@@ -1,5 +1,10 @@
 'use strict';
 
 module.exports = function binderReadById (request, response, next) {
-  response.send(request.params.binderId);
-}
+  response.send({
+    requestId : request.timestamp,
+    responseStatus : 200,
+    responseMessage : 'successful',
+    id : request.params.binderId
+  });
+};

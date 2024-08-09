@@ -1,28 +1,73 @@
 'use strict';
 
-// at some point
-var jwt = require('jsonwebtoken');
-
-const database = require('./database/');
-const routes = require('./routes/');
-const config = require('./config/');
-const logger = require('./logger/');
+// Dependencies
+const jsonwebtoken = require('jsonwebtoken');
+const { MongoClient } = require('mongodb');
 const express = require('express');
+const https = require('https');
+const joi = require('joi');
+const fs = require('fs');
+
+
+// const schemas = require('./schemas/')(fs, joi); // Will need joi
+const schemaOptions = {};
+const schemaLibraries = { fs : fs, joi : joi };
+const schemaRequirements = [ 'fs', 'joi' ];
+
+const Schemas = require('./schemas');
+const schema1 = new Schemas(schemaOptions, schemaLibraries, schemaRequirements);
+
+schema1.listFile();
+
+console.log(schema1);
+
+const request = { id : "66af8020fc13ae1c52e25f71" }
+const {value, error} = schema1.schemaId.validate(request);
+if (error) console.log(error);
+console.log(value);
+/*
+
+
+
+console.log(schemas);
+
+
+
+
+
+
+
+const config = require('./config')(schemas); // Need schema for config validation
+const logger = require('./logger')(config);
+
+// My classes
+const database = require('./database');
+const router = require('./router');
+
+const controllers = require('./middlewares/')(database); // Will need database and shcemas
+const middlewares = require('./middlewares/');
+
 
 const middlewares = require('./middlewares');
 
 const api = express()
 
-// Express middleware here :
-// Validation
-// Authentification
-
-// api.use(middlewares.timestamp);
+api.use(middlewares.setTimeout);
 api.use(express.json());
 api.use('/', routes);
+api.use(timeoutTest);
+api.use(middlewares.errorHandler);
 
-const https = require('https');
 const server = https.createServer(config.API_HTTPS_OPTIONS, api);
+
+function timeoutTest(request, response, next) {
+  let count = 0;
+  while (1) {
+    count++;
+  }
+  next();
+}
+
 
 async function test() {
   const seedData =  {
@@ -42,21 +87,6 @@ server.listen(config.API_PORT, () => {
     logger('info', 'Server Listening on : https://'+config.API_HOST+'/');
 });
 
-server.setTimeout(5000); // in ms https://github.com/expressjs/express/issues/3330
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // What can be handled by nginx
 // IP whitelist / blacklist
 // Rate limiting
@@ -73,41 +103,4 @@ server.setTimeout(5000); // in ms https://github.com/expressjs/express/issues/33
 // Http Logging
 // Wrong or missing headers
 
-
-// Now the request arrives at the Node JS API
-// We need to pre-validate the data (basic structure checks)
-// We will use joi for this task
-// 1. Sanitize the headers, body, and parameters 
-// 2. If we need body is there a body ? [post, put, patch, delete]
-// 3. what else ? 
-// Responses : 
-// 413 : Payload Too Large
-// 414 : URI Too Long
-// 400 : Bad Request
-
-// We want to check if any authentification is provided
-// 1. No authentification was provided
-// 2. Authentification was provided but is wrong type
-// 3. Authentification was provided and is correct but invalid
-// Responses :
-// 401 : Unauthorized
-
-// Now we have the http request with valid authentification
-// 1. We pass the request to the correct controller
-// 2. The individual controller need to validate the body and parameters if needed
-// 3. The controller use a model to query the database
-// 4. The controller send the appropriate response
-// Responses :
-// 200 : OK (With data)
-// 403 : Forbidden (you don't have authorization on this object)
-// 404 : Not Found (but request was ok)
-// 410 : Gone (object existed but was deleted)
-// 422 : Unprocessable Content (JSON body has invalid data)
-
-// default catch all route
-// 404 Not found
-
-// This is bad time.
-// Can this really be reached if we have a catch all url ? 
-// 50x Any server meltdown (log as critical and send 404 instead ?)
-
+*/

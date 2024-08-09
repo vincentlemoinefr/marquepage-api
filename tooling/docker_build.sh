@@ -1,4 +1,4 @@
-# This script will miserably fail if anything is wrong
+# This script will fail miserably if anything is wrong
 # better than if [ $? -ne 0 ]; then exit 0; fi
 # https://gist.github.com/mohanpedala/1e2ff5661761d3abd0385e8223e16425
 set -euxo pipefail
@@ -11,9 +11,6 @@ do_it_fast=true
 clean_before_use=true
 
 export IMAGE_NAME=$package_name:$version-$commit_hash
-
-# git add .
-# git commit -m "Automatic commit for $version"
 
 echo "Building image : $IMAGE_NAME starting at $full_date"
 
@@ -42,7 +39,15 @@ docker compose up --no-attach db
 
 
 
+# git add .
+# git commit -m "Automatic commit for $version"
 # git reset HEAD~
+
+# Merge :
+# git checkout green
+# git fetch
+# git pull
+# git merge
 
 
 # We would like :

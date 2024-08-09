@@ -1,18 +1,23 @@
 'use strict';
 
+const controllers = require('./controllers/');
+const definition = require('./api/definition.json');
+
+'use strict';
+
 const controllers = require('../controllers');
-const schema = require('./schema.json');
+const definition = require('./definition.json');
 const express = require('express');
 const router = express.Router();
 
 
-// This build an array for all the routes and methods from the OpenAPI schema
+// This build an array for all the routes and methods from the OpenAPI definition
 const routes = [];
-const paths = Object.keys(schema.paths);
+const paths = Object.keys(definition.paths);
 for (const path of paths) {
 
   const expressPath = path.replaceAll('{',':').replaceAll('}','');
-  const endpoint = schema.paths[path];
+  const endpoint = definition.paths[path];
   const methods = Object.keys(endpoint);
 
   for (const method of methods) {

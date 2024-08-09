@@ -3,7 +3,7 @@
 const fs = require('fs');
 const yaml = require('yaml');
 
-const schema_yaml = fs.readFileSync('./src/routes/schema.yaml').toString();
-const schema_json = yaml.parse(schema_yaml);
+const definition_yaml = fs.readFileSync('./src/routes/definition.yaml').toString();
+const definition_json = yaml.parse(definition_yaml);
 
-console.log(schema_json);
+console.log(definition_json);

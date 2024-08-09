@@ -1,5 +1,12 @@
 'use strict';
 
+const schemaId = require('./schemas/schemaId');
+const schemaBinder = require('./schemas/schemaBinder');
+const schemaFolder = require('./schemas/schemaFolder');
+const schemaBookmark = require('./schemas/schemaBookmark');
+
+'use strict';
+
 const config = require('../config/');
 const { MongoClient } = require('mongodb');
 

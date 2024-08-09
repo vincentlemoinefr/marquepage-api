@@ -1,6 +1,6 @@
 'use strict';
 
-const config = require('../config/');
+const config = require('./config');
 const { createLogger, format, transports } = require('winston');
 
 const winstonLogger = createLogger({

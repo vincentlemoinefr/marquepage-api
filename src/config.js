@@ -1,7 +1,7 @@
 'use strict';
 
-// Load the schema (a joi object) the single source of truth for configs
-const schema = require('./schema_config');
+// Load the config schema (a joi object) the single source of truth for configs
+const schema = require('./schemaConfig');
 
 // We get all our configs from process.env, unnecessary envs are cut off
 const { value: config, error } = schema.validate(process.env);

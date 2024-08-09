@@ -35,9 +35,9 @@
     }
   ],
   "paths": {
-    "/schema": {
+    "/definition": {
       "get": {
-        "operationId": "schemaRead",
+        "operationId": "definitionRead",
         "description": "Read the OpenAPI schema.",
         "tags": [
           "internal"
@@ -50,14 +50,6 @@
           "400": {
             "description": "Bad Request",
             "$ref": "#/components/responses/400"
-          },
-          "401": {
-            "description": "Unauthorized",
-            "$ref": "#/components/responses/401"
-          },
-          "403": {
-            "description": "Forbidden",
-            "$ref": "#/components/responses/403"
           },
           "404": {
             "description": "Not Found",
@@ -75,18 +67,6 @@
             "description": "Request Timeout",
             "$ref": "#/components/responses/408"
           },
-          "409": {
-            "description": "Conflict",
-            "$ref": "#/components/responses/409"
-          },
-          "410": {
-            "description": "Gone",
-            "$ref": "#/components/responses/410"
-          },
-          "412": {
-            "description": "Precondition Failed",
-            "$ref": "#/components/responses/412"
-          },
           "413": {
             "description": "Payload Too Large",
             "$ref": "#/components/responses/413"
@@ -94,10 +74,6 @@
           "414": {
             "description": "URI Too Long",
             "$ref": "#/components/responses/414"
-          },
-          "422": {
-            "description": "Unprocessable Content",
-            "$ref": "#/components/responses/422"
           },
           "426": {
             "description": "Upgrade Required",
@@ -122,6 +98,10 @@
           "503": {
             "description": "Service Unavailable",
             "$ref": "#/components/responses/503"
+          },
+          "504": {
+            "description": "Gateway Timeout",
+            "$ref": "#/components/responses/504"
           },
           "default": {
             "description": "Internal Server Error",
@@ -218,6 +198,10 @@
             "description": "Service Unavailable",
             "$ref": "#/components/responses/503"
           },
+          "504": {
+            "description": "Gateway Timeout",
+            "$ref": "#/components/responses/504"
+          },
           "default": {
             "description": "Internal Server Error",
             "$ref": "#/components/responses/500"
@@ -310,6 +294,10 @@
           "503": {
             "description": "Service Unavailable",
             "$ref": "#/components/responses/503"
+          },
+          "504": {
+            "description": "Gateway Timeout",
+            "$ref": "#/components/responses/504"
           },
           "default": {
             "description": "Internal Server Error",
@@ -406,6 +394,10 @@
             "description": "Service Unavailable",
             "$ref": "#/components/responses/503"
           },
+          "504": {
+            "description": "Gateway Timeout",
+            "$ref": "#/components/responses/504"
+          },
           "default": {
             "description": "Internal Server Error",
             "$ref": "#/components/responses/500"
@@ -499,6 +491,10 @@
             "description": "Service Unavailable",
             "$ref": "#/components/responses/503"
           },
+          "504": {
+            "description": "Gateway Timeout",
+            "$ref": "#/components/responses/504"
+          },
           "default": {
             "description": "Internal Server Error",
             "$ref": "#/components/responses/500"
@@ -591,6 +587,10 @@
           "503": {
             "description": "Service Unavailable",
             "$ref": "#/components/responses/503"
+          },
+          "504": {
+            "description": "Gateway Timeout",
+            "$ref": "#/components/responses/504"
           },
           "default": {
             "description": "Internal Server Error",
@@ -687,6 +687,10 @@
             "description": "Service Unavailable",
             "$ref": "#/components/responses/503"
           },
+          "504": {
+            "description": "Gateway Timeout",
+            "$ref": "#/components/responses/504"
+          },
           "default": {
             "description": "Internal Server Error",
             "$ref": "#/components/responses/500"
@@ -779,6 +783,10 @@
           "503": {
             "description": "Service Unavailable",
             "$ref": "#/components/responses/503"
+          },
+          "504": {
+            "description": "Gateway Timeout",
+            "$ref": "#/components/responses/504"
           },
           "default": {
             "description": "Internal Server Error",
@@ -875,6 +883,10 @@
             "description": "Service Unavailable",
             "$ref": "#/components/responses/503"
           },
+          "504": {
+            "description": "Gateway Timeout",
+            "$ref": "#/components/responses/504"
+          },
           "default": {
             "description": "Internal Server Error",
             "$ref": "#/components/responses/500"
@@ -968,6 +980,10 @@
             "description": "Service Unavailable",
             "$ref": "#/components/responses/503"
           },
+          "504": {
+            "description": "Gateway Timeout",
+            "$ref": "#/components/responses/504"
+          },
           "default": {
             "description": "Internal Server Error",
             "$ref": "#/components/responses/500"
@@ -1060,6 +1076,10 @@
           "503": {
             "description": "Service Unavailable",
             "$ref": "#/components/responses/503"
+          },
+          "504": {
+            "description": "Gateway Timeout",
+            "$ref": "#/components/responses/504"
           },
           "default": {
             "description": "Internal Server Error",
@@ -1156,6 +1176,10 @@
             "description": "Service Unavailable",
             "$ref": "#/components/responses/503"
           },
+          "504": {
+            "description": "Gateway Timeout",
+            "$ref": "#/components/responses/504"
+          },
           "default": {
             "description": "Internal Server Error",
             "$ref": "#/components/responses/500"
@@ -1248,6 +1272,10 @@
           "503": {
             "description": "Service Unavailable",
             "$ref": "#/components/responses/503"
+          },
+          "504": {
+            "description": "Gateway Timeout",
+            "$ref": "#/components/responses/504"
           },
           "default": {
             "description": "Internal Server Error",
@@ -1344,6 +1372,10 @@
             "description": "Service Unavailable",
             "$ref": "#/components/responses/503"
           },
+          "504": {
+            "description": "Gateway Timeout",
+            "$ref": "#/components/responses/504"
+          },
           "default": {
             "description": "Internal Server Error",
             "$ref": "#/components/responses/500"
@@ -1436,6 +1468,10 @@
           "503": {
             "description": "Service Unavailable",
             "$ref": "#/components/responses/503"
+          },
+          "504": {
+            "description": "Gateway Timeout",
+            "$ref": "#/components/responses/504"
           },
           "default": {
             "description": "Internal Server Error",
@@ -1530,6 +1566,10 @@
             "description": "Service Unavailable",
             "$ref": "#/components/responses/503"
           },
+          "504": {
+            "description": "Gateway Timeout",
+            "$ref": "#/components/responses/504"
+          },
           "default": {
             "description": "Internal Server Error",
             "$ref": "#/components/responses/500"
@@ -1540,406 +1580,150 @@
   },
   "components": {
     "schemas": {
-      "serverSuccessCreateBinder": {
+      "serverSuccessReadAllBinder": {
         "type": "object",
-        "description": "Returns the binder you created with additionnal information",
-        "properties": {
-          "requestId": {
-            "type": "string",
-            "format": "uuid.v1"
-          },
-          "responseStatus": {
-            "type": "integer"
-          },
-          "responseMessage": {
-            "type": "string"
-          }
-        }
+        "description": "Returns all the binder you have access to.",
+        "$ref": "#/components/schemas/serverSuccessMessage"
       },
       "serverSuccessReadBinder": {
         "type": "object",
-        "description": "Returns the binder you requested",
-        "properties": {
-          "requestId": {
-            "type": "string",
-            "format": "uuid.v1"
-          },
-          "responseStatus": {
-            "type": "integer"
-          },
-          "responseMessage": {
-            "type": "string"
-          }
-        }
+        "description": "Returns the binder you requested by id.",
+        "$ref": "#/components/schemas/serverSuccessMessage"
       },
-      "serverSuccessReadAllBinder": {
-        "type": "object",
-        "description": "Returns all the binder you have access to",
-        "properties": {
-          "requestId": {
-            "type": "string",
-            "format": "uuid.v1"
-          },
-          "responseStatus": {
-            "type": "integer"
-          },
-          "responseMessage": {
-            "type": "string"
-          }
-        }
+      "serverSuccessCreateBinder": {
+        "description": "Returns the binder you created with additionnal information.",
+        "$ref": "#/components/schemas/serverSuccessMessage"
       },
       "serverSuccessUpdateBinder": {
-        "type": "object",
-        "description": "Returns the information of the binder you updated",
-        "properties": {
-          "requestId": {
-            "type": "string",
-            "format": "uuid.v1"
-          },
-          "responseStatus": {
-            "type": "integer"
-          },
-          "responseMessage": {
-            "type": "string"
-          }
-        }
+        "description": "Returns the information of the binder you updated by id.",
+        "$ref": "#/components/schemas/serverSuccessMessage"
       },
       "serverSuccessDeleteBinder": {
-        "type": "object",
-        "description": "Returns the information of the binder you deleted",
-        "properties": {
-          "requestId": {
-            "type": "string",
-            "format": "uuid.v1"
-          },
-          "responseStatus": {
-            "type": "integer"
-          },
-          "responseMessage": {
-            "type": "string"
-          }
-        }
-      },
-      "serverSuccessCreateFolder": {
-        "type": "object"
-      },
-      "serverSuccessReadFolder": {
-        "type": "object"
+        "description": "Returns the information of the binder you deleted by id.",
+        "$ref": "#/components/schemas/serverSuccessMessage"
       },
       "serverSuccessReadAllFolder": {
-        "type": "object"
+        "description": "Returns all the folder you have access to.",
+        "$ref": "#/components/schemas/serverSuccessMessage"
+      },
+      "serverSuccessReadFolder": {
+        "description": "Returns the folder you requested by id.",
+        "$ref": "#/components/schemas/serverSuccessMessage"
+      },
+      "serverSuccessCreateFolder": {
+        "description": "Returns the folder you created with additionnal information.",
+        "$ref": "#/components/schemas/serverSuccessMessage"
       },
       "serverSuccessUpdateFolder": {
-        "type": "object"
+        "description": "Returns the information of the folder you updated by id.",
+        "$ref": "#/components/schemas/serverSuccessMessage"
       },
       "serverSuccessDeleteFolder": {
-        "type": "object"
-      },
-      "serverSuccessCreateBookmark": {
-        "type": "object"
-      },
-      "serverSuccessReadBookmark": {
-        "type": "object"
+        "description": "Returns the information of the folder you deleted by id.",
+        "$ref": "#/components/schemas/serverSuccessMessage"
       },
       "serverSuccessReadAllBookmark": {
-        "type": "object"
+        "description": "Returns all the bookmark you have access to.",
+        "$ref": "#/components/schemas/serverSuccessMessage"
+      },
+      "serverSuccessReadBookmark": {
+        "description": "Returns the bookmark you requested by id.",
+        "$ref": "#/components/schemas/serverSuccessMessage"
+      },
+      "serverSuccessCreateBookmark": {
+        "description": "Returns the bookmark you created with additionnal information.",
+        "$ref": "#/components/schemas/serverSuccessMessage"
       },
       "serverSuccessUpdateBookmark": {
-        "type": "object"
+        "description": "Returns the information of the bookmark you updated by id.",
+        "$ref": "#/components/schemas/serverSuccessMessage"
       },
       "serverSuccessDeleteBookmark": {
-        "type": "object"
+        "description": "Returns the information of the bookmark you deleted by id.",
+        "$ref": "#/components/schemas/serverSuccessMessage"
       },
       "clientErrorBadRequest": {
         "description": "400",
-        "type": "object",
-        "properties": {
-          "requestId": {
-            "type": "string",
-            "format": "uuid.v1"
-          },
-          "responseStatus": {
-            "type": "integer"
-          },
-          "responseMessage": {
-            "type": "string"
-          }
-        }
+        "$ref": "#/components/schemas/clientErrorMessage"
       },
       "clientErrorUnauthorized": {
         "description": "401",
-        "type": "object",
-        "properties": {
-          "requestId": {
-            "type": "string",
-            "format": "uuid.v1"
-          },
-          "responseStatus": {
-            "type": "integer"
-          },
-          "responseMessage": {
-            "type": "string"
-          }
-        }
+        "$ref": "#/components/schemas/clientErrorMessage"
       },
       "clientErrorForbidden": {
         "description": "403",
-        "type": "object",
-        "properties": {
-          "requestId": {
-            "type": "string",
-            "format": "uuid.v1"
-          },
-          "responseStatus": {
-            "type": "integer"
-          },
-          "responseMessage": {
-            "type": "string"
-          }
-        }
+        "$ref": "#/components/schemas/clientErrorMessage"
       },
       "clientErrorNotFound": {
         "description": "404",
-        "type": "object",
-        "properties": {
-          "requestId": {
-            "type": "string",
-            "format": "uuid.v1"
-          },
-          "responseStatus": {
-            "type": "integer"
-          },
-          "responseMessage": {
-            "type": "string"
-          }
-        }
+        "$ref": "#/components/schemas/clientErrorMessage"
       },
       "clientErrorMethodNotAllowed": {
         "description": "405",
-        "type": "object",
-        "properties": {
-          "requestId": {
-            "type": "string",
-            "format": "uuid.v1"
-          },
-          "responseStatus": {
-            "type": "integer"
-          },
-          "responseMessage": {
-            "type": "string"
-          }
-        }
+        "$ref": "#/components/schemas/clientErrorMessage"
       },
       "clientErrorNotAcceptable": {
         "description": "406",
-        "type": "object",
-        "properties": {
-          "requestId": {
-            "type": "string",
-            "format": "uuid.v1"
-          },
-          "responseStatus": {
-            "type": "integer"
-          },
-          "responseMessage": {
-            "type": "string"
-          }
-        }
+        "$ref": "#/components/schemas/clientErrorMessage"
       },
       "clientErrorRequestTimeout": {
         "description": "408",
-        "type": "object",
-        "properties": {
-          "requestId": {
-            "type": "string",
-            "format": "uuid.v1"
-          },
-          "responseStatus": {
-            "type": "integer"
-          },
-          "responseMessage": {
-            "type": "string"
-          }
-        }
+        "$ref": "#/components/schemas/clientErrorMessage"
       },
       "clientErrorConflict": {
         "description": "409",
-        "type": "object",
-        "properties": {
-          "requestId": {
-            "type": "string",
-            "format": "uuid.v1"
-          },
-          "responseStatus": {
-            "type": "integer"
-          },
-          "responseMessage": {
-            "type": "string"
-          }
-        }
+        "$ref": "#/components/schemas/clientErrorMessage"
       },
       "clientErrorGone": {
         "description": "410",
-        "type": "object",
-        "properties": {
-          "requestId": {
-            "type": "string",
-            "format": "uuid.v1"
-          },
-          "responseStatus": {
-            "type": "integer"
-          },
-          "responseMessage": {
-            "type": "string"
-          }
-        }
+        "$ref": "#/components/schemas/clientErrorMessage"
       },
       "clientPreconditionFailed": {
         "description": "412",
-        "type": "object",
-        "properties": {
-          "requestId": {
-            "type": "string",
-            "format": "uuid.v1"
-          },
-          "responseStatus": {
-            "type": "integer"
-          },
-          "responseMessage": {
-            "type": "string"
-          }
-        }
+        "$ref": "#/components/schemas/clientErrorMessage"
       },
       "clientErrorPayloadTooLarge": {
         "description": "413",
-        "type": "object",
-        "properties": {
-          "requestId": {
-            "type": "string",
-            "format": "uuid.v1"
-          },
-          "responseStatus": {
-            "type": "integer"
-          },
-          "responseMessage": {
-            "type": "string"
-          }
-        }
+        "$ref": "#/components/schemas/clientErrorMessage"
       },
       "clientErrorUriTooLong": {
         "description": "414",
-        "type": "object",
-        "properties": {
-          "requestId": {
-            "type": "string",
-            "format": "uuid.v1"
-          },
-          "responseStatus": {
-            "type": "integer"
-          },
-          "responseMessage": {
-            "type": "string"
-          }
-        }
+        "$ref": "#/components/schemas/clientErrorMessage"
       },
       "clientErrorUnprocessableContent": {
         "description": "422",
-        "type": "object",
-        "properties": {
-          "requestId": {
-            "type": "string",
-            "format": "uuid.v1"
-          },
-          "responseStatus": {
-            "type": "integer"
-          },
-          "responseMessage": {
-            "type": "string"
-          }
-        }
+        "$ref": "#/components/schemas/clientErrorMessage"
       },
       "clientErrorUpgradeRequired": {
         "description": "426",
-        "type": "object",
-        "properties": {
-          "requestId": {
-            "type": "string",
-            "format": "uuid.v1"
-          },
-          "responseStatus": {
-            "type": "integer"
-          },
-          "responseMessage": {
-            "type": "string"
-          }
-        }
+        "$ref": "#/components/schemas/clientErrorMessage"
       },
       "clientErrorPreconditionRequired": {
         "description": "428",
-        "type": "object",
-        "properties": {
-          "requestId": {
-            "type": "string",
-            "format": "uuid.v1"
-          },
-          "responseStatus": {
-            "type": "integer"
-          },
-          "responseMessage": {
-            "type": "string"
-          }
-        }
+        "$ref": "#/components/schemas/clientErrorMessage"
       },
       "clientErrorTooManyRequests": {
         "description": "429",
-        "type": "object",
-        "properties": {
-          "requestId": {
-            "type": "string",
-            "format": "uuid.v1"
-          },
-          "responseStatus": {
-            "type": "integer"
-          },
-          "responseMessage": {
-            "type": "string"
-          }
-        }
+        "$ref": "#/components/schemas/clientErrorMessage"
       },
       "clientErrorRequestHeaderFieldsTooLarge": {
         "description": "431",
-        "type": "object",
-        "properties": {
-          "requestId": {
-            "type": "string",
-            "format": "uuid.v1"
-          },
-          "responseStatus": {
-            "type": "integer"
-          },
-          "responseMessage": {
-            "type": "string"
-          }
-        }
+        "$ref": "#/components/schemas/clientErrorMessage"
       },
       "serverErrorInternalServerError": {
         "description": "500",
-        "type": "object",
-        "properties": {
-          "requestId": {
-            "type": "string",
-            "format": "uuid.v1"
-          },
-          "responseStatus": {
-            "type": "integer"
-          },
-          "responseMessage": {
-            "type": "string"
-          }
-        }
+        "$ref": "#/components/schemas/serverErrorMessage"
       },
       "serverErrorServiceUnavailable": {
         "description": "503",
+        "$ref": "#/components/schemas/serverErrorMessage"
+      },
+      "serverErrorGatewayTimeout": {
+        "description": "504",
+        "$ref": "#/components/schemas/serverErrorMessage"
+      },
+      "serverSuccessMessage": {
+        "description": "Client error response message",
         "type": "object",
         "properties": {
           "requestId": {
@@ -1947,15 +1731,71 @@
             "format": "uuid.v1"
           },
           "responseStatus": {
-            "type": "integer"
+            "type": "integer",
+            "enum": [
+              200
+            ]
           },
           "responseMessage": {
             "type": "string"
           }
         }
       },
-      "id": {
-        "type": "string"
+      "clientErrorMessage": {
+        "description": "Client error response message",
+        "type": "object",
+        "properties": {
+          "requestId": {
+            "type": "string",
+            "format": "uuid.v1"
+          },
+          "responseStatus": {
+            "type": "integer",
+            "enum": [
+              400,
+              401,
+              403,
+              404,
+              405,
+              406,
+              408,
+              409,
+              410,
+              412,
+              413,
+              414,
+              422,
+              426,
+              428,
+              429,
+              431
+            ]
+          },
+          "responseMessage": {
+            "type": "string"
+          }
+        }
+      },
+      "serverErrorMessage": {
+        "description": "Server error response message",
+        "type": "object",
+        "properties": {
+          "requestId": {
+            "type": "string",
+            "format": "uuid.v1"
+          },
+          "responseStatus": {
+            "type": "integer",
+            "enum": [
+              500,
+              503,
+              504
+            ]
+          },
+          "responseMessage": {
+            "type": "string"
+          }
+        }
       }
     },
     "responses": {
@@ -2205,12 +2045,22 @@
           }
         }
       },
+      "504": {
+        "description": "Gateway Timeout",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/serverErrorInternalServerError"
+            }
+          }
+        }
+      },
       "default": {
         "description": "Internal Server Error",
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/serverErrorInternalServerError"
+              "$ref": "#/components/schemas/serverErrorGatewayTimeout"
             }
           }
         }

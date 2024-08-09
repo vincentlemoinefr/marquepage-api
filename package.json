@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node .",
     "test": "node --env-file=.env .",
-    "api:build:schema": "node ./tooling/api_build_json_schema.js",
+    "api:build:definition": "node ./tooling/api_build_json_definition.js",
     "api:build:controllers": "node ./tooling/api_build_controllers.js",
     "api:build:documentation": "node ./tooling/api_build_documentation.js",
     "api:show:config": "node --env-file=.env ./src/config/index.js",
@@ -30,6 +30,7 @@
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.8.0",
+    "uuid": "^10.0.0",
     "winston": "^3.13.1"
   },
   "devDependencies": {
