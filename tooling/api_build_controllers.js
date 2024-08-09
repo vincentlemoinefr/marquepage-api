@@ -1,8 +1,8 @@
 'use strict';
 const schema = require('../src/routes/schema.json');
-const logger = require('../src/logger')
-const fs = require('fs');
 const paths = Object.keys(schema.paths);
+const fs = require('fs');
+const content = '\'use strict\';';
 
 const operationIds = [];
 for (const path of paths) {
@@ -16,14 +16,18 @@ for (const path of paths) {
 
 for (const operationId of operationIds) {
 
-  const file = '../src/controllers/' + operationId + '.js';
+  const file = './src/controllers/' + operationId + '.js';
 
   if (!fs.existsSync(file)) {
-    logger('info','Created or modified file : ' + file);
-    fs.appendFile(file, '\'use strict\';', doNothing);
+    
+    fs.appendFile(file, content, (error) => {
+      if (error)
+        console.log(error);
+      else
+        console.log('Created or modified file : ' + file);
+    });
   } else {
-    logger('info','Already exist : ' + file);
+    console.log('Already exist : ' + file);
   }
 };
 
-function doNothing () {};

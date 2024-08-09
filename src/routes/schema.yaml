@@ -24,7 +24,9 @@ tags:
 - name: "internal"
   description: "Endpoints related to the inner workings of the API"
 - name: "binder"
-  description: "A binder is a place where you store your bookmarks"
+  description: "A binder is the container for all your bookmarks"
+- name: "folder"
+  description: "Sub container where your bookmarks are stored"
 - name: "bookmark"
   description: "A bookmark is a website url you want to save for later"
 
@@ -37,119 +39,1118 @@ tags:
 # /bookmark
 # /bookmark/{bookmarkUuid}
 
-
-
 paths:
   "/schema":
     get:
-      tags:
-        - "internal"
-      description: "Returns the OpenAPI schema"
-      operationId: "schema_get"
+      operationId: schemaRead
+      description: Read the OpenAPI schema.
+      tags: 
+          - "internal"
       responses:
         200:
           description: OK
+          $ref: "#/components/responses/200"
+        400:
+          description: Bad Request
+          $ref: "#/components/responses/400"
+        401:
+          description: Unauthorized
+          $ref: "#/components/responses/401"
+        403:
+          description: Forbidden
+          $ref: "#/components/responses/403"
+        404:
+          description: Not Found
+          $ref: "#/components/responses/404"
+        405:
+          description: Method Not Allowed
+          $ref: "#/components/responses/405"
+        406:
+          description: Not Acceptable
+          $ref: "#/components/responses/406"
+        408:
+          description: Request Timeout
+          $ref: "#/components/responses/408"
+        409:
+          description: Conflict
+          $ref: "#/components/responses/409"
+        410:
+          description: Gone
+          $ref: "#/components/responses/410"
+        412:
+          description: Precondition Failed
+          $ref: "#/components/responses/412"
+        413:
+          description: Payload Too Large
+          $ref: "#/components/responses/413"
+        414:
+          description: URI Too Long
+          $ref: "#/components/responses/414"
+        422:
+          description: Unprocessable Content
+          $ref: "#/components/responses/422"
+        426:
+          description: Upgrade Required
+          $ref: "#/components/responses/426"
+        428:
+          description: Precondition Required
+          $ref: "#/components/responses/428"
+        429:
+          description: Too Many Requests
+          $ref: "#/components/responses/429"
+        431:
+          description: Request Header Fields Too Large
+          $ref: "#/components/responses/431"
+        500:
+          description: Internal Server Error
+          $ref: "#/components/responses/500"
+        503:
+          description: Service Unavailable
+          $ref: "#/components/responses/503"
+        default:
+          description: Internal Server Error
+          $ref: "#/components/responses/500"
   "/binder":
     get:
-      tags:
+      operationId: binderRead
+      description: Read all the binders you have access to.
+      tags: 
         - "binder"
-      description: "Get all the binders you have access to"
-      operationId: "binder_get"
       responses:
         200:
-          description : todo
+          description: OK
+          $ref: "#/components/responses/200"
+        400:
+          description: Bad Request
+          $ref: "#/components/responses/400"
+        401:
+          description: Unauthorized
+          $ref: "#/components/responses/401"
+        403:
+          description: Forbidden
+          $ref: "#/components/responses/403"
+        404:
+          description: Not Found
+          $ref: "#/components/responses/404"
+        405:
+          description: Method Not Allowed
+          $ref: "#/components/responses/405"
+        406:
+          description: Not Acceptable
+          $ref: "#/components/responses/406"
+        408:
+          description: Request Timeout
+          $ref: "#/components/responses/408"
+        409:
+          description: Conflict
+          $ref: "#/components/responses/409"
+        410:
+          description: Gone
+          $ref: "#/components/responses/410"
+        412:
+          description: Precondition Failed
+          $ref: "#/components/responses/412"
+        413:
+          description: Payload Too Large
+          $ref: "#/components/responses/413"
+        414:
+          description: URI Too Long
+          $ref: "#/components/responses/414"
+        422:
+          description: Unprocessable Content
+          $ref: "#/components/responses/422"
+        426:
+          description: Upgrade Required
+          $ref: "#/components/responses/426"
+        428:
+          description: Precondition Required
+          $ref: "#/components/responses/428"
+        429:
+          description: Too Many Requests
+          $ref: "#/components/responses/429"
+        431:
+          description: Request Header Fields Too Large
+          $ref: "#/components/responses/431"
+        500:
+          description: Internal Server Error
+          $ref: "#/components/responses/500"
+        503:
+          description: Service Unavailable
+          $ref: "#/components/responses/503"
+        default:
+          description: Internal Server Error
+          $ref: "#/components/responses/500"
     post:
-      tags:
+      operationId: binderCreate
+      description: Create a new binder.
+      tags: 
         - "binder"
-      description: "Create one or more binders, recieve corresponding uuid"
-      operationId: "binder_post"
       responses:
         200:
-          description : todo
-  "/binder/{binderUuid}":
+          description: OK
+          $ref: "#/components/responses/200"
+        400:
+          description: Bad Request
+          $ref: "#/components/responses/400"
+        401:
+          description: Unauthorized
+          $ref: "#/components/responses/401"
+        403:
+          description: Forbidden
+          $ref: "#/components/responses/403"
+        404:
+          description: Not Found
+          $ref: "#/components/responses/404"
+        405:
+          description: Method Not Allowed
+          $ref: "#/components/responses/405"
+        406:
+          description: Not Acceptable
+          $ref: "#/components/responses/406"
+        408:
+          description: Request Timeout
+          $ref: "#/components/responses/408"
+        409:
+          description: Conflict
+          $ref: "#/components/responses/409"
+        410:
+          description: Gone
+          $ref: "#/components/responses/410"
+        412:
+          description: Precondition Failed
+          $ref: "#/components/responses/412"
+        413:
+          description: Payload Too Large
+          $ref: "#/components/responses/413"
+        414:
+          description: URI Too Long
+          $ref: "#/components/responses/414"
+        422:
+          description: Unprocessable Content
+          $ref: "#/components/responses/422"
+        426:
+          description: Upgrade Required
+          $ref: "#/components/responses/426"
+        428:
+          description: Precondition Required
+          $ref: "#/components/responses/428"
+        429:
+          description: Too Many Requests
+          $ref: "#/components/responses/429"
+        431:
+          description: Request Header Fields Too Large
+          $ref: "#/components/responses/431"
+        500:
+          description: Internal Server Error
+          $ref: "#/components/responses/500"
+        503:
+          description: Service Unavailable
+          $ref: "#/components/responses/503"
+        default:
+          description: Internal Server Error
+          $ref: "#/components/responses/500"
+  "/binder/{binderId}":
     get:
-      tags:
+      operationId: binderReadById
+      description: Read one binder.
+      tags: 
         - "binder"
-      description: "Get a binder from its uuid"
-      operationId: "binder_get_by_uuid"
-      parameters: []
       responses:
         200:
-          description : todo
+          description: OK
+          $ref: "#/components/responses/200"
+        400:
+          description: Bad Request
+          $ref: "#/components/responses/400"
+        401:
+          description: Unauthorized
+          $ref: "#/components/responses/401"
+        403:
+          description: Forbidden
+          $ref: "#/components/responses/403"
+        404:
+          description: Not Found
+          $ref: "#/components/responses/404"
+        405:
+          description: Method Not Allowed
+          $ref: "#/components/responses/405"
+        406:
+          description: Not Acceptable
+          $ref: "#/components/responses/406"
+        408:
+          description: Request Timeout
+          $ref: "#/components/responses/408"
+        409:
+          description: Conflict
+          $ref: "#/components/responses/409"
+        410:
+          description: Gone
+          $ref: "#/components/responses/410"
+        412:
+          description: Precondition Failed
+          $ref: "#/components/responses/412"
+        413:
+          description: Payload Too Large
+          $ref: "#/components/responses/413"
+        414:
+          description: URI Too Long
+          $ref: "#/components/responses/414"
+        422:
+          description: Unprocessable Content
+          $ref: "#/components/responses/422"
+        426:
+          description: Upgrade Required
+          $ref: "#/components/responses/426"
+        428:
+          description: Precondition Required
+          $ref: "#/components/responses/428"
+        429:
+          description: Too Many Requests
+          $ref: "#/components/responses/429"
+        431:
+          description: Request Header Fields Too Large
+          $ref: "#/components/responses/431"
+        500:
+          description: Internal Server Error
+          $ref: "#/components/responses/500"
+        503:
+          description: Service Unavailable
+          $ref: "#/components/responses/503"
+        default:
+          description: Internal Server Error
+          $ref: "#/components/responses/500"
     patch:
-      tags:
+      operationId: binderUpdateById
+      description: Update one binder.
+      tags: 
         - "binder"
-      description: "Modify certain binders parameters, like its name"
-      operationId: "binder_patch_by_uuid"
-      parameters: []
       responses:
         200:
-          description : todo
+          description: OK
+          $ref: "#/components/responses/200"
+        400:
+          description: Bad Request
+          $ref: "#/components/responses/400"
+        401:
+          description: Unauthorized
+          $ref: "#/components/responses/401"
+        403:
+          description: Forbidden
+          $ref: "#/components/responses/403"
+        404:
+          description: Not Found
+          $ref: "#/components/responses/404"
+        405:
+          description: Method Not Allowed
+          $ref: "#/components/responses/405"
+        406:
+          description: Not Acceptable
+          $ref: "#/components/responses/406"
+        408:
+          description: Request Timeout
+          $ref: "#/components/responses/408"
+        409:
+          description: Conflict
+          $ref: "#/components/responses/409"
+        410:
+          description: Gone
+          $ref: "#/components/responses/410"
+        412:
+          description: Precondition Failed
+          $ref: "#/components/responses/412"
+        413:
+          description: Payload Too Large
+          $ref: "#/components/responses/413"
+        414:
+          description: URI Too Long
+          $ref: "#/components/responses/414"
+        422:
+          description: Unprocessable Content
+          $ref: "#/components/responses/422"
+        426:
+          description: Upgrade Required
+          $ref: "#/components/responses/426"
+        428:
+          description: Precondition Required
+          $ref: "#/components/responses/428"
+        429:
+          description: Too Many Requests
+          $ref: "#/components/responses/429"
+        431:
+          description: Request Header Fields Too Large
+          $ref: "#/components/responses/431"
+        500:
+          description: Internal Server Error
+          $ref: "#/components/responses/500"
+        503:
+          description: Service Unavailable
+          $ref: "#/components/responses/503"
+        default:
+          description: Internal Server Error
+          $ref: "#/components/responses/500"
     delete:
-      tags:
+      operationId: binderDeleteById
+      description: Delete one binder.
+      tags: 
         - "binder"
-      description: "Delete a binder by its uuid"
-      operationId: "binder_delete_by_uuid"
       responses:
         200:
-          description : todo
+          description: OK
+          $ref: "#/components/responses/200"
+        400:
+          description: Bad Request
+          $ref: "#/components/responses/400"
+        401:
+          description: Unauthorized
+          $ref: "#/components/responses/401"
+        403:
+          description: Forbidden
+          $ref: "#/components/responses/403"
+        404:
+          description: Not Found
+          $ref: "#/components/responses/404"
+        405:
+          description: Method Not Allowed
+          $ref: "#/components/responses/405"
+        406:
+          description: Not Acceptable
+          $ref: "#/components/responses/406"
+        408:
+          description: Request Timeout
+          $ref: "#/components/responses/408"
+        409:
+          description: Conflict
+          $ref: "#/components/responses/409"
+        410:
+          description: Gone
+          $ref: "#/components/responses/410"
+        412:
+          description: Precondition Failed
+          $ref: "#/components/responses/412"
+        413:
+          description: Payload Too Large
+          $ref: "#/components/responses/413"
+        414:
+          description: URI Too Long
+          $ref: "#/components/responses/414"
+        422:
+          description: Unprocessable Content
+          $ref: "#/components/responses/422"
+        426:
+          description: Upgrade Required
+          $ref: "#/components/responses/426"
+        428:
+          description: Precondition Required
+          $ref: "#/components/responses/428"
+        429:
+          description: Too Many Requests
+          $ref: "#/components/responses/429"
+        431:
+          description: Request Header Fields Too Large
+          $ref: "#/components/responses/431"
+        500:
+          description: Internal Server Error
+          $ref: "#/components/responses/500"
+        503:
+          description: Service Unavailable
+          $ref: "#/components/responses/503"
+        default:
+          description: Internal Server Error
+          $ref: "#/components/responses/500"
+  "/folder":
+    get:
+      operationId: folderRead
+      description: Read all the folders you have access to.
+      tags: 
+        - "folder"
+      responses:
+        200:
+          description: OK
+          $ref: "#/components/responses/200"
+        400:
+          description: Bad Request
+          $ref: "#/components/responses/400"
+        401:
+          description: Unauthorized
+          $ref: "#/components/responses/401"
+        403:
+          description: Forbidden
+          $ref: "#/components/responses/403"
+        404:
+          description: Not Found
+          $ref: "#/components/responses/404"
+        405:
+          description: Method Not Allowed
+          $ref: "#/components/responses/405"
+        406:
+          description: Not Acceptable
+          $ref: "#/components/responses/406"
+        408:
+          description: Request Timeout
+          $ref: "#/components/responses/408"
+        409:
+          description: Conflict
+          $ref: "#/components/responses/409"
+        410:
+          description: Gone
+          $ref: "#/components/responses/410"
+        412:
+          description: Precondition Failed
+          $ref: "#/components/responses/412"
+        413:
+          description: Payload Too Large
+          $ref: "#/components/responses/413"
+        414:
+          description: URI Too Long
+          $ref: "#/components/responses/414"
+        422:
+          description: Unprocessable Content
+          $ref: "#/components/responses/422"
+        426:
+          description: Upgrade Required
+          $ref: "#/components/responses/426"
+        428:
+          description: Precondition Required
+          $ref: "#/components/responses/428"
+        429:
+          description: Too Many Requests
+          $ref: "#/components/responses/429"
+        431:
+          description: Request Header Fields Too Large
+          $ref: "#/components/responses/431"
+        500:
+          description: Internal Server Error
+          $ref: "#/components/responses/500"
+        503:
+          description: Service Unavailable
+          $ref: "#/components/responses/503"
+        default:
+          description: Internal Server Error
+          $ref: "#/components/responses/500"
+    post:
+      operationId: folderCreate
+      description: Create a new folder.
+      tags: 
+        - "folder"
+      responses:
+        200:
+          description: OK
+          $ref: "#/components/responses/200"
+        400:
+          description: Bad Request
+          $ref: "#/components/responses/400"
+        401:
+          description: Unauthorized
+          $ref: "#/components/responses/401"
+        403:
+          description: Forbidden
+          $ref: "#/components/responses/403"
+        404:
+          description: Not Found
+          $ref: "#/components/responses/404"
+        405:
+          description: Method Not Allowed
+          $ref: "#/components/responses/405"
+        406:
+          description: Not Acceptable
+          $ref: "#/components/responses/406"
+        408:
+          description: Request Timeout
+          $ref: "#/components/responses/408"
+        409:
+          description: Conflict
+          $ref: "#/components/responses/409"
+        410:
+          description: Gone
+          $ref: "#/components/responses/410"
+        412:
+          description: Precondition Failed
+          $ref: "#/components/responses/412"
+        413:
+          description: Payload Too Large
+          $ref: "#/components/responses/413"
+        414:
+          description: URI Too Long
+          $ref: "#/components/responses/414"
+        422:
+          description: Unprocessable Content
+          $ref: "#/components/responses/422"
+        426:
+          description: Upgrade Required
+          $ref: "#/components/responses/426"
+        428:
+          description: Precondition Required
+          $ref: "#/components/responses/428"
+        429:
+          description: Too Many Requests
+          $ref: "#/components/responses/429"
+        431:
+          description: Request Header Fields Too Large
+          $ref: "#/components/responses/431"
+        500:
+          description: Internal Server Error
+          $ref: "#/components/responses/500"
+        503:
+          description: Service Unavailable
+          $ref: "#/components/responses/503"
+        default:
+          description: Internal Server Error
+          $ref: "#/components/responses/500"
+  "/folder/{folderId}":
+    get:
+      operationId: folderReadById
+      description: Read one folder.
+      tags: 
+        - "folder"
+      responses:
+        200:
+          description: OK
+          $ref: "#/components/responses/200"
+        400:
+          description: Bad Request
+          $ref: "#/components/responses/400"
+        401:
+          description: Unauthorized
+          $ref: "#/components/responses/401"
+        403:
+          description: Forbidden
+          $ref: "#/components/responses/403"
+        404:
+          description: Not Found
+          $ref: "#/components/responses/404"
+        405:
+          description: Method Not Allowed
+          $ref: "#/components/responses/405"
+        406:
+          description: Not Acceptable
+          $ref: "#/components/responses/406"
+        408:
+          description: Request Timeout
+          $ref: "#/components/responses/408"
+        409:
+          description: Conflict
+          $ref: "#/components/responses/409"
+        410:
+          description: Gone
+          $ref: "#/components/responses/410"
+        412:
+          description: Precondition Failed
+          $ref: "#/components/responses/412"
+        413:
+          description: Payload Too Large
+          $ref: "#/components/responses/413"
+        414:
+          description: URI Too Long
+          $ref: "#/components/responses/414"
+        422:
+          description: Unprocessable Content
+          $ref: "#/components/responses/422"
+        426:
+          description: Upgrade Required
+          $ref: "#/components/responses/426"
+        428:
+          description: Precondition Required
+          $ref: "#/components/responses/428"
+        429:
+          description: Too Many Requests
+          $ref: "#/components/responses/429"
+        431:
+          description: Request Header Fields Too Large
+          $ref: "#/components/responses/431"
+        500:
+          description: Internal Server Error
+          $ref: "#/components/responses/500"
+        503:
+          description: Service Unavailable
+          $ref: "#/components/responses/503"
+        default:
+          description: Internal Server Error
+          $ref: "#/components/responses/500"
+    patch:
+      operationId: folderUpdateById
+      description: Update one folder.
+      tags: 
+        - "folder"
+      responses:
+        200:
+          description: OK
+          $ref: "#/components/responses/200"
+        400:
+          description: Bad Request
+          $ref: "#/components/responses/400"
+        401:
+          description: Unauthorized
+          $ref: "#/components/responses/401"
+        403:
+          description: Forbidden
+          $ref: "#/components/responses/403"
+        404:
+          description: Not Found
+          $ref: "#/components/responses/404"
+        405:
+          description: Method Not Allowed
+          $ref: "#/components/responses/405"
+        406:
+          description: Not Acceptable
+          $ref: "#/components/responses/406"
+        408:
+          description: Request Timeout
+          $ref: "#/components/responses/408"
+        409:
+          description: Conflict
+          $ref: "#/components/responses/409"
+        410:
+          description: Gone
+          $ref: "#/components/responses/410"
+        412:
+          description: Precondition Failed
+          $ref: "#/components/responses/412"
+        413:
+          description: Payload Too Large
+          $ref: "#/components/responses/413"
+        414:
+          description: URI Too Long
+          $ref: "#/components/responses/414"
+        422:
+          description: Unprocessable Content
+          $ref: "#/components/responses/422"
+        426:
+          description: Upgrade Required
+          $ref: "#/components/responses/426"
+        428:
+          description: Precondition Required
+          $ref: "#/components/responses/428"
+        429:
+          description: Too Many Requests
+          $ref: "#/components/responses/429"
+        431:
+          description: Request Header Fields Too Large
+          $ref: "#/components/responses/431"
+        500:
+          description: Internal Server Error
+          $ref: "#/components/responses/500"
+        503:
+          description: Service Unavailable
+          $ref: "#/components/responses/503"
+        default:
+          description: Internal Server Error
+          $ref: "#/components/responses/500"
+    delete:
+      operationId: folderDeleteById
+      description: Delete one folder.
+      tags: 
+        - "folder"
+      responses:
+        200:
+          description: OK
+          $ref: "#/components/responses/200"
+        400:
+          description: Bad Request
+          $ref: "#/components/responses/400"
+        401:
+          description: Unauthorized
+          $ref: "#/components/responses/401"
+        403:
+          description: Forbidden
+          $ref: "#/components/responses/403"
+        404:
+          description: Not Found
+          $ref: "#/components/responses/404"
+        405:
+          description: Method Not Allowed
+          $ref: "#/components/responses/405"
+        406:
+          description: Not Acceptable
+          $ref: "#/components/responses/406"
+        408:
+          description: Request Timeout
+          $ref: "#/components/responses/408"
+        409:
+          description: Conflict
+          $ref: "#/components/responses/409"
+        410:
+          description: Gone
+          $ref: "#/components/responses/410"
+        412:
+          description: Precondition Failed
+          $ref: "#/components/responses/412"
+        413:
+          description: Payload Too Large
+          $ref: "#/components/responses/413"
+        414:
+          description: URI Too Long
+          $ref: "#/components/responses/414"
+        422:
+          description: Unprocessable Content
+          $ref: "#/components/responses/422"
+        426:
+          description: Upgrade Required
+          $ref: "#/components/responses/426"
+        428:
+          description: Precondition Required
+          $ref: "#/components/responses/428"
+        429:
+          description: Too Many Requests
+          $ref: "#/components/responses/429"
+        431:
+          description: Request Header Fields Too Large
+          $ref: "#/components/responses/431"
+        500:
+          description: Internal Server Error
+          $ref: "#/components/responses/500"
+        503:
+          description: Service Unavailable
+          $ref: "#/components/responses/503"
+        default:
+          description: Internal Server Error
+          $ref: "#/components/responses/500"
   "/bookmark":
     get:
-      tags:
-        - "binder"
-      description: "Get all the binders you have access to"
-      operationId: "binder_get"
-      responses:
-        200:
-          description : todo
-    post:
-      tags:
-        - "binder"
-      description: "Create one or more binders, recieve corresponding uuid"
-      operationId: "binder_post"
-      responses:
-        200:
-          description : todo
-  "/bookmark/{bookmarkUuid}":
-    get:
-      tags:
-        - "bookmark"
-      description: "Get a bookmark from its uuid"
-      operationId: "bookmark_get_by_uuid"
-      parameters: []
-      responses:
-        "201": {} # here is your bookmark
-        "401": {} # you are not authenticated
-        "403": {} # you don't have access to read this bookmark
-        "404": {} # this bookmark doesn't exist
-      security: []
-    put:
-      tags:
-        - "bookmark"
-      description: "Update all the bookmark fields"
-      operationId: "bookmark_put_by_uuid"
-      parameters: []
-      requestBody: {}
-      responses:
-        "201": {} # you changed some value of the bookmark
-        "401": {} # you are not authenticated
-        "403": {} # you don't have access to update this bookmark
-        "404": {} # this bookmark doesn't exist
-      security: []
-    delete:
+      operationId: bookmarkRead
+      description: Read all the bookmarks you have access to.
       tags: 
         - "bookmark"
-      description: "Delete a bookmark by its uuid"
-      operationId: "bookmark_delete_by_uuid"
-      parameters: []
       responses:
-        "201": {} # you deleted the bookmark
-        "401": {} # you are not authenticated
-        "403": {} # you don't have access to delete this bookmark
-        "404": {} # this bookmark doesn't exist
-      security: []
-
-
+        200:
+          description: OK
+          $ref: "#/components/responses/200"
+        400:
+          description: Bad Request
+          $ref: "#/components/responses/400"
+        401:
+          description: Unauthorized
+          $ref: "#/components/responses/401"
+        403:
+          description: Forbidden
+          $ref: "#/components/responses/403"
+        404:
+          description: Not Found
+          $ref: "#/components/responses/404"
+        405:
+          description: Method Not Allowed
+          $ref: "#/components/responses/405"
+        406:
+          description: Not Acceptable
+          $ref: "#/components/responses/406"
+        408:
+          description: Request Timeout
+          $ref: "#/components/responses/408"
+        409:
+          description: Conflict
+          $ref: "#/components/responses/409"
+        410:
+          description: Gone
+          $ref: "#/components/responses/410"
+        412:
+          description: Precondition Failed
+          $ref: "#/components/responses/412"
+        413:
+          description: Payload Too Large
+          $ref: "#/components/responses/413"
+        414:
+          description: URI Too Long
+          $ref: "#/components/responses/414"
+        422:
+          description: Unprocessable Content
+          $ref: "#/components/responses/422"
+        426:
+          description: Upgrade Required
+          $ref: "#/components/responses/426"
+        428:
+          description: Precondition Required
+          $ref: "#/components/responses/428"
+        429:
+          description: Too Many Requests
+          $ref: "#/components/responses/429"
+        431:
+          description: Request Header Fields Too Large
+          $ref: "#/components/responses/431"
+        500:
+          description: Internal Server Error
+          $ref: "#/components/responses/500"
+        503:
+          description: Service Unavailable
+          $ref: "#/components/responses/503"
+        default:
+          description: Internal Server Error
+          $ref: "#/components/responses/500"
+    post:
+      operationId: bookmarkCreate
+      description: Create a new bookmark.
+      tags: 
+        - "bookmark"
+      responses:
+        200:
+          description: OK
+          $ref: "#/components/responses/200"
+        400:
+          description: Bad Request
+          $ref: "#/components/responses/400"
+        401:
+          description: Unauthorized
+          $ref: "#/components/responses/401"
+        403:
+          description: Forbidden
+          $ref: "#/components/responses/403"
+        404:
+          description: Not Found
+          $ref: "#/components/responses/404"
+        405:
+          description: Method Not Allowed
+          $ref: "#/components/responses/405"
+        406:
+          description: Not Acceptable
+          $ref: "#/components/responses/406"
+        408:
+          description: Request Timeout
+          $ref: "#/components/responses/408"
+        409:
+          description: Conflict
+          $ref: "#/components/responses/409"
+        410:
+          description: Gone
+          $ref: "#/components/responses/410"
+        412:
+          description: Precondition Failed
+          $ref: "#/components/responses/412"
+        413:
+          description: Payload Too Large
+          $ref: "#/components/responses/413"
+        414:
+          description: URI Too Long
+          $ref: "#/components/responses/414"
+        422:
+          description: Unprocessable Content
+          $ref: "#/components/responses/422"
+        426:
+          description: Upgrade Required
+          $ref: "#/components/responses/426"
+        428:
+          description: Precondition Required
+          $ref: "#/components/responses/428"
+        429:
+          description: Too Many Requests
+          $ref: "#/components/responses/429"
+        431:
+          description: Request Header Fields Too Large
+          $ref: "#/components/responses/431"
+        500:
+          description: Internal Server Error
+          $ref: "#/components/responses/500"
+        503:
+          description: Service Unavailable
+          $ref: "#/components/responses/503"
+        default:
+          description: Internal Server Error
+          $ref: "#/components/responses/500"
+  "/bookmark/{bookmarkId}":
+    get:
+      operationId: bookmarkReadById
+      description: Read one folder.
+      tags: 
+        - "bookmark"
+      responses:
+        200:
+          description: OK
+          $ref: "#/components/responses/200"
+        400:
+          description: Bad Request
+          $ref: "#/components/responses/400"
+        401:
+          description: Unauthorized
+          $ref: "#/components/responses/401"
+        403:
+          description: Forbidden
+          $ref: "#/components/responses/403"
+        404:
+          description: Not Found
+          $ref: "#/components/responses/404"
+        405:
+          description: Method Not Allowed
+          $ref: "#/components/responses/405"
+        406:
+          description: Not Acceptable
+          $ref: "#/components/responses/406"
+        408:
+          description: Request Timeout
+          $ref: "#/components/responses/408"
+        409:
+          description: Conflict
+          $ref: "#/components/responses/409"
+        410:
+          description: Gone
+          $ref: "#/components/responses/410"
+        412:
+          description: Precondition Failed
+          $ref: "#/components/responses/412"
+        413:
+          description: Payload Too Large
+          $ref: "#/components/responses/413"
+        414:
+          description: URI Too Long
+          $ref: "#/components/responses/414"
+        422:
+          description: Unprocessable Content
+          $ref: "#/components/responses/422"
+        426:
+          description: Upgrade Required
+          $ref: "#/components/responses/426"
+        428:
+          description: Precondition Required
+          $ref: "#/components/responses/428"
+        429:
+          description: Too Many Requests
+          $ref: "#/components/responses/429"
+        431:
+          description: Request Header Fields Too Large
+          $ref: "#/components/responses/431"
+        500:
+          description: Internal Server Error
+          $ref: "#/components/responses/500"
+        503:
+          description: Service Unavailable
+          $ref: "#/components/responses/503"
+        default:
+          description: Internal Server Error
+          $ref: "#/components/responses/500"
+    patch:
+      operationId: bookmarkUpdateById
+      description: Update one folder.
+      tags: 
+        - "bookmark"
+      responses:
+        200:
+          description: OK
+          $ref: "#/components/responses/200"
+        400:
+          description: Bad Request
+          $ref: "#/components/responses/400"
+        401:
+          description: Unauthorized
+          $ref: "#/components/responses/401"
+        403:
+          description: Forbidden
+          $ref: "#/components/responses/403"
+        404:
+          description: Not Found
+          $ref: "#/components/responses/404"
+        405:
+          description: Method Not Allowed
+          $ref: "#/components/responses/405"
+        406:
+          description: Not Acceptable
+          $ref: "#/components/responses/406"
+        408:
+          description: Request Timeout
+          $ref: "#/components/responses/408"
+        409:
+          description: Conflict
+          $ref: "#/components/responses/409"
+        410:
+          description: Gone
+          $ref: "#/components/responses/410"
+        412:
+          description: Precondition Failed
+          $ref: "#/components/responses/412"
+        413:
+          description: Payload Too Large
+          $ref: "#/components/responses/413"
+        414:
+          description: URI Too Long
+          $ref: "#/components/responses/414"
+        422:
+          description: Unprocessable Content
+          $ref: "#/components/responses/422"
+        426:
+          description: Upgrade Required
+          $ref: "#/components/responses/426"
+        428:
+          description: Precondition Required
+          $ref: "#/components/responses/428"
+        429:
+          description: Too Many Requests
+          $ref: "#/components/responses/429"
+        431:
+          description: Request Header Fields Too Large
+          $ref: "#/components/responses/431"
+        500:
+          description: Internal Server Error
+          $ref: "#/components/responses/500"
+        503:
+          description: Service Unavailable
+          $ref: "#/components/responses/503"
+        default:
+          description: Internal Server Error
+          $ref: "#/components/responses/500"
+    delete:
+      operationId: bookmarkDeleteById
+      description: Delete one folder.
+      tags: 
+        - "bookmark"
+      responses:
+        200:
+          description: OK
+          $ref: "#/components/responses/200"
+        400:
+          description: Bad Request
+          $ref: "#/components/responses/400"
+        401:
+          description: Unauthorized
+          $ref: "#/components/responses/401"
+        403:
+          description: Forbidden
+          $ref: "#/components/responses/403"
+        404:
+          description: Not Found
+          $ref: "#/components/responses/404"
+        405:
+          description: Method Not Allowed
+          $ref: "#/components/responses/405"
+        406:
+          description: Not Acceptable
+          $ref: "#/components/responses/406"
+        408:
+          description: Request Timeout
+          $ref: "#/components/responses/408"
+        409:
+          description: Conflict
+          $ref: "#/components/responses/409"
+        410:
+          description: Gone
+          $ref: "#/components/responses/410"
+        412:
+          description: Precondition Failed
+          $ref: "#/components/responses/412"
+        413:
+          description: Payload Too Large
+          $ref: "#/components/responses/413"
+        414:
+          description: URI Too Long
+          $ref: "#/components/responses/414"
+        422:
+          description: Unprocessable Content
+          $ref: "#/components/responses/422"
+        426:
+          description: Upgrade Required
+          $ref: "#/components/responses/426"
+        428:
+          description: Precondition Required
+          $ref: "#/components/responses/428"
+        429:
+          description: Too Many Requests
+          $ref: "#/components/responses/429"
+        431:
+          description: Request Header Fields Too Large
+          $ref: "#/components/responses/431"
+        500:
+          description: Internal Server Error
+          $ref: "#/components/responses/500"
+        503:
+          description: Service Unavailable
+          $ref: "#/components/responses/503"
+        default:
+          description: Internal Server Error
+          $ref: "#/components/responses/500"
 components:
   schemas:
     serverSuccessCreateBinder:
@@ -229,6 +1230,7 @@ components:
       type: object
 
     clientErrorBadRequest:
+      description: '400'
       type: object
       properties:
         requestId:
@@ -239,6 +1241,7 @@ components:
         responseMessage:
           type: string
     clientErrorUnauthorized:
+      description: '401'
       type: object
       properties:
         requestId:
@@ -249,6 +1252,7 @@ components:
         responseMessage:
           type: string
     clientErrorForbidden:
+      description: '403'
       type: object
       properties:
         requestId:
@@ -259,6 +1263,7 @@ components:
         responseMessage:
           type: string
     clientErrorNotFound:
+      description: '404'
       type: object
       properties:
         requestId:
@@ -269,6 +1274,7 @@ components:
         responseMessage:
           type: string
     clientErrorMethodNotAllowed:
+      description: '405'
       type: object
       properties:
         requestId:
@@ -279,6 +1285,7 @@ components:
         responseMessage:
           type: string
     clientErrorNotAcceptable:
+      description: '406'
       type: object
       properties:
         requestId:
@@ -289,6 +1296,7 @@ components:
         responseMessage:
           type: string
     clientErrorRequestTimeout:
+      description: '408'
       type: object
       properties:
         requestId:
@@ -299,6 +1307,7 @@ components:
         responseMessage:
           type: string
     clientErrorConflict:
+      description: '409'
       type: object
       properties:
         requestId:
@@ -309,6 +1318,18 @@ components:
         responseMessage:
           type: string
     clientErrorGone:
+      description: '410'
+      type: object
+      properties:
+        requestId:
+          type: string
+          format: uuid.v1
+        responseStatus:
+          type: integer
+        responseMessage:
+          type: string
+    clientPreconditionFailed:
+      description: '412'
       type: object
       properties:
         requestId:
@@ -319,6 +1340,7 @@ components:
         responseMessage:
           type: string
     clientErrorPayloadTooLarge:
+      description: '413'
       type: object
       properties:
         requestId:
@@ -329,6 +1351,7 @@ components:
         responseMessage:
           type: string
     clientErrorUriTooLong:
+      description: '414'
       type: object
       properties:
         requestId:
@@ -339,6 +1362,7 @@ components:
         responseMessage:
           type: string
     clientErrorUnprocessableContent:
+      description: '422'
       type: object
       properties:
         requestId:
@@ -349,6 +1373,18 @@ components:
         responseMessage:
           type: string
     clientErrorUpgradeRequired:
+      description: '426'
+      type: object
+      properties:
+        requestId:
+          type: string
+          format: uuid.v1
+        responseStatus:
+          type: integer
+        responseMessage:
+          type: string
+    clientErrorPreconditionRequired:
+      description: '428'
       type: object
       properties:
         requestId:
@@ -359,6 +1395,7 @@ components:
         responseMessage:
           type: string
     clientErrorTooManyRequests:
+      description: '429'
       type: object
       properties:
         requestId:
@@ -369,6 +1406,7 @@ components:
         responseMessage:
           type: string
     clientErrorRequestHeaderFieldsTooLarge:
+      description: '431'
       type: object
       properties:
         requestId:
@@ -379,6 +1417,7 @@ components:
         responseMessage:
           type: string
     serverErrorInternalServerError:
+      description: '500'
       type: object
       properties:
         requestId:
@@ -389,6 +1428,7 @@ components:
         responseMessage:
           type: string
     serverErrorServiceUnavailable:
+      description: '503'
       type: object
       properties:
         requestId:
@@ -399,8 +1439,12 @@ components:
         responseMessage:
           type: string
 
+    # Other schemas
+    id:
+      type: string
+
+
   responses:
-    # Success
     200: # A 200 response always has a payload
       description: OK
       content:
@@ -422,62 +1466,126 @@ components:
               - $ref: '#/components/schemas/serverSuccessReadAllBookmark'
               - $ref: '#/components/schemas/serverSuccessUpdateBookmark'
               - $ref: '#/components/schemas/serverSuccessDeleteBookmark'
-
-    # Client Erros, you fucked up.
     400: # Failed header, parameters or body validation (Pre-validation)
       description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/clientErrorBadRequest'
     401: # Didn't send authentification or bad authentification 
       description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/clientErrorUnauthorized'
     403: # Unauthorized on ressource or generic error from proxy (eg blacklisted)
       description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/clientErrorForbidden'
     404: # Ressource not found or uri invalid
       description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/clientErrorNotFound'
     405: # When you use a bad HTTP method (eg TRACE)
       description: Method Not Allowed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/clientErrorMethodNotAllowed'
     406: # When you use "Accept: application/rtf" and we don't accept it
       description: Not Acceptable
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/clientErrorNotAcceptable'
     408: # Failed to process request in time. (useful when we depend on others api or database)
       description: Request Timeout
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/clientErrorRequestTimeout'
     409: # Used if we want to handle concurrency, when 2 person modify in a short time
       description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/clientErrorConflict'
     410: # The ressource existed in the past but was deleted
       description: Gone
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/clientErrorGone'
+    412: # Precondition failed (eg ETag is too old)
+      description: Precondition Failed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/clientPreconditionFailed'
     413: # Self explanatory
       description: Payload Too Large
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/clientErrorPayloadTooLarge'
     414: # Self explanatory
       description: URI Too Long
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/clientErrorUriTooLong'
     422: # Pre-validation OK but the content you sent was bad on the business logic side
       description: Unprocessable Content
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/clientErrorUnprocessableContent'
     426: # Upgrade the protocol (eg HTTP/1.1 -> HTTP/3.0)
       description: Upgrade Required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/clientErrorUpgradeRequired'
+    428: # Need headers but you didn't give them
+      description: Precondition Required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/clientErrorPreconditionRequired'
     429: # Self explanatory
       description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/clientErrorTooManyRequests'
     431: # Self explanatory
-      description: Request Header Fields Too Large 
-
-    # Server Errors, we fucked up.
-    500:
+      description: Request Header Fields Too Large
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/clientErrorRequestHeaderFieldsTooLarge'
+    500: # We fucked up
       description: Internal Server Error
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/serverErrorInternalServerError'
-    503:
+    503: # We are busy right now
       description: Service Unavailable
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/serverErrorServiceUnavailable'
-    default:
+    default: # Unpredictable fuck up
       description: Internal Server Error
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/serverErrorInternalServerError'
-
-
-
-
 
   # Reusable response headers
   headers: {}

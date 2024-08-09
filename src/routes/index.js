@@ -24,6 +24,9 @@ for (const path of paths) {
   }
 };
 
+console.log(controllers);
+console.log(routes);
+
 for (const route of routes) {
   router[route.method](
     route.path,

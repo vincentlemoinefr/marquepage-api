@@ -42,6 +42,8 @@ server.listen(config.API_PORT, () => {
     logger('info', 'Server Listening on : https://'+config.API_HOST+'/');
 });
 
+server.setTimeout(5000); // in ms https://github.com/expressjs/express/issues/3330
+
 
 
 
@@ -69,6 +71,7 @@ server.listen(config.API_PORT, () => {
 // https://www.acunetix.com/blog/web-security-zone/hardening-nginx/
 // Disable unwanted HTTP request : HEAD, CONNECT, OPTIONS, TRACE...
 // Http Logging
+// Wrong or missing headers
 
 
 // Now the request arrives at the Node JS API
@@ -96,8 +99,6 @@ server.listen(config.API_PORT, () => {
 // 4. The controller send the appropriate response
 // Responses :
 // 200 : OK (With data)
-// 201 : Created
-// 204 : No Content (deleted correctly)
 // 403 : Forbidden (you don't have authorization on this object)
 // 404 : Not Found (but request was ok)
 // 410 : Gone (object existed but was deleted)
