@@ -1,8 +1,24 @@
-'use strict';
+class Id {
+  constructor(data, configurations, librairies) {
+    this.joi = librairies;
 
-const joi = require('joi');
 
-module.exports = joi
+
+
+  }
+
+  validate() {
+
+  }
+
+  create() {
+
+  }
+}
+
+
+
+export default joi
   .object({
     id: joi
       .string()

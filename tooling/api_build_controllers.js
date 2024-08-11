@@ -1,4 +1,3 @@
-'use strict';
 const definition = require('../src/routes/definition.json');
 const paths = Object.keys(definition.paths);
 const fs = require('fs');

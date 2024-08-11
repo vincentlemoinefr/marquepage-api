@@ -1,4 +1,3 @@
-'use strict';
 const files = require('fs').readdirSync('./src/middlewares/');
 
 for (const file of files) {

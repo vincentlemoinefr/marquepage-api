@@ -1,9 +1,5 @@
-'use strict';
-
 const controllers = require('./controllers/');
 const definition = require('./api/definition.json');
-
-'use strict';
 
 const controllers = require('../controllers');
 const definition = require('./definition.json');

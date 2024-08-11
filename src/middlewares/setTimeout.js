@@ -1,4 +1,3 @@
-'use strict';
 // https://datatracker.ietf.org/doc/html/rfc4122
 const uuid = require('uuid');
 

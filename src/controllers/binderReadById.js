@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = function binderReadById (request, response, next) {
   response.send({
     requestId : request.timestamp,

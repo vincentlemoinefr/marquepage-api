@@ -1,5 +1,3 @@
-'use strict';
-
 // Access rights : 
 // Read
 // Modify

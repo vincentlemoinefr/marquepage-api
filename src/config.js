@@ -1,5 +1,3 @@
-'use strict';
-
 // Load the config schema (a joi object) the single source of truth for configs
 const schema = require('./schemaConfig');
 

@@ -1,46 +1,25 @@
-'use strict';
-
-// Dependencies
-const jsonwebtoken = require('jsonwebtoken');
-const { MongoClient } = require('mongodb');
-const express = require('express');
-const https = require('https');
-const joi = require('joi');
-const fs = require('fs');
+// import jsonwebtoken from 'jsonwebtoken';
+// import { MongoClient } from 'mongodb';
+// import express from 'express';
+// import https from 'https';
+// import fs from 'fs';
 
 
-// const schemas = require('./schemas/')(fs, joi); // Will need joi
-const schemaOptions = {};
-const schemaLibraries = { fs : fs, joi : joi };
-const schemaRequirements = [ 'fs', 'joi' ];
+import joi from 'joi';
+import { BookmarkBuilder } from '#schemas/schemaBookmark';
 
-const Schemas = require('./schemas');
-const schema1 = new Schemas(schemaOptions, schemaLibraries, schemaRequirements);
+const data = { id : "66af8020fc13ae1c52e25f73" };
+const builder = new BookmarkBuilder(joi);
 
-schema1.listFile();
+const bookmark = builder.build(data);
 
-console.log(schema1);
+bookmark.echo();
 
-const request = { id : "66af8020fc13ae1c52e25f71" }
-const {value, error} = schema1.schemaId.validate(request);
-if (error) console.log(error);
-console.log(value);
+
+
+
+
 /*
-
-
-
-console.log(schemas);
-
-
-
-
-
-
-
-const config = require('./config')(schemas); // Need schema for config validation
-const logger = require('./logger')(config);
-
-// My classes
 const database = require('./database');
 const router = require('./router');
 

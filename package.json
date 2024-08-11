@@ -2,6 +2,7 @@
   "name": "marquepage-api",
   "version": "1.0.2",
   "description": "Synchronise bookmarks between browsers and share them",
+  "type": "module",
   "main": "./src/server.js",
   "scripts": {
     "start": "node .",
@@ -25,6 +26,9 @@
     "url": "https://github.com/vincentlemoinefr/marquepage-api/issues"
   },
   "homepage": "https://github.com/vincentlemoinefr/marquepage-api#readme",
+  "imports": {
+    "#schemas/*": "./src/schemas/*.js"
+  },
   "dependencies": {
     "express": "^4.19.2",
     "joi": "^17.13.3",
