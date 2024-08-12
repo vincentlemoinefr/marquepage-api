@@ -5,8 +5,9 @@
   "type": "module",
   "main": "./src/server.js",
   "scripts": {
-    "start": "node .",
-    "test": "node --env-file=.env .",
+    "api:launch:prod": "node .",
+    "api:launch:dev": "node --env-file=.env .",
+    "api:launch:test": "node --env-file=.env .",
     "api:build:definition": "node ./tooling/api_build_json_definition.js",
     "api:build:controllers": "node ./tooling/api_build_controllers.js",
     "api:build:documentation": "node ./tooling/api_build_documentation.js",

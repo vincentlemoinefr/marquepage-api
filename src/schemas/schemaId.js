@@ -1,35 +1,24 @@
-class Id {
-  constructor(data, configurations, librairies) {
-    this.joi = librairies;
+export function Id(data, joi) {
 
-
-
-
-  }
-
-  validate() {
-
-  }
-
-  create() {
-
-  }
-}
-
-
-
-export default joi
-  .object({
+  const schema = joi.object({
     id: joi
       .string()
       .hex()
       .length(24)
-      .description('A MongoDB _id in string format')
-  })
-  .options({
-    presence: 'required',
-    stripUnknown: true,
-    abortEarly: true 
+      .required()
   });
 
+  const object = {};
 
+  const {value, error} = schema.validate(data);
+
+  if (error) {
+    object.valid = false;
+    object.errors = error.details;
+  } else {
+    for (const key in value)
+      object[key] = value[key];
+  };
+
+  return object;
+};

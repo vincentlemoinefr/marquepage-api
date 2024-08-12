@@ -6,17 +6,17 @@
 
 
 import joi from 'joi';
-import { BookmarkBuilder } from '#schemas/schemaBookmark';
-
-const data = { id : "66af8020fc13ae1c52e25f73" };
-const builder = new BookmarkBuilder(joi);
-
-const bookmark = builder.build(data);
-
-bookmark.echo();
+import { Id } from '#schemas/schemaId';
+import { Config } from '#schemas/schemaConfig';
 
 
 
+const data = { id : "66af8020fc13ae1c52e25f73eza" };
+const id = new Id(data, joi);
+const config = new Config(process.env, joi);
+
+
+console.log(config);
 
 
 /*
