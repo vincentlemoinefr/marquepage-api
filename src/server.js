@@ -1,85 +1,68 @@
-// import jsonwebtoken from 'jsonwebtoken';
-// import { MongoClient } from 'mongodb';
-// import express from 'express';
-// import https from 'https';
-// import fs from 'fs';
-
-
+// Basic librairies
+import jsonwebtoken from 'jsonwebtoken';
+import { MongoClient } from 'mongodb';
+import { v1 as uuid } from 'uuid';
+import express from 'express';
+import winston from 'winston';
+import https from 'https';
+import yaml from 'yaml';
 import joi from 'joi';
-import { Id } from '#schemas/schemaId';
-import { Config } from '#schemas/schemaConfig';
+import fs from 'fs';
+
+// Schemas
+import schemaConfig from '#schemas/schemaConfig';
+import schemaId from '#schemas/schemaId';
+
+// Managers
+import openapiManager from '#openapiManager';
+import routesManager from '#routesManager';
+import configManager from '#configManager';
+import mongoAdapter from '#mongoAdapter';
+import logManager from '#logManager';
+
+// Controllers
+import controllers from '#controllers/index';
+const {
+  securityTimeout,
+  binderReadById,
+  definitionRead,
+  securityErrorHandler,
+} = controllers;
+
+// Todo : add an option to load some configs from a file
+const config = configManager(process.env, schemaConfig(joi));
+
+// Todo : make winston more like console.log()
+const log = logManager(config, winston);
+
+// Todo : give the logger to the other libs
+const openapi = openapiManager('./src/apiDefinition.yaml', fs, yaml, log);
+const database = mongoAdapter(MongoClient, log);
 
 
+// Connect to database
+await database.connect(config);
 
-const data = { id : "66af8020fc13ae1c52e25f73eza" };
-const id = new Id(data, joi);
-const config = new Config(process.env, joi);
-
-
-console.log(config);
-
-
-/*
-const database = require('./database');
-const router = require('./router');
-
-const controllers = require('./middlewares/')(database); // Will need database and shcemas
-const middlewares = require('./middlewares/');
-
-
-const middlewares = require('./middlewares');
-
-const api = express()
-
-api.use(middlewares.setTimeout);
-api.use(express.json());
-api.use('/', routes);
-api.use(timeoutTest);
-api.use(middlewares.errorHandler);
-
-const server = https.createServer(config.API_HTTPS_OPTIONS, api);
-
-function timeoutTest(request, response, next) {
-  let count = 0;
-  while (1) {
-    count++;
-  }
-  next();
+const data = {
+  name: 'google',
+  url: 'google.com',
+  test: 'search engine',
 }
 
+const result = await database.dbCreate(data);
+log('info', result);
 
-async function test() {
-  const seedData =  {
-    decade: '1970s',
-    artist: 'Debby Boone',
-    song: 'You Light Up My Life',
-    weeksAtOne: 10
-  };
 
-  await database.connect();
-  const create_result = await database.create(seedData);
-  logger('info', 'added one row to the database');
-  logger('info', create_result);
-};
 
+// Express stuff
+const api = express();
+const router = routesManager(controllers, openapi, express.Router());
+api.use(express.json());
+api.use(securityTimeout);
+api.use(router);
+api.use('*', securityErrorHandler);
+
+const server = https.createServer(config.API_HTTPS_OPTIONS, api);
 server.listen(config.API_PORT, () => {
-    logger('info', 'Server Listening on : https://'+config.API_HOST+'/');
+    log('info', 'Server Listening on : https://'+config.API_HOST+'/');
 });
-
-// What can be handled by nginx
-// IP whitelist / blacklist
-// Rate limiting
-// Force https
-// Wrong https protocol / cipher
-// Require 2 Way SSL
-// Request gateway timeout
-// nginx can read OpenAPI ???
-// https://www.f5.com/company/blog/nginx/from-openapi-to-nginx-as-an-api-gateway-using-a-declarative-api
-// Load balancing
-// ModSecurity
-// https://www.acunetix.com/blog/web-security-zone/hardening-nginx/
-// Disable unwanted HTTP request : HEAD, CONNECT, OPTIONS, TRACE...
-// Http Logging
-// Wrong or missing headers
-
-*/

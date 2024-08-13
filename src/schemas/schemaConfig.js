@@ -1,6 +1,5 @@
-export function Config(data, joi) {
-
-  const schema = joi.object({
+export default function schemaConfig(joi) {
+  return joi.object({
     API_HOST: joi
       .string().max(253)
       .failover('localhost')
@@ -104,18 +103,4 @@ export function Config(data, joi) {
     stripUnknown: true,
     abortEarly: false 
   });
-
-  const object = {};
-
-  const {value, error} = schema.validate(data);
-
-  if (error) {
-    object.valid = false;
-    object.errors = error.details;
-  } else {
-    for (const key in value)
-      object[key] = value[key];
-  };
-
-  return object;
 };

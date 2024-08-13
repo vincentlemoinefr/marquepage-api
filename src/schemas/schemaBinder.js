@@ -1,33 +1,4 @@
-// Access rights : 
-// Read
-// Modify
-// Change rights 
 
-// Business logic :
-// Get all the binders you have access to
-// 
-// Create a binder
-// Delete a binder by id
-// Update a binder by id :
-//   - Name
-//   - Access list
-// Create a binder's folder structure (./subfolderA/subfolderB/subfolderC)
-// Delete a binder's folder
-
-// Create a bookmark
-// Get a bookmark by id
-// Delete a bookmark by id
-// Update a bookmark by id :
-//   - Name
-//   - Description
-//   - Url
-//   - Tags
-//   - Change folder
-
-// What about users and authorizations ? ?
-const user = {
-  user_something : ''         // idklol
-}
 
 // Also, Etags, If-Match, If-None-Match
 // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag
@@ -43,19 +14,4 @@ const binder = {
   bookmarks_amount : 5000,    // Number of bookmarks in that binder
   bookmarks_list : [],        // Bookmarks array
   binder_folders_list : []
-}
-
-const bookmark = {
-  bookmark_uuid : '',
-  bookmark_verion : '',
-  bookmark_time_created : '',
-  bookmark_last_updated : '',
-  bookmark_last_accessed : '',
-  bookmark_deleted : '',
-  bookmark_time_deleted : '',
-  bookmark_name: '',
-  bookmark_url: '',
-  bookmark_description: '',
-  bookmark_subfolder: '',
-  bookmark_tags: ''
 }

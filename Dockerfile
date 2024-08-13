@@ -17,4 +17,4 @@ COPY ./src ./src
 
 RUN npm ci
 
-ENTRYPOINT ["npm", "run", "start"]
+ENTRYPOINT ["npm", "run", "api:launch:prod"]

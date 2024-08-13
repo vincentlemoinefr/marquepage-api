@@ -1,6 +1,5 @@
-const definition = require('../routes/definition.json');
-
-module.exports = function binderCreate (request, response, next) {
-  console.log(request.timestamp);
-  response.json(definition);
+export default function definitionRead(request, response, next, definition = { test: 123}) {
+  response
+    .status(200)
+    .json(definition);
 };
