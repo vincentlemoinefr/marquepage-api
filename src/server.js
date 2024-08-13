@@ -34,23 +34,15 @@ const config = configManager(process.env, schemaConfig(joi));
 
 // Todo : make winston more like console.log()
 const log = logManager(config, winston);
-
-// Todo : give the logger to the other libs
 const openapi = openapiManager('./src/apiDefinition.yaml', fs, yaml, log);
-const database = mongoAdapter(MongoClient, log);
 
+// MongoClient create an object with a circular reference 
+const mongoClient = new MongoClient(config.MONGO_URI, config.MONGO_OPTIONS);
 
-// Connect to database
-await database.connect(config);
+await mongoClient.connect();
 
-const data = {
-  name: 'google',
-  url: 'google.com',
-  test: 'search engine',
-}
-
-const result = await database.dbCreate(data);
-log('info', result);
+const mongoDatabase = mongoClient.db(config.MONGO_DB_NAME);
+const mongoCollection = mongoDatabase.collection(config.MONGO_COLLECTION_NAME);
 
 
 
