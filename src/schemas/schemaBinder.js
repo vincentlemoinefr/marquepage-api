@@ -1,4 +1,6 @@
-
+export default function prepareSchemaBinder(joi) {
+  return joi;
+};
 
 // Also, Etags, If-Match, If-None-Match
 // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag

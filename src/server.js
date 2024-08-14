@@ -1,4 +1,9 @@
-// Basic librairies
+// Todo list :
+// Have loadOpenapi use a config for the definition path
+// Allow to load some configuration from file
+// Config to enable / disable log in (file, stdout, external service)
+// Move id validator to request validator ? 
+
 import jsonwebtoken from 'jsonwebtoken';
 import { MongoClient } from 'mongodb';
 import { v1 as uuid } from 'uuid';
@@ -9,52 +14,65 @@ import yaml from 'yaml';
 import joi from 'joi';
 import fs from 'fs';
 
-// Schemas
-import schemaConfig from '#schemas/schemaConfig';
-import schemaId from '#schemas/schemaId';
+import prepareSchemaBookmark from '#schemas/schemaBookmark';
+import prepareSchemaRequest from '#schemas/schemaRequest';
+import prepareSchemaConfig from '#schemas/schemaConfig';
+import prepareSchemaBinder from '#schemas/schemaBinder';
+import prepareSchemaId from '#schemas/schemaId';
 
-// Managers
-import openapiManager from '#openapiManager';
-import routesManager from '#routesManager';
-import configManager from '#configManager';
-import mongoAdapter from '#mongoAdapter';
-import logManager from '#logManager';
+const schemaBookmark = prepareSchemaBookmark(joi);
+const schemaRequest = prepareSchemaRequest(joi);
+const schemaConfig = prepareSchemaConfig(joi);
+const schemaBinder = prepareSchemaBinder(joi);
+const schemaId = prepareSchemaId(joi);
 
-// Controllers
-import controllers from '#controllers/index';
-const {
-  securityTimeout,
-  binderReadById,
-  definitionRead,
-  securityErrorHandler,
-} = controllers;
+import loadOpenapi from '#services/loaderOpenapi';
+import loadConfig from '#services/loaderConfig';
 
-// Todo : add an option to load some configs from a file
-const config = configManager(process.env, schemaConfig(joi));
+const openapi = loadOpenapi('./src/apiDefinition.yaml', fs, yaml);
+const config = loadConfig(process.env, schemaConfig);
 
-// Todo : make winston more like console.log()
-const log = logManager(config, winston);
-const openapi = openapiManager('./src/apiDefinition.yaml', fs, yaml, log);
+import prepareAuthentificationHandler from '#services/handlerAuthentification';
+import prepareAuthorizationHandler from '#services/handlerAuthorization';
+import prepareTimeoutHandler from '#services/handlerTimeout';
+import prepareErrorHandler from '#services/handlerError';
+import prepareLogHandler from '#services/handlerLog';
 
-// MongoClient create an object with a circular reference 
-const mongoClient = new MongoClient(config.MONGO_URI, config.MONGO_OPTIONS);
+const logHandler = prepareLogHandler(config, winston);
 
-await mongoClient.connect();
+const authentificationHandler = prepareAuthentificationHandler(config, jsonwebtoken, logHandler);
+const authorizationHandler = prepareAuthorizationHandler(config, jsonwebtoken, logHandler);
+const timeoutHandler = prepareTimeoutHandler(config, uuid, logHandler);
+const errorHandler = prepareErrorHandler(config, logHandler);
 
-const mongoDatabase = mongoClient.db(config.MONGO_DB_NAME);
-const mongoCollection = mongoDatabase.collection(config.MONGO_COLLECTION_NAME);
+import prepareRequestValidator from '#services/validatorRequest';
+import prepareIdValidator from '#services/validatorId';
 
+const requestValidator = prepareRequestValidator(config, schemaRequest, logHandler);
+const idValidator = prepareIdValidator(config, schemaId, logHandler);
 
+import loadControllers from '#services/loaderControllers';
+import loadRoutes from '#services/loaderRoutes';
 
-// Express stuff
+const controllers = await loadControllers('./src/controllers/', fs);
+const routes = loadRoutes(controllers, openapi, express.Router());
+
+console.log(controllers);
+console.log(routes);
+
 const api = express();
-const router = routesManager(controllers, openapi, express.Router());
+
 api.use(express.json());
-api.use(securityTimeout);
-api.use(router);
-api.use('*', securityErrorHandler);
+api.use(timeoutHandler);
+api.use(routes);
 
 const server = https.createServer(config.API_HTTPS_OPTIONS, api);
-server.listen(config.API_PORT, () => {
-    log('info', 'Server Listening on : https://'+config.API_HOST+'/');
-});
+server.listen(config.API_PORT);
+
+/*
+// MongoClient create an object with a circular reference (why??)
+// const mongoClient = new MongoClient(config.MONGO_URI, config.MONGO_OPTIONS);
+// await mongoClient.connect();
+// const mongoDatabase = mongoClient.db(config.MONGO_DB_NAME);
+// const mongoCollection = mongoDatabase.collection(config.MONGO_COLLECTION_NAME);
+*/

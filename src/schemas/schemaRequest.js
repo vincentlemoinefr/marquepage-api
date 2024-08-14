@@ -1,4 +1,4 @@
-export default function prepareSchemaId(joi) {
+export default function prepareSchemaRequest(joi) {
   return joi.object({
     id: joi
       .string()

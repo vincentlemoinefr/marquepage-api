@@ -1,4 +1,4 @@
-export default function schemaConfig(joi) {
+export default function prepareSchemaConfig(joi) {
   return joi.object({
     API_HOST: joi
       .string().max(253)
@@ -13,6 +13,14 @@ export default function schemaConfig(joi) {
       .string().max(10)
       .failover('/')
       .description('Relative path to the marquepage api, after the domain name'),
+    API_CLIENT_TIMEOUT: joi
+      .number().integer()
+      .failover(5000)
+      .description('Time in ms after which we send a 408 request timeout'),
+    API_SERVER_TIMEOUT: joi
+      .number().integer()
+      .failover(10000)
+      .description('Time in ms after which we send a 504 server timeout'),
     API_PROXY: joi
       .boolean()
       .failover(false)
@@ -70,7 +78,7 @@ export default function schemaConfig(joi) {
     MONGO_HOST: joi
       .string()
       .failover('localhost')
-      .description('Hostname for the mongodb database'),
+      .description('Hostname for mongodb database'),
     MONGO_PORT: joi
       .number().integer()
       .min(1).max(65535)
@@ -102,5 +110,36 @@ export default function schemaConfig(joi) {
     presence: 'required',
     stripUnknown: true,
     abortEarly: false 
+  })
+  .custom((value) => {
+    value.MONGO_URI = value.MONGO_URI_BASE
+      + encodeURIComponent(value.MONGO_USERNAME)
+      + ':' + encodeURIComponent(value.MONGO_PASSWORD)
+      + '@' + value.MONGO_HOST
+      + ':' + value.MONGO_PORT
+      + '/' + value.MONGO_DB_NAME
+      + '?' + value.MONGO_AUTHSOURCE;
+
+    value.MONGO_OPTIONS = {
+      connectTimeoutMS: value.MONGO_TIMEOUT,
+      ssl: false,
+    };
+
+    value.API_HTTPS_OPTIONS = {
+      cert: value.API_HTTPS_CRT,
+      key: value.API_HTTPS_KEY
+    };
+
+    delete value.MONGO_TIMEOUT;
+    delete value.MONGO_URI_BASE;
+    delete value.MONGO_USERNAME;
+    delete value.MONGO_PASSWORD;
+    delete value.MONGO_HOST;
+    delete value.MONGO_PORT;
+    delete value.MONGO_AUTHSOURCE;
+    delete value.API_HTTPS_CRT;
+    delete value.API_HTTPS_KEY;
+
+    return value;
   });
 };

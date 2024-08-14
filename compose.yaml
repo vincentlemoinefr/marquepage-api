@@ -16,18 +16,18 @@ services:
       - ./tooling/mongo_fake_bookmark.json:/docker-entrypoint-initdb.d/mongo_fake_bookmark.json
       - ./tooling/mongo_bootstrap.js:/docker-entrypoint-initdb.d/mongo_bootstrap.js
       - ./tooling/mongo_import.sh:/docker-entrypoint-initdb.d/mongo_import.sh
-#  api:
-#    container_name: marquepage-api
-#    image: $IMAGE_NAME
-#    depends_on:
-#      - db
-#    env_file: [.env]
-#    ports:
-#      - 443:443
-#    restart: "no"
-#    volumes:
-#      - api-data:/marquepage
-#      - ./tooling/api_healthcheck.js:/marquepage/src/api_healthcheck.js
+  api:
+    container_name: marquepage-api
+    image: $IMAGE_NAME
+    depends_on:
+      - db
+    env_file: [.env]
+    ports:
+      - 443:443
+    restart: "no"
+    volumes:
+      - api-data:/marquepage
+      - ./tooling/api_healthcheck.js:/marquepage/src/api_healthcheck.js
 volumes:
   db-configdb:
   db-backup:
