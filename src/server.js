@@ -1,7 +1,8 @@
 // Todo list :
 // Have loadOpenapi use a config for the definition path
+// Same for loadControllers
 // Allow to load some configuration from file
-// Config to enable / disable log in (file, stdout, external service)
+// Config to enable / disable logs in (file, stdout, external service)
 // Move id validator to request validator ? 
 
 import jsonwebtoken from 'jsonwebtoken';
@@ -61,6 +62,10 @@ console.log(controllers);
 console.log(routes);
 
 const api = express();
+
+// Load order : 
+// express.json()
+// timeoutHandler
 
 api.use(express.json());
 api.use(timeoutHandler);
