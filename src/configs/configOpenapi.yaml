@@ -45,7 +45,7 @@ paths:
       operationId: openapiRead
       description: Read the OpenAPI schema.
       tags: 
-          - "internal"
+        - "internal"
       responses:
         200:
           description: OK
@@ -241,6 +241,14 @@ paths:
           description: Internal Server Error
           $ref: "#/components/responses/500"
   "/binder/{binderId}":
+    parameters:
+      - name: binderId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          pattern: "/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i"
     get:
       operationId: binderReadById
       description: Read one binder.
@@ -603,6 +611,14 @@ paths:
           description: Internal Server Error
           $ref: "#/components/responses/500"
   "/bookmark/{bookmarkId}":
+    parameters:
+      - name: binderId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          pattern: "/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i"
     get:
       operationId: bookmarkReadById
       description: Read one folder.
@@ -822,7 +838,6 @@ paths:
 
 components:
   schemas:
-
     # Binder success
     serverSuccessReadAllBinder:
       type: object
@@ -841,7 +856,6 @@ components:
     serverSuccessDeleteBinder:
       description: Returns the information of the binder you deleted by id.
       $ref: '#/components/schemas/serverSuccessMessage'
-
     # Bookmark success
     serverSuccessReadAllBookmark:
       description: Returns all the bookmark you have access to.
@@ -858,7 +872,6 @@ components:
     serverSuccessDeleteBookmark:
       description: Returns the information of the bookmark you deleted by id.
       $ref: '#/components/schemas/serverSuccessMessage'
-
     # Client error
     clientErrorBadRequest:
       description: '400'
@@ -920,27 +933,25 @@ components:
     serverErrorGatewayTimeout:
       description: '504'
       $ref: '#/components/schemas/serverErrorMessage'
-
     serverSuccessMessage:
       description: Client error response message
       type: object
       properties:
         requestId:
           type: string
-          format: uuid.v1
+          format: uuid
         responseStatus:
           type: integer
           enum: [200]
         responseMessage:
           type: string
-
     clientErrorMessage:
       description: Client error response message
       type: object
       properties:
         requestId:
           type: string
-          format: uuid.v1
+          format: uuid
         responseStatus:
           type: integer
           enum: [
@@ -950,14 +961,13 @@ components:
           ]
         responseMessage:
           type: string
-
     serverErrorMessage:
       description: Server error response message
       type: object
       properties:
         requestId:
           type: string
-          format: uuid.v1
+          format: uuid
         responseStatus:
           type: integer
           enum: [
@@ -965,7 +975,6 @@ components:
           ]
         responseMessage:
           type: string
-
   responses:
     200: # A 200 response always has a payload
       description: OK
@@ -1102,14 +1111,13 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/serverErrorInternalServerError'
+            $ref: '#/components/schemas/serverErrorGatewayTimeout'
     default: # Unpredictable fuck up
       description: Internal Server Error
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/serverErrorGatewayTimeout'
-
+            $ref: '#/components/schemas/serverErrorInternalServerError'
   # Reusable response headers
   headers: {}
   # Reusable examples
@@ -1118,6 +1126,5 @@ components:
   links: {}
   # Reusable callbacks
   callbacks: {}
-
 # Security ???
 security: []

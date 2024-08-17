@@ -1,37 +1,40 @@
-export default function routesManager(controllers, openapi, router) {
-
+export default function routesManager(
+  controllers,
+  authentificationHandler,
+  authorizationHandler,
+  idValidator,
+  openapi,
+  router,
+  logger
+) {
   for (const path in openapi.paths) {
 
-    const route = openapi.paths[path];
+    const pathObject = openapi.paths[path];
 
-    /* temp
-    const conts = [];
-    if (openapi.paths[path].security !== void 0) {
-      conts.push(controllers.securityAuthentification);
+    for (const httpMethod in pathObject) {
 
-      // AuthZ is not always needed (eg create a new binder)/*
-      // But authN is needed
-      conts.push(controllers.securityFindById);
-      conts.push(controllers.securityAuthorization);
-    }
-    conts.push(controllers[route[httpMethod].operationId]);
+      if (httpMethod === 'parameters') continue;
+      const finalControllers = [];
 
-    // Later...
-    conts.push(controllers.securityErrorHandler)
+      if (pathObject[httpMethod].security !== void 0)
+        finalControllers.push(authentificationHandler);
 
-    */
+      if (pathObject.parameters !== void 0)
+        finalControllers.push(idValidator);
 
-    for (const httpMethod in route) {
-      /*
+      if (pathObject[httpMethod].security !== void 0)
+        finalControllers.push(authorizationHandler);
+
+      finalControllers.push(controllers[pathObject[httpMethod].operationId]);
+
       console.log(
-        'Trying to set : ', httpMethod,
-        ' url : ', path.replaceAll('{',':').replaceAll('}',''),
-        ' operationId : ', route[httpMethod].operationId);
-      */
-     
+        'Setting :', httpMethod,
+        'on', path.replaceAll('{',':').replaceAll('}',''),
+        'with', finalControllers);
+    
       router[httpMethod](
         path.replaceAll('{',':').replaceAll('}',''),
-        controllers[route[httpMethod].operationId]
+        finalControllers
       );
     };
   };
