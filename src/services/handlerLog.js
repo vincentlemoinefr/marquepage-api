@@ -1,4 +1,4 @@
-export default function prepareLogHandler(config, winston) {
+export default function prepareLogHandler({ config, winston }) {
 
   const { createLogger, format, transports } = winston;
   const path = config.LOG_PATH;

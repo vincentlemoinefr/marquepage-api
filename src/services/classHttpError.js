@@ -1,4 +1,4 @@
-export default function prepareHttpError(STATUS_CODES) {
+export default function prepareHttpError({ STATUS_CODES }) {
   return class HttpError extends Error {
     constructor(statusCode, message, context) {
       super(message || STATUS_CODES[statusCode]);

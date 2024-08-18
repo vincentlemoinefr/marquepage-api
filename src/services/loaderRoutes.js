@@ -1,4 +1,4 @@
-export default function routesManager(
+export default function loadRoutes(
   controllers,
   authentificationHandler,
   authorizationHandler,

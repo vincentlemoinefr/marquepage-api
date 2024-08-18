@@ -1,35 +1,73 @@
 export default function loadConfig(
-  // Object deconstruction : get 'config' from librairies and place it in
-  // 'originalConfig' and make 'originalConfig' empty object if not defined
-  { config: originalConfig = {}, fs, yaml, schemaConfig },
-  newConfig, 
+  {
+    schemaConfig,
+    config = {},
+    yaml,
+    fs
+  },
+  nextConfig = false, 
   finalConfig = false
 ) {
-  if (typeof newConfig === 'string' && newConfig.endsWith('.yaml')) {
 
-    if (!fs.existsSync(newConfig)) return originalConfig;
-    const yamlContent = fs.readFileSync(newConfig, 'utf8');
-    if (!yamlContent) return originalConfig;
-    const yamlConfig = yaml.parseDocument(yamlContent);
-
-    if (yamlConfig.warnings.length !== 0 || yamlConfig.errors.length !== 0) {
-      console.log('There was an error in this YAML file :', newConfig);
-      process.exit(1);
+  // if it's Openapi we only want to load, not chance original config
+  if (typeof nextConfig === 'string' && nextConfig.includes('Openapi')) {
+    nextConfig = loadYaml(nextConfig, yaml, fs);
+    if (nextConfig !== 'cantLoadError') {
+      return nextConfig;
     };
-
-    newConfig = yamlConfig.toJS();
   };
 
-  // todo : check if we have a file link for CERT and KEY and then load it
-  if (!newConfig instanceof Object) return originalConfig;
-  originalConfig = {...originalConfig, ...newConfig};
-  const { value: validConfig , error } = schemaConfig.validate(originalConfig);
+  // if it's a string we will load it as yaml
+  if (typeof nextConfig === 'string') {
+    nextConfig = loadYaml(nextConfig, yaml, fs);
+  };
+
+  // At this point nextConfig should be an object, return config if not
+  if (!nextConfig instanceof Object) {
+    return config;
+  };
+
+  const { value: validConfig , error }
+    = schemaConfig.validate({...config, ...nextConfig});
 
   if (error !== void 0 && finalConfig) {
-    console.log('Terminating process because configurations are required :');
-    for (const detail of error.details) console.log(detail.message);
+    console.log('Those configurations are required :');
+    for (const detail of error.details) {
+      console.log(detail.message);
+    };
     process.exit(1);
   };
 
   return validConfig;
+};
+
+function loadYaml(Yamlfile, yaml, fs) {
+  if (!fs.existsSync(Yamlfile)) {
+    console.log(Yamlfile, 'doesnt exist.');
+    return 'cantLoadError';
+  };
+
+  const yamlContent = fs.readFileSync(Yamlfile, 'utf8');
+
+  if (!yamlContent) {
+    console.log('Yaml file', Yamlfile, 'is empty.');
+    return 'cantLoadError';
+  };
+  
+  const yamlConfig = yaml.parseDocument(yamlContent);
+
+  if (yamlConfig.warnings.length !== 0 || yamlConfig.errors.length !== 0) {
+
+    for (const error of yamlConfig.errors) {
+      console.log(error)
+    };
+
+    for (const warning of yamlConfig.warnings) {
+      console.log(warning)
+      
+    };
+    return 'cantLoadError';
+  };
+
+  return yamlConfig.toJS();
 };

@@ -37,8 +37,10 @@ import prepareLogHandler from '#services/handlerLog';
 import prepareRequestValidator from '#services/validatorRequest';
 import prepareIdValidator from '#services/validatorId';
 
-const librairies = { jsonwebtoken, randomUUID, https, yaml, joi, fs };
-const bigLibrairies = { MongoClient, express, winston };
+const librairies = {
+  MongoClient, express, winston, jsonwebtoken,
+  randomUUID, STATUS_CODES, https, yaml, joi, fs
+};
 
 librairies.schemaUuid = prepareSchemaUuid(librairies);
 librairies.schemaConfig = prepareSchemaConfig(librairies);
@@ -50,19 +52,22 @@ librairies.config = loadConfig(librairies, './src/configs/configServer.yaml');
 librairies.config = loadConfig(librairies, './src/configs/configLogger.yaml');
 librairies.config = loadConfig(librairies, './src/configs/configDatabase.yaml');
 librairies.config = loadConfig(librairies, process.env, true);
-
-console.log('in server :', librairies.config)
-
-/*
-
-librairies.openapi = loadConfig(librairies, './configs/configOpenapi.yaml');
-
-librairies.controllers = await loadControllers(librairies);
-
-librairies.HttpError = prepareHttpError(STATUS_CODES);
+librairies.openapi = loadConfig(librairies, './src/configs/configOpenapi.yaml');
 
 
 librairies.logHandler = prepareLogHandler(librairies);
+
+librairies.HttpError = prepareHttpError(librairies);
+
+librairies.controllers = await loadControllers(librairies);
+
+
+
+
+/*
+
+
+
 
 librairies.authentificationHandler = prepareAuthentificationHandler(librairies);
 librairies.authorizationHandler = prepareAuthorizationHandler(librairies);
