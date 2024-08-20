@@ -35,5 +35,4 @@ function roughSizeOfObject(object) {
 }
 
 
-
 const roughObjSize = JSON.stringify(librairies).length;

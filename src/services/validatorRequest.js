@@ -1,4 +1,6 @@
-export default function prepareRequestValidator(config, schemaHttp) {
+export default function prepareRequestValidator(
+  {schemaRequest, HttpError, logHandler}
+) {
   return function requestValidator(request, response, next) {
     next();
   };

@@ -13,6 +13,10 @@ export default function prepareSchemaConfig({ joi }) {
       .string().max(10)
       .failover('/')
       .description('Relative path to the marquepage api, after the domain name'),
+    API_CONTROLLERS_DIR: joi
+      .string().max(255)
+      .failover('./src/controllers')
+      .description('The controllers folder'),
     API_CLIENT_TIMEOUT: joi
       .number().integer()
       .failover(5000)

@@ -14,5 +14,4 @@ function getIterableClasses() {
 let c = getIterableClasses();
 console.log('Found ' + c.length + ' iterable classes');
 console.log(c.join('\n'));
-
 console.log(globalThis);

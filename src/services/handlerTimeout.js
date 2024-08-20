@@ -1,16 +1,15 @@
-export default function prepareTimeoutHandler(config, uuid, HttpError, logger) {
+export default function prepareTimeoutHandler(
+  { config, randomUUID, logHandler, HttpError }
+) {
   return function timeoutHandler(request, response, next) {
 
-    response.locals.requestId = uuid();
+    response.locals.requestId = randomUUID();
 
     const clientTimeoutError = new HttpError(408);
     const serverTimeoutError = new HttpError(504);
 
-    console.log(config.API_CLIENT_TIMEOUT);
-    console.log(config.API_SERVER_TIMEOUT);
-
-    request.setTimeout(1000, sendTimeout);
-    response.setTimeout(1000, sendTimeout2);
+    request.setTimeout(config.API_CLIENT_TIMEOUT, sendTimeout);
+    response.setTimeout(config.API_SERVER_TIMEOUT, sendTimeout2);
 
     function sendTimeout() {
       return response.status(408).end();
@@ -18,7 +17,6 @@ export default function prepareTimeoutHandler(config, uuid, HttpError, logger) {
     function sendTimeout2() {
       return response.status(504).end();
     }
-
 
     next();
   };

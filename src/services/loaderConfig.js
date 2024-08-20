@@ -1,10 +1,5 @@
 export default function loadConfig(
-  {
-    schemaConfig,
-    config = {},
-    yaml,
-    fs
-  },
+  { config = {}, schemaConfig, yaml, fs },
   nextConfig = false, 
   finalConfig = false
 ) {
@@ -23,7 +18,7 @@ export default function loadConfig(
   };
 
   // At this point nextConfig should be an object, return config if not
-  if (!nextConfig instanceof Object) {
+  if (!nextConfig instanceof Object || nextConfig === 'cantLoadError') {
     return config;
   };
 
@@ -41,16 +36,16 @@ export default function loadConfig(
   return validConfig;
 };
 
-function loadYaml(Yamlfile, yaml, fs) {
-  if (!fs.existsSync(Yamlfile)) {
-    console.log(Yamlfile, 'doesnt exist.');
+function loadYaml(yamlFile, yaml, fs) {
+  if (!fs.existsSync(yamlFile)) {
+    console.log(yamlFile, 'doesnt exist.');
     return 'cantLoadError';
   };
 
-  const yamlContent = fs.readFileSync(Yamlfile, 'utf8');
+  const yamlContent = fs.readFileSync(yamlFile, 'utf8');
 
   if (!yamlContent) {
-    console.log('Yaml file', Yamlfile, 'is empty.');
+    console.log('Yaml file', yamlFile, 'is empty.');
     return 'cantLoadError';
   };
   

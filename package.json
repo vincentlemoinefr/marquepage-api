@@ -8,12 +8,13 @@
     "api:launch:prod": "node --unhandled-rejections=strict .",
     "api:launch:dev": "node --env-file=.env --unhandled-rejections=strict .",
     "api:launch:test": "node --env-file=.env --unhandled-rejections=strict .",
-    "api:build:definition": "node ./tooling/api_build_json_definition.js",
-    "api:build:controllers": "node ./tooling/api_build_controllers.js",
-    "api:build:documentation": "node ./tooling/api_build_documentation.js",
-    "api:show:config": "node --env-file=.env ./src/config/index.js",
-    "docker:build": "sh ./tooling/docker_build.sh",
-    "docker:nuke": "sh ./tooling/docker_nuke.sh",
+    "docker:build:api": "sh ./tooling/docker_build.sh",
+    "docker:launch:all": "npm run docker:launch:db && npm run docker:launch:api",
+    "docker:launch:api": "sh ./tooling/docker_launch.sh api",
+    "docker:launch:db": "sh ./tooling/docker_launch.sh db",
+    "docker:clean:all": "npm run docker:clean:api && npm run docker:clean:db",
+    "docker:clean:api": "sh ./tooling/docker_clean.sh api",
+    "docker:clean:db": "sh ./tooling/docker_clean.sh db",
     "docker:exec:api": "sh ./tooling/docker_exec.sh api",
     "docker:exec:db": "sh ./tooling/docker_exec.sh db"
   },
@@ -28,17 +29,14 @@
   },
   "homepage": "https://github.com/vincentlemoinefr/marquepage-api#readme",
   "imports": {
-    "#controllers/*": "./src/controllers/*.js",
-    "#schemas/*": "./src/schemas/*.js",
-    "#*.yaml": "./src/*.yaml",
     "#*": "./src/*.js"
   },
   "dependencies": {
-    "express": "^4.19.2",
-    "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
-    "mongodb": "^6.8.0",
+    "express": "^4.19.2",
     "winston": "^3.13.1",
+    "mongodb": "^6.8.0",
+    "joi": "^17.13.3",
     "yaml": "^2.5.0"
   }
 }

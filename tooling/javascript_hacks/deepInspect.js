@@ -1,7 +1,7 @@
 function listAllProperties(object) {
   var objectToInspect;     
   var result = [];
-  
+
   for(
     objectToInspect = object;
     objectToInspect !== null;
@@ -9,5 +9,7 @@ function listAllProperties(object) {
   ) {
     result = result.concat(Object.getOwnPropertyNames(objectToInspect));
   };
-  return result; 
+  return result;
 };
+
+console.log(listAllProperties(globalThis));

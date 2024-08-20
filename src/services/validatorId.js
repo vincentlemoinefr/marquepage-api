@@ -1,18 +1,15 @@
-export default function prepareIdValidator(config, schemaId) {
+export default function prepareIdValidator(
+  { schemaUuid, HttpError, logHandler }
+) {
   return function idValidator(request, response, next) {
 
     const id = request.params.binderId || request.params.bookmarkId;
-    const { error } = schemaId.validate(id);
-
-    // let i = 0;
-    // while (1) {
-    //   console.log(i++);
-    // }
+    const { error } = schemaUuid.validate(id);
 
     if ( error === void 0) {
       next();
     } else {
-      const error = new Error('Not a valid id');
+      const error = new HttpError(404, 'Not a valid id');
       next(error);
     };
   };

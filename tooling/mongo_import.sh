@@ -2,9 +2,9 @@
 
 mongoimport \
   --db='marquepage' \
-  --collection='bookmark' \
+  --collection='binder' \
   --jsonArray \
-  --file='/docker-entrypoint-initdb.d/mongo_fake_bookmark_no_id.json' \
+  --file='/docker-entrypoint-initdb.d/mongo_fake_bookmark.json' \
   --username='test' \
   --password='azerty123' \
   --authenticationDatabase=admin

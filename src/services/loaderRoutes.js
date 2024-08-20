@@ -1,12 +1,14 @@
-export default function loadRoutes(
+export default function loadRoutes({
   controllers,
   authentificationHandler,
   authorizationHandler,
   idValidator,
+  HttpError,
   openapi,
-  router,
-  logger
-) {
+  express
+}) {
+  const router = express.Router();
+
   for (const path in openapi.paths) {
 
     const pathObject = openapi.paths[path];

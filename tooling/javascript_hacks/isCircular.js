@@ -1,4 +1,4 @@
-function existCircular(obj) {
+function isCircular(obj) {
   let cache = new Set();
   function helper(obj) {
     let values = Object.values(obj);

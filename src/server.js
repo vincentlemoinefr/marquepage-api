@@ -54,30 +54,33 @@ librairies.config = loadConfig(librairies, './src/configs/configDatabase.yaml');
 librairies.config = loadConfig(librairies, process.env, true);
 librairies.openapi = loadConfig(librairies, './src/configs/configOpenapi.yaml');
 
-
+// Require config, winston
 librairies.logHandler = prepareLogHandler(librairies);
 
+// Require STATUS_CODES
 librairies.HttpError = prepareHttpError(librairies);
 
-librairies.controllers = await loadControllers(librairies);
-
-
-
-
-/*
-
-
-
-
+// Require config, jsonwebtoken, logHandler, HttpError
 librairies.authentificationHandler = prepareAuthentificationHandler(librairies);
+
+// Require config, jsonwebtoken, logHandler, HttpError, database
 librairies.authorizationHandler = prepareAuthorizationHandler(librairies);
+
+// Require config, randomUUID, logHandler, HttpError 
 librairies.timeoutHandler = prepareTimeoutHandler(librairies);
+
+// Require logHandler
 librairies.errorHandler = prepareErrorHandler(librairies);
 
-
+// Require schemaRequest, HttpError, logHandler
 librairies.requestValidator = prepareRequestValidator(librairies);
+
+// Require schemaId, HttpError, logHandler
 librairies.idValidator = prepareIdValidator(librairies);
 
+
+
+librairies.controllers = await loadControllers(librairies);
 librairies.routes = loadRoutes(librairies);
 
 const api = express();
@@ -90,19 +93,25 @@ api.set('x-powered-by', false);
 api.set('trust proxy', true);
 api.set('etag', 'strong');
 
-api.use(requestValidator);
-api.use(timeoutHandler);
+api.use(librairies.requestValidator);
+api.use(librairies.timeoutHandler);
 api.use(express.json());
-api.use(routes);
-api.use(errorHandler);
+api.use(librairies.routes);
+api.use(librairies.errorHandler);
 
-const server = https.createServer(config.API_HTTPS_OPTIONS, api);
-server.listen(config.API_PORT);
+const server = https.createServer(librairies.config.API_HTTPS_OPTIONS, api);
+server.listen(librairies.config.API_PORT);
+
+
 
 /*
-// MongoClient create an object with a circular reference (why??)
-// const mongoClient = new MongoClient(config.MONGO_URI, config.MONGO_OPTIONS);
-// await mongoClient.connect();
-// const mongoDatabase = mongoClient.db(config.MONGO_DB_NAME);
-// const mongoCollection = mongoDatabase.collection(config.MONGO_COLLECTION_NAME);
+const mongoClient = new MongoClient(config.MONGO_URI, config.MONGO_OPTIONS);
+function initDatabase(mongoClient) {
+  await mongoClient.connect();
+  const mongoDatabase = mongoClient.db(config.MONGO_DB_NAME);
+  return mongoDatabase;
+}
+librairies.logs = mongoDatabase.collection(config.MONGO_COLL_LOGS);
+librairies.binders = mongoDatabase.collection(config.MONGO_COLL_BINDERS);
+librairies.databaseAdapter = prepareDatabaseAdapter(librairies);
 */
