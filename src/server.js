@@ -85,6 +85,15 @@ librairies.routes = loadRoutes(librairies);
 
 const api = express();
 
+function printRawRequest(request, response, next) {
+
+  for (const key in request) {
+    console.log(key, request[key]);
+  }
+  next();
+
+};
+
 // https://expressjs.com/en/api.html#app.set
 // We need to move that to config
 api.set('case sensitive routing', true);
@@ -93,11 +102,18 @@ api.set('x-powered-by', false);
 api.set('trust proxy', true);
 api.set('etag', 'strong');
 
+api.use(express.raw());
+api.use(printRawRequest);
+
+/*
+
 api.use(librairies.requestValidator);
 api.use(librairies.timeoutHandler);
-api.use(express.json());
+
 api.use(librairies.routes);
+// Here : api.use(notFoundHandler)
 api.use(librairies.errorHandler);
+*/
 
 const server = https.createServer(librairies.config.API_HTTPS_OPTIONS, api);
 server.listen(librairies.config.API_PORT);

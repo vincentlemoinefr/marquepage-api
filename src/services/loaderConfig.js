@@ -52,15 +52,8 @@ function loadYaml(yamlFile, yaml, fs) {
   const yamlConfig = yaml.parseDocument(yamlContent);
 
   if (yamlConfig.warnings.length !== 0 || yamlConfig.errors.length !== 0) {
-
-    for (const error of yamlConfig.errors) {
-      console.log(error)
-    };
-
-    for (const warning of yamlConfig.warnings) {
-      console.log(warning)
-      
-    };
+    for (const error of yamlConfig.errors) console.log(error)
+    for (const warning of yamlConfig.warnings) console.log(warning)
     return 'cantLoadError';
   };
 
