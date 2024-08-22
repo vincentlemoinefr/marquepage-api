@@ -1,4 +1,4 @@
-export default async function loadControllers({config, fs}) {
+export default async function loadControllers({ config, binders, fs }) {
 
   const directory = config.API_CONTROLLERS_DIR;
   const files = fs.readdirSync(directory);

@@ -78,21 +78,17 @@ librairies.requestValidator = prepareRequestValidator(librairies);
 // Require schemaId, HttpError, logHandler
 librairies.idValidator = prepareIdValidator(librairies);
 
+import prepareBinderCollection from '#services/adapterMongo';
+
+librairies.binders = prepareBinderCollection(librairies);
+
+
 
 
 librairies.controllers = await loadControllers(librairies);
 librairies.routes = loadRoutes(librairies);
 
 const api = express();
-
-function printRawRequest(request, response, next) {
-
-  for (const key in request) {
-    console.log(key, request[key]);
-  }
-  next();
-
-};
 
 // https://expressjs.com/en/api.html#app.set
 // We need to move that to config
@@ -102,32 +98,15 @@ api.set('x-powered-by', false);
 api.set('trust proxy', true);
 api.set('etag', 'strong');
 
-api.use(express.raw());
-api.use(printRawRequest);
-
-/*
 
 api.use(librairies.requestValidator);
 api.use(librairies.timeoutHandler);
 
 api.use(librairies.routes);
-// Here : api.use(notFoundHandler)
+// api.use(notFoundHandler)
 api.use(librairies.errorHandler);
-*/
+
 
 const server = https.createServer(librairies.config.API_HTTPS_OPTIONS, api);
 server.listen(librairies.config.API_PORT);
-
-
-
-/*
-const mongoClient = new MongoClient(config.MONGO_URI, config.MONGO_OPTIONS);
-function initDatabase(mongoClient) {
-  await mongoClient.connect();
-  const mongoDatabase = mongoClient.db(config.MONGO_DB_NAME);
-  return mongoDatabase;
-}
-librairies.logs = mongoDatabase.collection(config.MONGO_COLL_LOGS);
-librairies.binders = mongoDatabase.collection(config.MONGO_COLL_BINDERS);
-librairies.databaseAdapter = prepareDatabaseAdapter(librairies);
 */

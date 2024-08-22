@@ -8,12 +8,12 @@ service_volume="$name"_"$1"
 
 if [[ ! -z "$service_name" ]]
 then
-  docker stop $(docker ps -a | tail -n +2 | grep "$service_name" | awk '{print $1}')
-  docker rm $(docker ps -a | tail -n +2 | grep "$service_name" | awk '{print $1}')
-  docker volume rm $(docker volume ls | tail -n +2 | grep "$service_volume" | awk '{print $2}' )
+  docker stop $(docker ps -a | tail -n +2 | grep "$service_name" | awk '{print $1}') || echo 'Nothing to stop'
+  docker rm $(docker ps -a | tail -n +2 | grep "$service_name" | awk '{print $1}') || echo 'Nothing to remove'
+  docker volume rm $(docker volume ls | tail -n +2 | grep "$service_volume" | awk '{print $2}' ) || echo 'No volume to delete'
 fi
 
 if [ "$service_name" == "marquepage-api" ]
 then
-  docker image rm -f $(docker images | grep "$service_name" | awk '{print $3}')
+  docker image rm -f $(docker images | grep "$service_name" | awk '{print $3}') || echo 'No image to delete'
 fi
